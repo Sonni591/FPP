@@ -36,15 +36,15 @@
           <Tab text="Eingabe">
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                    <content>
-                      <AnchorPane fx:id="inputPane" minHeight="0.0" minWidth="0.0" />
-                    </content>
+                     <content>
+                        <BorderPane fx:id="borderPane" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
                   </ScrollPane>
                </content>
           </Tab>
           <Tab text="Lösungsweg Konflikt">
             <content>
-              <AnchorPane fx:id="pane2" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
             <Tab text="Lösung Konflikt">
@@ -74,8 +74,8 @@
                   <TextArea editable="false" text="Erklärkomponente...&#10;&#10;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, &#10;sed diam nonumy eirmod tempor invidunt ut labore et dolore&#10; magna aliquyam erat, sed diam voluptua. At vero eos et &#10;accusam et justo duo dolores et ea rebum. Stet clita kasd &#10;gubergren, no sea takimata sanctus est Lorem ipsum dolor &#10;sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing &#10;elitr, sed diam nonumy eirmod tempor invidunt ut labore et &#10;dolore magna aliquyam erat, sed diam voluptua. At vero &#10;et accusam et justo duo dolores et ea rebum." />
                   <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="weiter" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="30.0" />
-                        <Button mnemonicParsing="false" text="zurück" AnchorPane.leftAnchor="5.0" />
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="weiter" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0" />
+                        <Button mnemonicParsing="false" text="zurück" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="10.0" />
                      </children>
                      <HBox.margin>
                         <Insets />
