@@ -35,31 +35,27 @@
         <tabs>
           <Tab text="Eingabe">
                <content>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                     <content>
-                        <BorderPane fx:id="borderPane" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
+                  <fx:include fx:id="tab1" source="Tab1.fxml"/>
                </content>
           </Tab>
           <Tab text="Lösungsweg Konflikt">
             <content>
-              <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <fx:include fx:id="tab2" source="Tab2.fxml"/>
             </content>
           </Tab>
             <Tab text="Lösung Konflikt">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               <fx:include fx:id="tab3" source="Tab3.fxml"/>
               </content>
             </Tab>
             <Tab text="Lösungsweg Konfliktfrei">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <fx:include fx:id="tab4" source="Tab4.fxml"/>
               </content>
             </Tab>
             <Tab text="Lösung Konfliktfrei">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <fx:include fx:id="tab5" source="Tab5.fxml"/>
               </content>
             </Tab>
         </tabs>

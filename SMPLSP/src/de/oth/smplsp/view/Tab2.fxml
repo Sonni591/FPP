@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.Tab2Controller">
+   <children>
+      <Label fx:id="label1" layoutX="14.0" layoutY="14.0" text="Ich bin Tab 2" />
+      <CheckBox layoutX="10.0" layoutY="39.0" mnemonicParsing="false" text="CheckBox" />
+   </children>
+</AnchorPane>

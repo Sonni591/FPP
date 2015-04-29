@@ -1,22 +1,14 @@
 package de.oth.smplsp.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 import de.oth.smplsp.Main;
 
-public class RootLayoutController {
+public class Tab2Controller {
 
-    // References to all panes of the tab bar
+    // References
     @FXML
-    private AnchorPane tab1;
-    @FXML
-    private AnchorPane tab2;
-    @FXML
-    private AnchorPane tab3;
-    @FXML
-    private AnchorPane tab4;
-    @FXML
-    private AnchorPane tab5;
+    private Label label1;
 
     // Reference to the main application.
     private Main main;
@@ -25,7 +17,7 @@ public class RootLayoutController {
      * The constructor. The constructor is called before the initialize()
      * method.
      */
-    public RootLayoutController() {
+    public Tab2Controller() {
 
     }
 
