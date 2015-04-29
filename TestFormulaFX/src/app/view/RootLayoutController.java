@@ -2,28 +2,43 @@ package app.view;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
+
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
+
 import app.MainApp;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.ZoomEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
+import javafx.scene.transform.Scale;
 
 public class RootLayoutController {
-
-	@FXML
-	private Label label;
 
 	@FXML
 	private TextFlow textFlow;
 
 	@FXML
 	private SwingNode swingNode;
-
-	final double SCALE_DELTA = 1.1;
-
+	
+	@FXML
+	private BorderPane rootPane;
+	
+	@FXML
+	private Label label;
+	
+	@FXML
+	private Button buttonPlus;
+	
+	@FXML
+	private Button buttonMinus;
+	
 	// global parameters for the font size
 	private int fontsize = 20;
 
@@ -76,6 +91,8 @@ public class RootLayoutController {
 
 		// regenerate LaTeX image
 		showLatex();
+		
+		zoomTestSouthBar();
 	}
 
 	@FXML
@@ -84,6 +101,9 @@ public class RootLayoutController {
 
 		// regenerate LaTeX image
 		showLatex();
+		
+		zoomTestSouthBar();
+		
 	}
 
 	/**
@@ -108,7 +128,7 @@ public class RootLayoutController {
 		// stop further propagation of the event
 		event.consume();
 	}
-
+	
 	/**
 	 * Redraws the image with the LaTeX code based on the new fontsize
 	 * @param event
@@ -120,6 +140,32 @@ public class RootLayoutController {
 
 		// stop further propagation of the event
 		event.consume();
+		
+		zoomTestSouthBar();
+	}
+	
+	/**
+	 * Experimental Zoom Method
+	 * !!!WARNING - does not do the zoom properly!!!
+	 * @param content
+	 */
+	public void scalableZoom(Node content)
+	  {
+		
+		double scaleValue = 2.0;
+		Scale scaleTransform = new Scale(scaleValue , scaleValue, 0, 0);
+		content.getTransforms().add(scaleTransform);
+	  
+	  }
+	
+	/**
+	 * Test Zoom for the south bar
+	 */
+	public void zoomTestSouthBar() {
+		buttonPlus.setFont(new Font(fontsize));
+		buttonMinus.setFont(new Font(fontsize));
+		label.setFont(new Font(fontsize));
+		
 	}
 
 	/**

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.RootLayoutController">
+<BorderPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -39,9 +39,9 @@
    <bottom>
       <HBox prefHeight="32.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Zoom" />
-            <Button mnemonicParsing="false" onMouseClicked="#handleZoomOut" onZoom="#handleZoomIn" text="-" />
-            <Button mnemonicParsing="false" onMouseClicked="#handleZoomIn" text="+" />
+            <Label fx:id="label" text="Zoom" />
+            <Button fx:id="buttonMinus" mnemonicParsing="false" onMouseClicked="#handleZoomOut" onZoom="#handleZoomIn" text="-" />
+            <Button fx:id="buttonPlus" mnemonicParsing="false" onMouseClicked="#handleZoomIn" text="+" />
          </children>
       </HBox>
    </bottom>
