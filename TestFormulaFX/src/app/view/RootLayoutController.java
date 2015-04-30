@@ -92,7 +92,7 @@ public class RootLayoutController {
 		// regenerate LaTeX image
 		showLatex();
 		
-		zoomTestSouthBar();
+//		zoomTestSouthBar();
 	}
 
 	@FXML
@@ -102,7 +102,7 @@ public class RootLayoutController {
 		// regenerate LaTeX image
 		showLatex();
 		
-		zoomTestSouthBar();
+//		zoomTestSouthBar();
 		
 	}
 
@@ -141,7 +141,7 @@ public class RootLayoutController {
 		// stop further propagation of the event
 		event.consume();
 		
-		zoomTestSouthBar();
+//		zoomTestSouthBar();
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class RootLayoutController {
 	public void scalableZoom(Node content)
 	  {
 		
-		double scaleValue = 2.0;
+		double scaleValue = 4.0;
 		Scale scaleTransform = new Scale(scaleValue , scaleValue, 0, 0);
 		content.getTransforms().add(scaleTransform);
 	  

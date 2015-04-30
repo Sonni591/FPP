@@ -35,27 +35,27 @@
         <tabs>
           <Tab text="Eingabe">
                <content>
-                  <fx:include fx:id="tab1" source="Tab1.fxml"/>
+                  <fx:include fx:id="tab1" source="Tab1.fxml" />
                </content>
           </Tab>
           <Tab text="Lösungsweg Konflikt">
             <content>
-              <fx:include fx:id="tab2" source="Tab2.fxml"/>
+              <fx:include fx:id="tab2" source="Tab2.fxml" />
             </content>
           </Tab>
             <Tab text="Lösung Konflikt">
               <content>
-               <fx:include fx:id="tab3" source="Tab3.fxml"/>
+               <fx:include fx:id="tab3" source="Tab3.fxml" />
               </content>
             </Tab>
             <Tab text="Lösungsweg Konfliktfrei">
               <content>
-                <fx:include fx:id="tab4" source="Tab4.fxml"/>
+                <fx:include fx:id="tab4" source="Tab4.fxml" />
               </content>
             </Tab>
             <Tab text="Lösung Konfliktfrei">
               <content>
-                <fx:include fx:id="tab5" source="Tab5.fxml"/>
+                <fx:include fx:id="tab5" source="Tab5.fxml" />
               </content>
             </Tab>
         </tabs>
@@ -91,9 +91,9 @@
                      </textFill>
                   </Label>
                   <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-                  <Label font="$x3" maxWidth="-1.0" text="Zoom" textFill="$x4" HBox.hgrow="NEVER" />
-                  <Button focusTraversable="false" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="+" />
-                  <Button focusTraversable="false" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="-" />
+                  <Label fx:id="lblZoom" font="$x3" maxWidth="-1.0" text="Zoom" textFill="$x4" HBox.hgrow="NEVER" />
+                  <Button fx:id="btnZoomMinus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="-" />
+                  <Button fx:id="btnZoomPlus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="+" />
                </children>
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
