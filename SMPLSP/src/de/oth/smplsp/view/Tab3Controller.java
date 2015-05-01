@@ -1,14 +1,30 @@
 package de.oth.smplsp.view;
 
+import java.util.Arrays;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import de.oth.smplsp.Main;
 
 public class Tab3Controller {
 
     // References
     @FXML
-    private Label label1;
+    private BarChart<String, Integer> barChart;
+
+    @FXML
+    private CategoryAxis xAxis;
+
+    @FXML
+    private NumberAxis yAxis;
+
+    private ObservableList<String> categories = FXCollections
+	    .observableArrayList();
 
     // Reference to the main application.
     private Main main;
@@ -27,6 +43,12 @@ public class Tab3Controller {
      */
     @FXML
     private void initialize() {
+	String[] cities = { "Regensburg", "Hamburg", "München" };
+	categories.addAll(Arrays.asList(cities));
+	xAxis.setCategories(categories);
+	yAxis.setLabel("Einwohner");
+	barChart.setTitle("Einwohner Vergleich");
+	setCiticenData();
     }
 
     /**
@@ -36,6 +58,19 @@ public class Tab3Controller {
      */
     public void setMainApp(Main main) {
 	this.main = main;
+    }
+
+    public void setCiticenData() {
+
+	XYChart.Series<String, Integer> series = new XYChart.Series<>();
+
+	// Create a XYChart.Data object for each month. Add it to the series.
+	for (int i = 0; i < categories.size(); i++) {
+	    series.getData().add(
+		    new XYChart.Data<>(categories.get(i), (i * 1000) + 250));
+	}
+
+	barChart.getData().add(series);
     }
 
 }
