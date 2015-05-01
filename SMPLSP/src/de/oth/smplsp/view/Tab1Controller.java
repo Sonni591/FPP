@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 
@@ -33,6 +34,19 @@ public class Tab1Controller {
     @FXML
     private TableView<InputData> tableInputData;
 
+    @FXML
+    private TableColumn<InputData, Number> c1;
+    @FXML
+    private TableColumn<InputData, Number> c2;
+    @FXML
+    private TableColumn<InputData, Number> c3;
+    @FXML
+    private TableColumn<InputData, Number> c4;
+    @FXML
+    private TableColumn<InputData, Number> c5;
+    @FXML
+    private TableColumn<InputData, Number> c6;
+
     // Reference to the main application.
     private Main main;
 
@@ -56,6 +70,12 @@ public class Tab1Controller {
     private void initialize() {
 	// customize the look of the panel
 	customizeUI();
+	c1.setCellValueFactory(cellData -> cellData.getValue().kProperty());
+	c2.setCellValueFactory(cellData -> cellData.getValue().dProperty());
+	c3.setCellValueFactory(cellData -> cellData.getValue().pProperty());
+	c4.setCellValueFactory(cellData -> cellData.getValue().tauProperty());
+	c5.setCellValueFactory(cellData -> cellData.getValue().sProperty());
+	c6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
 
 	fillTableTestData();
 
@@ -87,8 +107,9 @@ public class Tab1Controller {
 
     private void fillTableTestData() {
 
-	testDataList.add(new InputData(10.4, 128.5714, 2.0000, 190, 0.000689));
-	testDataList.add(new InputData(0.8, 32.43243, 2.0, 210, 0.010208));
+	testDataList
+		.add(new InputData(1, 10.4, 128.5714, 2.0000, 190, 0.000689));
+	testDataList.add(new InputData(2, 0.8, 32.43243, 2.0, 210, 0.010208));
 
 	// TODO: BUG - Elemente sind da, werden aber nicht angezeigt ?!?
 	tableInputData.setItems(testDataList);

@@ -1,13 +1,18 @@
 package de.oth.smplsp.model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class InputData {
 
-    private Integer k;
-    private Double d;
-    private Double p;
-    private Double tau;
-    private Integer s;
-    private Double h;
+    private IntegerProperty k;
+    private DoubleProperty d;
+    private DoubleProperty p;
+    private DoubleProperty tau;
+    private IntegerProperty s;
+    private DoubleProperty h;
 
     private static Integer indexCount = 1;
 
@@ -17,7 +22,7 @@ public class InputData {
      * Default constructor.
      */
     public InputData() {
-	this(null, null, null, null, null, null, null);
+	this(null, null, null, null, null, null);
     }
 
     /**
@@ -31,15 +36,15 @@ public class InputData {
      * @param h
      * @param object
      */
-    private InputData(Integer k, Double d, Double p, Double tau, Integer s,
-	    Double h, Object object) {
+    public InputData(Integer k, Double d, Double p, Double tau, Integer s,
+	    Double h) {
 	super();
-	this.k = indexCount++;
-	this.d = d;
-	this.p = p;
-	this.tau = tau;
-	this.s = s;
-	this.h = h;
+	this.k = new SimpleIntegerProperty(indexCount++);
+	this.d = new SimpleDoubleProperty(d);
+	this.p = new SimpleDoubleProperty(p);
+	this.tau = new SimpleDoubleProperty(tau);
+	this.s = new SimpleIntegerProperty(s);
+	this.h = new SimpleDoubleProperty(h);
     }
 
     /**
@@ -51,23 +56,48 @@ public class InputData {
      * @param s
      * @param h
      */
-    public InputData(Double d, Double p, Double tau, Integer s, Double h) {
-	super();
-	this.k = indexCount++;
-	this.d = d;
-	this.p = p;
-	this.tau = tau;
-	this.s = s;
-	this.h = h;
-    }
+    // public InputData(Double d, Double p, Double tau, Integer s, Double h) {
+    // super();
+    // this.k = indexCount++;
+    // this.d = d;
+    // this.p = p;
+    // this.tau = tau;
+    // this.s = s;
+    // this.h = h;
+    // }
 
     // Getters and Setters
 
     /**
      * @return the k
      */
-    public Integer getK() {
+
+    public IntegerProperty kProperty() {
 	return k;
+    }
+
+    public DoubleProperty dProperty() {
+	return d;
+    }
+
+    public DoubleProperty pProperty() {
+	return p;
+    }
+
+    public DoubleProperty tauProperty() {
+	return tau;
+    }
+
+    public IntegerProperty sProperty() {
+	return s;
+    }
+
+    public DoubleProperty hProperty() {
+	return h;
+    }
+
+    public Integer getK() {
+	return k.get();
     }
 
     /**
@@ -75,14 +105,14 @@ public class InputData {
      *            the k to set
      */
     public void setK(Integer k) {
-	this.k = k;
+	this.k.set(k);
     }
 
     /**
      * @return the d
      */
     public Double getD() {
-	return d;
+	return d.get();
     }
 
     /**
@@ -90,14 +120,14 @@ public class InputData {
      *            the d to set
      */
     public void setD(Double d) {
-	this.d = d;
+	this.d.set(d);
     }
 
     /**
      * @return the p
      */
     public Double getP() {
-	return p;
+	return p.get();
     }
 
     /**
@@ -105,14 +135,14 @@ public class InputData {
      *            the p to set
      */
     public void setP(Double p) {
-	this.p = p;
+	this.p.set(p);
     }
 
     /**
      * @return the tau
      */
     public Double getTau() {
-	return tau;
+	return tau.get();
     }
 
     /**
@@ -120,14 +150,14 @@ public class InputData {
      *            the tau to set
      */
     public void setTau(Double tau) {
-	this.tau = tau;
+	this.tau.set(tau);
     }
 
     /**
      * @return the s
      */
     public Integer getS() {
-	return s;
+	return s.get();
     }
 
     /**
@@ -135,14 +165,14 @@ public class InputData {
      *            the s to set
      */
     public void setS(Integer s) {
-	this.s = s;
+	this.s.set(s);
     }
 
     /**
      * @return the h
      */
     public Double getH() {
-	return h;
+	return h.get();
     }
 
     /**
@@ -150,7 +180,7 @@ public class InputData {
      *            the h to set
      */
     public void setH(Double h) {
-	this.h = h;
+	this.h.set(h);
     }
 
     /**
