@@ -171,7 +171,7 @@ public class InputData {
     /**
      * @return the h
      */
-    public Double getH() {
+    public double getH() {
 	return h.get();
     }
 
