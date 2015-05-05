@@ -62,8 +62,8 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 
     @Override
     public String getDescriptionToString() {
-	return "Berechnung der optimalen Losgr��en der Produkte 1-"
+	return "Berechnung der optimalen Losgrößen der Produkte 1-"
 		+ products.size()
-		+ " mit Hilfe des klassischen Losgr��enverfahrens" + "\n";
+		+ " mit Hilfe des klassischen Losgrößenverfahrens" + "\n";
     }
 }

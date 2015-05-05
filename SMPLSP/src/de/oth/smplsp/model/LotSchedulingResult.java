@@ -51,7 +51,7 @@ public class LotSchedulingResult {
 
     public String getOptProductionCycleToString() {
 	if (tOptCommon != null) {
-	    return "Der optimale gemeinsame Produktionszyklus betr�gt: "
+	    return "Der optimale gemeinsame Produktionszyklus beträgt: "
 		    + MathUtils.round(tOptCommon, 2) + "\n";
 	}
 	return "";
@@ -59,7 +59,7 @@ public class LotSchedulingResult {
 
     public String getMinProductionCycleToString() {
 	if (tMin != null) {
-	    return "Der minimale gemeinsame Produktionszyklus betr�gt: "
+	    return "Der minimale gemeinsame Produktionszyklus beträgt: "
 		    + MathUtils.round(tMin, 2) + "\n";
 	}
 	return "";
@@ -72,9 +72,9 @@ public class LotSchedulingResult {
 	    s += product.getQToString();
 	    s += product.getTToString();
 	    if (tOptSingle.containsKey(product.getK())) {
-		s += "Der optimale, produktspezifische Produkionszyklus f�r das Produkt mit der Produktnummer "
+		s += "Der optimale, produktspezifische Produkionszyklus für das Produkt mit der Produktnummer "
 			+ product.getK()
-			+ " betr�gt "
+			+ " beträgt "
 			+ MathUtils.round(tOptSingle.get(product.getK()), 2)
 			+ "\n";
 	    }

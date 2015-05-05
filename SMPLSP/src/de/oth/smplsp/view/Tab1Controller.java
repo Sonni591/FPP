@@ -1,5 +1,7 @@
 package de.oth.smplsp.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -17,7 +19,13 @@ import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.algorithms.ClassicLotScheduling;
+import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
+import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
 import de.oth.smplsp.model.InputData;
+import de.oth.smplsp.model.LotSchedulingResult;
+import de.oth.smplsp.model.Product;
+import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
 public class Tab1Controller {
 
@@ -76,6 +84,8 @@ public class Tab1Controller {
 	column6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
 
 	fillTableTestData();
+
+	testPrintout();
 
     }
 
@@ -173,6 +183,26 @@ public class Tab1Controller {
 	} else {
 	    // ... user chose CANCEL or closed the dialog
 	    // do nothing
+	}
+    }
+
+    /**
+     * Testausgabe
+     */
+    public void testPrintout() {
+	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
+	List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
+
+	algorithms.add(new ClassicLotScheduling(products));
+	algorithms.add(new MehrproduktLosgroessen(products));
+
+	String ausgabe = "";
+	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
+	    ausgabe += algorithm.getDescriptionToString();
+	    LotSchedulingResult result = algorithm.calculateInTotal();
+	    ausgabe += result.getTotalErgebnis();
+	    System.out.println(ausgabe);
+	    ausgabe = "";
 	}
     }
 
