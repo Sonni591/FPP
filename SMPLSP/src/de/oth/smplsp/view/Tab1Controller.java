@@ -24,28 +24,25 @@ public class Tab1Controller {
     // References
     @FXML
     private Button btnAddLine;
-
     @FXML
     private Button btnRemoveLine;
-
     @FXML
     private Button btnRemoveAll;
-
     @FXML
     private TableView<InputData> tableInputData;
 
     @FXML
-    private TableColumn<InputData, Number> c1;
+    private TableColumn<InputData, Number> column1;
     @FXML
-    private TableColumn<InputData, Number> c2;
+    private TableColumn<InputData, Number> column2;
     @FXML
-    private TableColumn<InputData, Number> c3;
+    private TableColumn<InputData, Number> column3;
     @FXML
-    private TableColumn<InputData, Number> c4;
+    private TableColumn<InputData, Number> column4;
     @FXML
-    private TableColumn<InputData, Number> c5;
+    private TableColumn<InputData, Number> column5;
     @FXML
-    private TableColumn<InputData, Number> c6;
+    private TableColumn<InputData, Number> column6;
 
     // Reference to the main application.
     private Main main;
@@ -70,12 +67,13 @@ public class Tab1Controller {
     private void initialize() {
 	// customize the look of the panel
 	customizeUI();
-	c1.setCellValueFactory(cellData -> cellData.getValue().kProperty());
-	c2.setCellValueFactory(cellData -> cellData.getValue().dProperty());
-	c3.setCellValueFactory(cellData -> cellData.getValue().pProperty());
-	c4.setCellValueFactory(cellData -> cellData.getValue().tauProperty());
-	c5.setCellValueFactory(cellData -> cellData.getValue().sProperty());
-	c6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
+	column1.setCellValueFactory(cellData -> cellData.getValue().kProperty());
+	column2.setCellValueFactory(cellData -> cellData.getValue().dProperty());
+	column3.setCellValueFactory(cellData -> cellData.getValue().pProperty());
+	column4.setCellValueFactory(cellData -> cellData.getValue()
+		.tauProperty());
+	column5.setCellValueFactory(cellData -> cellData.getValue().sProperty());
+	column6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
 
 	fillTableTestData();
 
