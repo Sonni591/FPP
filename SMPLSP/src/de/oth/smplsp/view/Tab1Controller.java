@@ -1,5 +1,7 @@
 package de.oth.smplsp.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -17,35 +19,38 @@ import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.algorithms.ClassicLotScheduling;
+import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
+import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
 import de.oth.smplsp.model.InputData;
+import de.oth.smplsp.model.LotSchedulingResult;
+import de.oth.smplsp.model.Product;
+import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
 public class Tab1Controller {
 
     // References
     @FXML
     private Button btnAddLine;
-
     @FXML
     private Button btnRemoveLine;
-
     @FXML
     private Button btnRemoveAll;
-
     @FXML
     private TableView<InputData> tableInputData;
 
     @FXML
-    private TableColumn<InputData, Number> c1;
+    private TableColumn<InputData, Number> column1;
     @FXML
-    private TableColumn<InputData, Number> c2;
+    private TableColumn<InputData, Number> column2;
     @FXML
-    private TableColumn<InputData, Number> c3;
+    private TableColumn<InputData, Number> column3;
     @FXML
-    private TableColumn<InputData, Number> c4;
+    private TableColumn<InputData, Number> column4;
     @FXML
-    private TableColumn<InputData, Number> c5;
+    private TableColumn<InputData, Number> column5;
     @FXML
-    private TableColumn<InputData, Number> c6;
+    private TableColumn<InputData, Number> column6;
 
     // Reference to the main application.
     private Main main;
@@ -70,14 +75,17 @@ public class Tab1Controller {
     private void initialize() {
 	// customize the look of the panel
 	customizeUI();
-	c1.setCellValueFactory(cellData -> cellData.getValue().kProperty());
-	c2.setCellValueFactory(cellData -> cellData.getValue().dProperty());
-	c3.setCellValueFactory(cellData -> cellData.getValue().pProperty());
-	c4.setCellValueFactory(cellData -> cellData.getValue().tauProperty());
-	c5.setCellValueFactory(cellData -> cellData.getValue().sProperty());
-	c6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
+	column1.setCellValueFactory(cellData -> cellData.getValue().kProperty());
+	column2.setCellValueFactory(cellData -> cellData.getValue().dProperty());
+	column3.setCellValueFactory(cellData -> cellData.getValue().pProperty());
+	column4.setCellValueFactory(cellData -> cellData.getValue()
+		.tauProperty());
+	column5.setCellValueFactory(cellData -> cellData.getValue().sProperty());
+	column6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
 
 	fillTableTestData();
+
+	testPrintout();
 
     }
 
@@ -175,6 +183,26 @@ public class Tab1Controller {
 	} else {
 	    // ... user chose CANCEL or closed the dialog
 	    // do nothing
+	}
+    }
+
+    /**
+     * Testausgabe
+     */
+    public void testPrintout() {
+	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
+	List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
+
+	algorithms.add(new ClassicLotScheduling(products));
+	algorithms.add(new MehrproduktLosgroessen(products));
+
+	String ausgabe = "";
+	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
+	    ausgabe += algorithm.getDescriptionToString();
+	    LotSchedulingResult result = algorithm.calculateInTotal();
+	    ausgabe += result.getTotalErgebnis();
+	    System.out.println(ausgabe);
+	    ausgabe = "";
 	}
     }
 
