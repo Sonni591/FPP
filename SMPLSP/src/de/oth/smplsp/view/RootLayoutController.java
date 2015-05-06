@@ -4,6 +4,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
 
 import javax.swing.Icon;
@@ -97,8 +98,10 @@ public class RootLayoutController {
 
 	// generate a JTextPane that will be displayed in a SwingNode in JavaFX
 	JTextPane pane = new JTextPane();
+	pane.setEditable(false);
 	pane.insertIcon(icon);
 	swingNode.setContent(pane);
+
     }
 
     @FXML
@@ -115,6 +118,41 @@ public class RootLayoutController {
 
 	// regenerate LaTeX image
 	showLatex();
+    }
+
+    /**
+     * Sets the font size according of zoom factor on a touch based zoom event
+     * 
+     * @param event
+     */
+    public void handleZoom(ZoomEvent event) {
+
+	Double zoomFactorDouble = event.getZoomFactor();
+	Integer zoomFactorInteger = zoomFactorDouble.intValue();
+
+	if (zoomFactorInteger >= 1) { // zoom in
+	    fontsize += zoomFactorInteger;
+	} else { // zoom out
+	    fontsize -= 1;
+	}
+
+	// stop further propagation of the event
+	event.consume();
+    }
+
+    /**
+     * Redraws the image with the LaTeX code based on the new fontsize
+     * 
+     * @param event
+     */
+    public void handleZoomFinished(ZoomEvent event) {
+
+	// regenerate LaTeX image
+	showLatex();
+
+	// stop further propagation of the event
+	event.consume();
+
     }
 
     /**

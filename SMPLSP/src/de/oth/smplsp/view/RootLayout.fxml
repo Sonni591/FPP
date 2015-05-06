@@ -68,15 +68,15 @@
             <Separator prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ScrollPane prefHeight="100.0" prefWidth="628.0">
+                  <ScrollPane onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="100.0" prefWidth="628.0">
                      <content>
                         <SwingNode fx:id="swingNode" />
                      </content>
                   </ScrollPane>
-                  <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0">
+                  <AnchorPane nodeOrientation="RIGHT_TO_LEFT" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="weiter" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0" />
-                        <Button mnemonicParsing="false" text="zurück" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="10.0" />
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="weiter" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <Button mnemonicParsing="false" text="zurück" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="5.0" />
                      </children>
                      <HBox.margin>
                         <Insets />

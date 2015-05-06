@@ -14,6 +14,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.NumberStringConverter;
 
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
@@ -22,42 +24,46 @@ import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
-import de.oth.smplsp.model.InputData;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
 public class Tab1Controller {
 
-    // References
+    // References for the FXML layout
     @FXML
-    private Button btnAddLine;
+    private Button btnAddRow;
     @FXML
-    private Button btnRemoveLine;
+    private Button btnRemoveRow;
     @FXML
     private Button btnRemoveAll;
     @FXML
-    private TableView<InputData> tableInputData;
+    private Button btnLoad;
+    @FXML
+    private Button btnSave;
+    @FXML
+    private Button btnCalculate;
 
     @FXML
-    private TableColumn<InputData, Number> column1;
+    private TableView<Product> productsTableView;
+
     @FXML
-    private TableColumn<InputData, Number> column2;
+    private TableColumn<Product, Number> column1;
     @FXML
-    private TableColumn<InputData, Number> column3;
+    private TableColumn<Product, Number> column2;
     @FXML
-    private TableColumn<InputData, Number> column4;
+    private TableColumn<Product, Number> column3;
     @FXML
-    private TableColumn<InputData, Number> column5;
+    private TableColumn<Product, Number> column4;
     @FXML
-    private TableColumn<InputData, Number> column6;
+    private TableColumn<Product, Number> column5;
+    @FXML
+    private TableColumn<Product, Number> column6;
 
     // Reference to the main application.
     private Main main;
 
-    // Test Liste mit Daten
-    ObservableList<InputData> testDataList = FXCollections
-	    .observableArrayList();
+    ObservableList<Product> productsList = FXCollections.observableArrayList();
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -75,17 +81,22 @@ public class Tab1Controller {
     private void initialize() {
 	// customize the look of the panel
 	customizeUI();
-	column1.setCellValueFactory(cellData -> cellData.getValue().kProperty());
-	column2.setCellValueFactory(cellData -> cellData.getValue().dProperty());
-	column3.setCellValueFactory(cellData -> cellData.getValue().pProperty());
+	column1.setCellValueFactory(cellData -> cellData.getValue()
+		.getKProperty());
+	column2.setCellValueFactory(cellData -> cellData.getValue()
+		.getDProperty());
+	column3.setCellValueFactory(cellData -> cellData.getValue()
+		.getPProperty());
 	column4.setCellValueFactory(cellData -> cellData.getValue()
-		.tauProperty());
-	column5.setCellValueFactory(cellData -> cellData.getValue().sProperty());
-	column6.setCellValueFactory(cellData -> cellData.getValue().hProperty());
+		.getTauProperty());
+	column5.setCellValueFactory(cellData -> cellData.getValue()
+		.getSProperty());
+	column6.setCellValueFactory(cellData -> cellData.getValue()
+		.getHProperty());
 
 	fillTableTestData();
 
-	testPrintout();
+	customizeTable();
 
     }
 
@@ -94,33 +105,39 @@ public class Tab1Controller {
      */
     private void customizeUI() {
 	// remove default text of the buttons
-	btnAddLine.setText("");
-	btnRemoveLine.setText("");
+	btnAddRow.setText("");
+	btnRemoveRow.setText("");
 	btnRemoveAll.setText("");
 
 	// set icon fonts to the buttons
-	btnAddLine.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PLUS));
-	btnRemoveLine.setGraphic(new Glyph("FontAwesome",
+	btnAddRow.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PLUS));
+	btnRemoveRow.setGraphic(new Glyph("FontAwesome",
 		FontAwesome.Glyph.MINUS));
 	btnRemoveAll.setGraphic(new Glyph("FontAwesome",
 		FontAwesome.Glyph.TIMES));
+	btnLoad.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.FOLDER_OPEN_ALT));
+	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE));
+	btnCalculate.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.PLAY_CIRCLE_ALT));
 
 	// set tooltip text
 	// TODO: Strings auslagern?
-	btnAddLine.setTooltip(new Tooltip("Zeile hinzufügen"));
-	btnRemoveLine.setTooltip(new Tooltip("Zeile löschen"));
+	btnAddRow.setTooltip(new Tooltip("Zeile hinzufügen"));
+	btnRemoveRow.setTooltip(new Tooltip("Zeile löschen"));
 	btnRemoveAll.setTooltip(new Tooltip("Tabelle leeren"));
+	btnLoad.setTooltip(new Tooltip("Projekt laden"));
+	btnSave.setTooltip(new Tooltip("Projekt speichern"));
+	btnCalculate.setTooltip(new Tooltip("Berechnung starten"));
 
     }
 
     private void fillTableTestData() {
 
-	testDataList
-		.add(new InputData(1, 10.4, 128.5714, 2.0000, 190, 0.000689));
-	testDataList.add(new InputData(2, 0.8, 32.43243, 2.0, 210, 0.010208));
+	productsList.add(new Product(1, 10.4, 128.5714, 2.0000, 190, 0.000689));
+	productsList.add(new Product(2, 0.8, 32.43243, 2.0, 210, 0.010208));
 
-	// TODO: BUG - Elemente sind da, werden aber nicht angezeigt ?!?
-	tableInputData.setItems(testDataList);
+	productsTableView.setItems(productsList);
 
     }
 
@@ -134,23 +151,30 @@ public class Tab1Controller {
     }
 
     /**
-     * Called when the user clicks the add line button
+     * Called when the user clicks the add row button. A new row is added to the
+     * table directly after the current selected one
      */
     @FXML
-    private void handleAddLine() {
-	InputData newLineData = new InputData();
-	testDataList.add(newLineData);
+    private void handleAddRow() {
+	Product newProductRow = new Product(productsList.size() + 1);
+	int selectedIndex = productsTableView.getSelectionModel()
+		.getSelectedIndex();
+	productsList.add(selectedIndex + 1, newProductRow);
+
+	refactorIndexes(productsList);
     }
 
     /**
-     * Called when the user clicks on the delete button
+     * Called when the user clicks on the delete button. The current selected
+     * row will be deleted from the table
      */
     @FXML
-    private void handleDeleteLine() {
-	int selectedIndex = tableInputData.getSelectionModel()
+    private void handleDeleteRow() {
+	int selectedIndex = productsTableView.getSelectionModel()
 		.getSelectedIndex();
 	if (selectedIndex >= 0) {
-	    tableInputData.getItems().remove(selectedIndex);
+	    productsTableView.getItems().remove(selectedIndex);
+	    refactorIndexes(productsList);
 	} else {
 	    // Nothing selected.
 	    Alert alert = new Alert(AlertType.INFORMATION);
@@ -164,11 +188,11 @@ public class Tab1Controller {
     }
 
     /**
-     * Called when the user clicks on the delete all button
+     * Called when the user clicks on the delete all button. After a
+     * Warning-Dialog the table will be cleared
      */
     @FXML
     private void handleDeleteAll() {
-	// TODO
 	// show dialog, with warning that all data will be deleted
 	Alert alert = new Alert(AlertType.CONFIRMATION);
 	alert.setTitle("Tabelle löschen?");
@@ -179,17 +203,29 @@ public class Tab1Controller {
 	if (result.get() == ButtonType.OK) {
 	    // ... user chose OK
 	    // delete the table data
-	    testDataList.clear();
+	    productsList.clear();
 	} else {
 	    // ... user chose CANCEL or closed the dialog
 	    // do nothing
 	}
     }
 
-    /**
-     * Testausgabe
-     */
-    public void testPrintout() {
+    @FXML
+    private void handleLoad() {
+	// TODO
+    }
+
+    @FXML
+    private void handleSave() {
+	// TODO
+    }
+
+    @FXML
+    private void handleCalculate() {
+
+	// TODO: code below is just for test!!
+	// run complete algorithm and print result in console
+
 	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
 	List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
 
@@ -206,4 +242,35 @@ public class Tab1Controller {
 	}
     }
 
+    private void refactorIndexes(ObservableList<Product> products) {
+	for (Product product : products) {
+	    product.setK(products.indexOf(product) + 1);
+	}
+    }
+
+    private void customizeTable() {
+
+	// TODO: set tooltip for each column header field (but not just the
+	// text); by now I just found a solution to set a tooltip of the column
+	// fields, not of the column header row
+
+	// tooltip for the whole table
+	productsTableView.setTooltip(new Tooltip("k: Zeilenindex\n"
+		+ "D: Nachfragerate\n" + "p: Produktionsrate\n"
+		+ "τ: Rüstzeit\n" + "s: Rüstkostensatz\n"
+		+ "h: Lagerkostensatz"));
+
+	// making columns 2-6 editable
+	column2.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter()));
+	column3.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter()));
+	column4.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter()));
+	column5.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter()));
+	column6.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter()));
+
+    }
 }
