@@ -5,6 +5,14 @@
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.osgi_3.10.1.v20140909-1633.jar"/>
 	<classpathentry kind="lib" path="lib/controlsfx-8.20.8.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jlatexmath-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/JMathTeX-0.7pre.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/ostermillerutils-1.08.02.jar" sourcepath="lib/ostermillerutils-1.08.02-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SMPLSP/lib/ostermillerutils-1.08.02-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
