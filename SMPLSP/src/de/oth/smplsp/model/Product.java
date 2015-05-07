@@ -40,13 +40,31 @@ public class Product {
      * @param h
      */
     public Product(int k, double d, double p, double tau, double s, double h) {
-	super();
 	this.k = new SimpleIntegerProperty(k);
 	this.d = new SimpleDoubleProperty(d);
 	this.p = new SimpleDoubleProperty(p);
 	this.tau = new SimpleDoubleProperty(tau);
 	this.s = new SimpleDoubleProperty(s);
 	this.h = new SimpleDoubleProperty(h);
+    }
+
+    /**
+     * 
+     * @param values
+     *            contains the parameters of the product in with the following
+     *            order:
+     *            <p>
+     *            int k, double d, double p, double tau, double s, double h
+     *            </p>
+     */
+    public Product(String[] values) {
+
+	this.k = new SimpleIntegerProperty(Integer.parseInt(values[0]));
+	this.d = new SimpleDoubleProperty(Double.parseDouble(values[1]));
+	this.p = new SimpleDoubleProperty(Double.parseDouble(values[2]));
+	this.tau = new SimpleDoubleProperty(Double.parseDouble(values[3]));
+	this.s = new SimpleDoubleProperty(Double.parseDouble(values[4]));
+	this.h = new SimpleDoubleProperty(Double.parseDouble(values[5]));
     }
 
     /**
@@ -346,5 +364,18 @@ public class Product {
     public String getRohToString() {
 	return "Die Auslastung der Anlage für das Produkt mit Produktnummer "
 		+ getK() + " beträgt: " + MathUtils.round(getRoh(), 2) + "\n";
+    }
+
+    public String[] getAllSaveParametersAsString() {
+	String[] productValues = new String[6];
+
+	productValues[0] = Integer.toString(getK());
+	productValues[1] = Double.toString(getD());
+	productValues[2] = Double.toString(getP());
+	productValues[3] = Double.toString(getTau());
+	productValues[4] = Double.toString(getS());
+	productValues[5] = Double.toString(getH());
+
+	return productValues;
     }
 }
