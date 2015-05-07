@@ -18,7 +18,7 @@ public class Configuration {
 
 	private void loadProperties() {
 		try {
-			props.load(new FileInputStream("config.txt"));
+			props.load(new FileInputStream("config.txt")); //$NON-NLS-1$
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class Configuration {
 	public void saveProperties(Properties properties) {
 		try {
 			props = properties;
-			props.store(new FileOutputStream("config.txt"), null);
+			props.store(new FileOutputStream("config.txt"), null); //$NON-NLS-1$
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import messages.Messages;
+
 import com.Ostermiller.util.CSVParse;
 import com.Ostermiller.util.CSVParser;
 import com.Ostermiller.util.CSVPrint;
@@ -53,8 +55,9 @@ public class CSVFile extends AbstractFile {
 		products.add(new Product(strings));
 		i++;
 	    } else {
-		throw new Exception("Fehler beim Einlesen der Datei. In Zeile "
-			+ i + " ist die Anzahl der Werte nicht korrekt");
+		throw new Exception(
+			Messages.CSVFile_WrongNumberOfValuesInFile
+				+ i);
 	    }
 	}
 
