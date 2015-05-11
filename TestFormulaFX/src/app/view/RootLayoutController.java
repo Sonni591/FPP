@@ -124,6 +124,9 @@ public class RootLayoutController {
         latex += "\\\\";
 
         latex += getGemeinsameProduktionszyklusFormel(result.getProducts());
+        latex += "\\\\";
+        latex += getMinimalenProduktionszyklusFormel(result.getProducts());
+
         TeXFormula tex = new TeXFormula(latex);
 
         // Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, 40);
@@ -260,6 +263,30 @@ public class RootLayoutController {
 
     private String getMinimalenProduktionszyklusFormel() {
         String formel = "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{RubineRed}{{\\rho}_k}}} \\leq T";
+        return formel;
+    }
+
+    private String getMinimalenProduktionszyklusFormel(List<Product> products) {
+        String formel = "T_{min} = \\frac{";
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            if (i == products.size() - 1) {
+                formel += formatter.format(product.getTau()) + "}";
+            } else {
+                formel += formatter.format(product.getTau()) + " + ";
+            }
+        }
+        formel += "{1 - (";
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            if (i == products.size() - 1) {
+                formel += "\\textcolor{RubineRed}{"
+                        + formatter.format(product.getRoh()) + "})}";
+            } else {
+                formel += " \\textcolor{RubineRed}{"
+                        + formatter.format(product.getRoh()) + "} + ";
+            }
+        }
         return formel;
     }
 
