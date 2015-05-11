@@ -17,14 +17,33 @@ import com.Ostermiller.util.CSVPrinter;
 
 import de.oth.smplsp.model.Product;
 
+/**
+ * A implementation of the abstract class AbstractFile. It represents a CSV -
+ * File.
+ * 
+ * @author Tobias Eichinger
+ *
+ */
 public class CSVFile extends AbstractFile {
 
     File file = null;
 
+    /**
+     * Creating a new instance with the given pathname.
+     * 
+     * @param pathname
+     * @throws FileNotFoundException
+     */
     public CSVFile(String pathname) throws FileNotFoundException {
 	super(pathname);
     }
 
+    /**
+     * Creating a new instance with the given file.
+     * 
+     * @param csvFile
+     * @throws FileNotFoundException
+     */
     public CSVFile(File csvFile) throws FileNotFoundException {
 	super(csvFile);
     }
@@ -55,9 +74,8 @@ public class CSVFile extends AbstractFile {
 		products.add(new Product(strings));
 		i++;
 	    } else {
-		throw new Exception(
-			Messages.CSVFile_WrongNumberOfValuesInFile
-				+ i);
+		throw new Exception(Messages.CSVFile_WrongNumberOfValuesInFile
+			+ i);
 	    }
 	}
 

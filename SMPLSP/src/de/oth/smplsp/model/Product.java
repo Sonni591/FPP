@@ -59,6 +59,8 @@ public class Product {
      */
     public Product(String[] values) {
 
+	// Make sure, that the order in this constructor is the same as in the
+	// getAllSaveParametersAsString method.
 	this.k = new SimpleIntegerProperty(Integer.parseInt(values[0]));
 	this.d = new SimpleDoubleProperty(Double.parseDouble(values[1]));
 	this.p = new SimpleDoubleProperty(Double.parseDouble(values[2]));
@@ -366,9 +368,17 @@ public class Product {
 		+ getK() + " beträgt: " + MathUtils.round(getRoh(), 2) + "\n";
     }
 
+    /**
+     * This method returns all parameters of a product, which should be saved in
+     * a file.
+     * 
+     * @return
+     */
     public String[] getAllSaveParametersAsString() {
 	String[] productValues = new String[6];
 
+	// Make sure, that the order in this method is the same as in the
+	// constructor of this class.
 	productValues[0] = Integer.toString(getK());
 	productValues[1] = Double.toString(getD());
 	productValues[2] = Double.toString(getP());
