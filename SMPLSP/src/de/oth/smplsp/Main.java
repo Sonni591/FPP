@@ -1,6 +1,9 @@
 package de.oth.smplsp;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +34,13 @@ public class Main extends Application {
 	try {
 	    // Load root layout from fxml file
 	    FXMLLoader loader = new FXMLLoader();
+
+	    // Set properties for internationalization.
+	    InputStream inputStream = Main.class.getResource(
+		    "messages/messages.properties").openStream();
+	    ResourceBundle bundle = new PropertyResourceBundle(inputStream);
+	    loader.setResources(bundle);
+
 	    loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
 	    rootLayout = (BorderPane) loader.load();
 

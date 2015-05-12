@@ -13,19 +13,23 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="%Menu_File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionFileOpen" text="%Menu_File_Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionFileSave" text="%Menu_File_Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionFileSettings" text="%Menu_File_Settings" />
+              <MenuItem mnemonicParsing="false" onAction="#onActionFileExit" text="%Menu_File_Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="%Menu_Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionEditAdd" text="%Menu_Edit_Add" />
+              <MenuItem mnemonicParsing="false" onAction="#onActionEditDelete" text="%Menu_Edit_Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="%Menu_Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#onActionHelpAbout" text="%Menu_Help_About" />
             </items>
           </Menu>
         </menus>

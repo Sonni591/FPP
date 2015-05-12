@@ -1,5 +1,6 @@
 package de.oth.smplsp.view;
 
+import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -153,6 +154,41 @@ public class RootLayoutController {
 	// stop further propagation of the event
 	event.consume();
 
+    }
+
+    @FXML
+    private void onActionFileOpen() {
+	System.out.println("Datei->Öffnen");
+    }
+
+    @FXML
+    private void onActionFileSave() {
+	System.out.println("Datei->Speichern");
+    }
+
+    @FXML
+    private void onActionFileSettings() {
+	System.out.println("Datei->Einstellungen");
+    }
+
+    @FXML
+    private void onActionFileExit() {
+	Platform.exit();
+    }
+
+    @FXML
+    private void onActionEditAdd() {
+	System.out.println("Bearbeiten->Hinzufügen");
+    }
+
+    @FXML
+    private void onActionEditDelete() {
+	System.out.println("Bearbeiten->Entfernen");
+    }
+
+    @FXML
+    private void onActionHelpAbout() {
+	System.out.println("Hilfe->Über");
     }
 
     /**
