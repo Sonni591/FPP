@@ -1,4 +1,4 @@
-package messages;
+package de.oth.smplsp.messages;
 
 import org.eclipse.osgi.util.NLS;
 
