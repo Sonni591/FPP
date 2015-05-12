@@ -9,8 +9,9 @@ import de.oth.smplsp.model.Product;
 
 public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 
-    List<Product> products;
-    Map<Integer, Double> tOptSingle;
+    private List<Product> products;
+    private Map<Integer, Double> tOptSingle;
+    private LotSchedulingResult result;
 
     public ClassicLotScheduling(List<Product> products) {
 	super();
@@ -25,8 +26,9 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	calculateProductionTime();
 	calculateEfficiencyOfMachine();
 	calculateOptProductionCycle();
+	result = new LotSchedulingResult(products, tOptSingle);
 
-	return new LotSchedulingResult(products, tOptSingle);
+	return result;
     }
 
     private void calculateEfficiencyOfMachine() {
@@ -60,10 +62,20 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	}
     }
 
+    /**
+     * @return the result
+     */
+    public LotSchedulingResult getResult() {
+	if (result == null) {
+	    result = calculateInTotal();
+	}
+	return result;
+    }
+
     @Override
     public String getDescriptionToString() {
 	return "Berechnung der optimalen Losgrößen der Produkte 1-"
-		+ products.size()
+		+ result.getProducts().size()
 		+ " mit Hilfe des klassischen Losgrößenverfahrens" + "\n";
     }
 }

@@ -2,12 +2,14 @@ package de.oth.smplsp.algorithms;
 
 import java.util.List;
 
+import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 
 public class MehrproduktLosgroessen implements IBasicLotSchedulingAlgorithm {
 
     private List<Product> products;
+    private LotSchedulingResult result;
     private Double tOpt;
     private Double tMin;
 
@@ -19,7 +21,8 @@ public class MehrproduktLosgroessen implements IBasicLotSchedulingAlgorithm {
     }
 
     @Override
-    public LotSchedulingResult calculateInTotal() {
+    public LotSchedulingResult calculateInTotal()
+	    throws MinimalProductionCycleError {
 
 	calculateEfficiencyOfMachine();
 
@@ -28,15 +31,16 @@ public class MehrproduktLosgroessen implements IBasicLotSchedulingAlgorithm {
 	calculateMinProductionCycle();
 
 	if (tOpt < tMin) {
-	    // TODO: Was passiert in diesem Fall?
-	    tOpt = tMin;
+	    throw new MinimalProductionCycleError();
 	}
 
 	calculateBatchSize();
 
 	calculateProductionTime();
 
-	return new LotSchedulingResult(products, tOpt, tMin);
+	this.result = new LotSchedulingResult(products, tOpt, tMin);
+
+	return result;
     }
 
     private void calculateBatchSize() {
@@ -92,11 +96,23 @@ public class MehrproduktLosgroessen implements IBasicLotSchedulingAlgorithm {
 	}
     }
 
+    /**
+     * @return the result
+     * @throws MinimalProductionCycleError
+     */
+    public LotSchedulingResult getResult() throws MinimalProductionCycleError {
+	if (result == null) {
+	    result = calculateInTotal();
+	}
+	return result;
+    }
+
     @Override
     public String getDescriptionToString() {
 	return "Berechnung der optimalen Losgrößen der Produkte 1-"
-		+ products.size()
+		+ result.getProducts().size()
 		+ " mit Hilfe der statischen Mehrproduktlosgrößenplanung"
 		+ "\n";
     }
+
 }

@@ -5,18 +5,26 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
+import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 
 public class LotSchedulingAlgorithmTester {
 
+    private List<Product> products;
+
+    @Before
+    public void initialize() {
+	products = getTestProducts();
+    }
+
     @Test
     public void testKlassischeLosgroessen() {
-	List<Product> products = getTestProducts();
 	ClassicLotScheduling tester = new ClassicLotScheduling(products);
 
 	LotSchedulingResult result = tester.calculateInTotal();
@@ -54,39 +62,47 @@ public class LotSchedulingAlgorithmTester {
 
     @Test
     public void testMehrproduktLosgroessen() {
-	List<Product> products = getTestProducts();
 
 	MehrproduktLosgroessen tester = new MehrproduktLosgroessen(products);
 
-	LotSchedulingResult result = tester.calculateInTotal();
+	LotSchedulingResult result;
+	try {
+	    result = tester.calculateInTotal();
 
-	Double[] expectedLotSizes = { 1076.28, 82.79, 372.56, 1264.85, 275.97,
-		413.95, 1287.85 };
-	Double[] expectedEfficiencyOfMachine = { 0.08089, 0.02467, 0.089,
-		0.2377, 0.04815, 0.0978, 0.2713 };
-	Double[] expectedProductionTime = { 8.37, 2.55, 9.21, 24.59, 4.98,
-		10.12, 28.26 };
-	Double expectedMinProductionCycle = 94.16;
-	Double expectedOptProductionCycle = 103.488;
+	    Double[] expectedLotSizes = { 1076.28, 82.79, 372.56, 1264.85,
+		    275.97, 413.95, 1287.85 };
+	    Double[] expectedEfficiencyOfMachine = { 0.08089, 0.02467, 0.089,
+		    0.2377, 0.04815, 0.0978, 0.2713 };
+	    Double[] expectedProductionTime = { 8.37, 2.55, 9.21, 24.59, 4.98,
+		    10.12, 28.26 };
+	    Double expectedMinProductionCycle = 94.16;
+	    Double expectedOptProductionCycle = 103.488;
 
-	// Test if calculation for ideal common production cycle works correct
-	assertEquals(expectedOptProductionCycle, result.gettOpt(), 0.3);
-	// Test if calculation for ideal common production cycle works correct
-	assertEquals(expectedMinProductionCycle, result.gettMin(), 0.3);
-	// Test if calculation for batch sizes works correct
-	for (Product product : result.getProducts()) {
-	    assertEquals(expectedLotSizes[product.getK() - 1], product.getQ(),
-		    0.2);
-	}
-	// Test if calculation for efficiency of machine works correct
-	for (Product product : result.getProducts()) {
-	    assertEquals(expectedEfficiencyOfMachine[product.getK() - 1],
-		    product.getRoh(), 0.1);
-	}
-	// Test if calculation for production time works correct
-	for (Product product : result.getProducts()) {
-	    assertEquals(expectedProductionTime[product.getK() - 1],
-		    product.getT(), 0.1);
+	    // Test if calculation for ideal common production cycle works
+	    // correct
+	    assertEquals(expectedOptProductionCycle, result.gettOpt(), 0.3);
+	    // Test if calculation for ideal common production cycle works
+	    // correct
+	    assertEquals(expectedMinProductionCycle, result.gettMin(), 0.3);
+	    // Test if calculation for batch sizes works correct
+	    for (Product product : result.getProducts()) {
+		assertEquals(expectedLotSizes[product.getK() - 1],
+			product.getQ(), 0.2);
+	    }
+	    // Test if calculation for efficiency of machine works correct
+	    for (Product product : result.getProducts()) {
+		assertEquals(expectedEfficiencyOfMachine[product.getK() - 1],
+			product.getRoh(), 0.1);
+	    }
+	    // Test if calculation for production time works correct
+	    for (Product product : result.getProducts()) {
+		assertEquals(expectedProductionTime[product.getK() - 1],
+			product.getT(), 0.1);
+	    }
+
+	} catch (MinimalProductionCycleError e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
 	}
 
     }

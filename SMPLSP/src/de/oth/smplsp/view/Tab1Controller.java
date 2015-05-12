@@ -24,6 +24,7 @@ import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
+import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
@@ -235,9 +236,17 @@ public class Tab1Controller {
 	String ausgabe = "";
 	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
 	    ausgabe += algorithm.getDescriptionToString();
-	    LotSchedulingResult result = algorithm.calculateInTotal();
-	    ausgabe += result.getTotalErgebnis();
-	    System.out.println(ausgabe);
+	    LotSchedulingResult result;
+	    try {
+		result = algorithm.calculateInTotal();
+		ausgabe += result.getTotalErgebnis();
+		System.out.println(ausgabe);
+	    } catch (MinimalProductionCycleError e) {
+		// TODO Abfangen der Exception: Öffnen eines Error-Overlays mit
+		// Anzeige der Fehlermeldung
+		e.printStackTrace();
+	    }
+
 	    ausgabe = "";
 	}
     }
