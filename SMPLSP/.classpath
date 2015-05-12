@@ -14,7 +14,13 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/SMPLSP/lib/ostermillerutils-1.08.02-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="lib/fxgraphics2d-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/controlsfx-samples-8.20.8.jar"/>
+	<classpathentry kind="lib" path="lib/fxsampler-1.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/openjfx-dialogs-1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/ostermillerutils-1.08.02-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/ostermillerutils-1.08.02-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

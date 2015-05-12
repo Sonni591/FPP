@@ -3,12 +3,12 @@ package de.oth.smplsp.view;
 import java.util.Calendar;
 import java.util.Date;
 
-import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.gantt.Task;
@@ -17,13 +17,20 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.util.jfreechartfx.ChartViewer;
 
 public class Tab4Controller {
 
     // Reference to the main application.
     private Main main;
     @FXML
-    AnchorPane chartPane;
+    private AnchorPane chartPane;
+
+    @FXML
+    private StackPane myStackPane;
+
+    @FXML
+    private Canvas myCanvas;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -40,13 +47,20 @@ public class Tab4Controller {
     @FXML
     private void initialize() {
 	final IntervalCategoryDataset dataset = createDataset();
-	final JFreeChart chart = createChart(dataset);
+	JFreeChart chart = createChart(dataset);
 
-	// add the chart to a panel...
-	final ChartPanel chartPanel = new ChartPanel(chart);
-	final SwingNode node = new SwingNode();
-	node.setContent(chartPanel);
-	chartPane.getChildren().add(node);
+	// ChartViewer for displaying JFreeChart with JavaFX
+	ChartViewer viewer = new ChartViewer(chart);
+	// viewer.addChartMouseListener(this);
+
+	myStackPane.getChildren().add(viewer);
+
+	// old code - add Chart in a JPanel (BUG: does not work on OS X 10.10
+	// and Java 8)
+	// final ChartPanel chartPanel = new ChartPanel(chart);
+	// final SwingNode node = new SwingNode();
+	// // node.setContent(chartPanel);
+	// chartPane.getChildren().add(node);
 
     }
 
@@ -139,7 +153,18 @@ public class Tab4Controller {
 		true, // tooltips
 		false // urls
 		);
-	// chart.getCategoryPlot().getDomainAxis().setMaxCategoryLabelWidthRatio(10.0f);
+
+	// TODO set font size
+	// CategoryPlot plot = chart.getCategoryPlot();
+	//
+	// ValueAxis valueAxis = plot.getRangeAxis();
+	// CategoryAxis categoryAxis = plot.getDomainAxis();
+	//
+	// Font font = new Font("Dialog", Font.PLAIN, 100);
+	//
+	// valueAxis.setLabelFont(font); // label y-axis
+	// categoryAxis.setLabelFont(font); // label x-axis
+
 	return chart;
     }
 
