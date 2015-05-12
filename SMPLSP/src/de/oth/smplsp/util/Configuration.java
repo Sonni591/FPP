@@ -15,16 +15,19 @@ import java.util.Properties;
  */
 public class Configuration {
 
+    // singleton instance of this class
     private static Configuration instance;
-
+    // settings of the application as a Properties object
     private Properties props;
-    private boolean hasChanged;
+    // set this flag to true, if the settings were changed
+    private boolean hasChanged = false;
 
     private static String CONFIGPATH = "config.txt"; //$NON-NLS-1$
     private static String DEFULTDECIMALPLACES = "5"; //$NON-NLS-1$
     private static String DECIMALPLACES = "DecimalPlaces"; //$NON-NLS-1$
 
     private Configuration() {
+	hasChanged = false;
 	props = new Properties();
 	loadSettings();
     }
@@ -34,12 +37,11 @@ public class Configuration {
      */
     public void loadSettings() {
 	try {
+	    hasChanged = false;
 	    props.load(new FileInputStream(CONFIGPATH));
 	} catch (FileNotFoundException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
@@ -60,6 +62,7 @@ public class Configuration {
      * @param decimalPlaces
      */
     public void setDecimalPlaces(int decimalPlaces) {
+	hasChanged = true;
 	props.setProperty(DECIMALPLACES, Integer.toString(decimalPlaces));
     }
 
@@ -68,12 +71,11 @@ public class Configuration {
      */
     public void saveSettingsToConfigFile() {
 	try {
+	    hasChanged = false;
 	    props.store(new FileOutputStream(CONFIGPATH), null); //$NON-NLS-1$
 	} catch (FileNotFoundException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }

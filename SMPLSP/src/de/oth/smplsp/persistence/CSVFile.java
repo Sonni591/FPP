@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import messages.Messages;
-
 import com.Ostermiller.util.CSVParse;
 import com.Ostermiller.util.CSVParser;
 import com.Ostermiller.util.CSVPrint;
 import com.Ostermiller.util.CSVPrinter;
 
+import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.model.Product;
 
 /**
