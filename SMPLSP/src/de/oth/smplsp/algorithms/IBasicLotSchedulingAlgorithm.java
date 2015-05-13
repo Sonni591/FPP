@@ -10,4 +10,6 @@ public interface IBasicLotSchedulingAlgorithm {
 
     public String getDescriptionToString();
 
+    public LotSchedulingResult getResult();
+
 }

@@ -88,6 +88,6 @@ public class LotSchedulingResult {
 	s += getMinProductionCycleToString();
 	s += getProductsToString();
 	return s;
-
     }
+
 }

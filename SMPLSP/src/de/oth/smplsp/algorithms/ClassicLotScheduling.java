@@ -65,17 +65,15 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
     /**
      * @return the result
      */
+    @Override
     public LotSchedulingResult getResult() {
-	if (result == null) {
-	    result = calculateInTotal();
-	}
 	return result;
     }
 
     @Override
     public String getDescriptionToString() {
 	return "Berechnung der optimalen Losgrößen der Produkte 1-"
-		+ result.getProducts().size()
+		+ products.size()
 		+ " mit Hilfe des klassischen Losgrößenverfahrens" + "\n";
     }
 }

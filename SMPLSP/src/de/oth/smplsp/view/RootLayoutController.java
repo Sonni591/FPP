@@ -27,7 +27,13 @@ public class RootLayoutController {
     private AnchorPane tab1;
 
     @FXML
+    private Tab1Controller tab1Controller;
+
+    @FXML
     private AnchorPane tab2;
+
+    @FXML
+    private Tab2Controller tab2Controller;
 
     @FXML
     private AnchorPane tab3;
@@ -76,6 +82,10 @@ public class RootLayoutController {
 	customizeUIZoom();
 
 	showLatex();
+
+	tab1Controller.setController2(tab2Controller);
+	tab2Controller.setRootController(this);
+	// tab2Controller.setData();
     }
 
     /**

@@ -1,11 +1,15 @@
 package de.oth.smplsp.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -30,7 +34,9 @@ import de.oth.smplsp.model.Product;
 import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
 public class Tab1Controller {
+    // implements Initializable {
 
+    public static Map<String, IBasicLotSchedulingAlgorithm> results = new HashMap();
     // References for the FXML layout
     @FXML
     private Button btnAddRow;
@@ -64,7 +70,10 @@ public class Tab1Controller {
     // Reference to the main application.
     private Main main;
 
-    ObservableList<Product> productsList = FXCollections.observableArrayList();
+    private Tab2Controller controller2;
+
+    private ObservableList<Product> productsList = FXCollections
+	    .observableArrayList();
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -100,6 +109,49 @@ public class Tab1Controller {
 	customizeTable();
 
     }
+
+    // @Override
+    // public void initialize(URL arg0, ResourceBundle arg1) {
+    // customizeUI();
+    // column1.setCellValueFactory(cellData -> cellData.getValue()
+    // .getKProperty());
+    // column2.setCellValueFactory(cellData -> cellData.getValue()
+    // .getDProperty());
+    // column3.setCellValueFactory(cellData -> cellData.getValue()
+    // .getPProperty());
+    // column4.setCellValueFactory(cellData -> cellData.getValue()
+    // .getTauProperty());
+    // column5.setCellValueFactory(cellData -> cellData.getValue()
+    // .getSProperty());
+    // column6.setCellValueFactory(cellData -> cellData.getValue()
+    // .getHProperty());
+    //
+    // btnLoad.setOnAction(new EventHandler<ActionEvent>() {
+    //
+    // @Override
+    // public void handle(ActionEvent event) {
+    //
+    // Tab2Controller controller;
+    // try {
+    // controller = Tab2Controller.class.newInstance();
+    // } catch (InstantiationException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (IllegalAccessException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    // // controller.setData();
+    // // main.setButtonText();
+    // }
+    // });
+    // ;
+    //
+    // fillTableTestData();
+    //
+    // customizeTable();
+    //
+    // }
 
     /**
      * //TODO documentation!!
@@ -149,6 +201,10 @@ public class Tab1Controller {
      */
     public void setMainApp(Main main) {
 	this.main = main;
+    }
+
+    public void setController2(Tab2Controller controller2) {
+	this.controller2 = controller2;
     }
 
     /**
@@ -212,8 +268,9 @@ public class Tab1Controller {
     }
 
     @FXML
-    private void handleLoad() {
-	// TODO
+    private void handleLoad(ActionEvent e) throws IOException {
+	// controller2.setData();
+
     }
 
     @FXML
@@ -228,27 +285,31 @@ public class Tab1Controller {
 	// run complete algorithm and print result in console
 
 	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
-	List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
+	List<Product> productsClassic = LotSchedulingAlgorithmTester
+		.getTestProducts();
+	List<Product> productsMehrprodukt = LotSchedulingAlgorithmTester
+		.getTestProducts();
 
-	algorithms.add(new ClassicLotScheduling(products));
-	algorithms.add(new MehrproduktLosgroessen(products));
+	algorithms.add(new ClassicLotScheduling(productsClassic));
+	algorithms.add(new MehrproduktLosgroessen(productsMehrprodukt));
 
-	String ausgabe = "";
+	// String ausgabe = "";
 	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
-	    ausgabe += algorithm.getDescriptionToString();
-	    LotSchedulingResult result;
+	    // ausgabe += algorithm.getDescriptionToString();
+	    // LotSchedulingResult result;
 	    try {
-		result = algorithm.calculateInTotal();
-		ausgabe += result.getTotalErgebnis();
-		System.out.println(ausgabe);
+		LotSchedulingResult testresult = algorithm.calculateInTotal();
+		results.put(algorithm.getClass().toString(), algorithm);
+		// ausgabe += result.getTotalErgebnis();
+		// System.out.println(ausgabe);
 	    } catch (MinimalProductionCycleError e) {
 		// TODO Abfangen der Exception: Öffnen eines Error-Overlays mit
 		// Anzeige der Fehlermeldung
 		e.printStackTrace();
 	    }
-
-	    ausgabe = "";
+	    // ausgabe = "";
 	}
+	controller2.setData();
     }
 
     private void refactorIndexes(ObservableList<Product> products) {
@@ -282,4 +343,5 @@ public class Tab1Controller {
 		.<Product, Number> forTableColumn(new NumberStringConverter()));
 
     }
+
 }

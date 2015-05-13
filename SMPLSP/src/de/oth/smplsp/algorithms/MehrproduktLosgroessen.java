@@ -100,17 +100,14 @@ public class MehrproduktLosgroessen implements IBasicLotSchedulingAlgorithm {
      * @return the result
      * @throws MinimalProductionCycleError
      */
-    public LotSchedulingResult getResult() throws MinimalProductionCycleError {
-	if (result == null) {
-	    result = calculateInTotal();
-	}
+    @Override
+    public LotSchedulingResult getResult() {
 	return result;
     }
 
-    @Override
     public String getDescriptionToString() {
 	return "Berechnung der optimalen Losgrößen der Produkte 1-"
-		+ result.getProducts().size()
+		+ products.size()
 		+ " mit Hilfe der statischen Mehrproduktlosgrößenplanung"
 		+ "\n";
     }

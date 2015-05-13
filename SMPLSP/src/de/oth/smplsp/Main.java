@@ -11,11 +11,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.oth.smplsp.view.RootLayoutController;
+import de.oth.smplsp.view.Tab1Controller;
+import de.oth.smplsp.view.Tab2Controller;
 
 public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+
+    public Tab1Controller controller1;
+    public Tab2Controller controller2;
 
     @Override
     public void start(Stage primaryStage) {
@@ -32,6 +37,7 @@ public class Main extends Application {
      */
     public void initRootLayout() {
 	try {
+
 	    // Load root layout from fxml file
 	    FXMLLoader loader = new FXMLLoader();
 
@@ -70,5 +76,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 	launch(args);
+
+    }
+
+    public void setButtonText() {
+	controller2.setData();
     }
 }
