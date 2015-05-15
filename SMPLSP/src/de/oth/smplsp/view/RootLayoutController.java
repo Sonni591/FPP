@@ -50,6 +50,8 @@ public class RootLayoutController {
 
     private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome");
 
+    private String latexString = "";
+
     // global parameters for the font size
     private int fontsize = 20;
 
@@ -81,8 +83,6 @@ public class RootLayoutController {
 
 	// customize the look of the Zoom area
 	customizeUIZoom();
-
-	showLatex();
     }
 
     /**
@@ -97,10 +97,7 @@ public class RootLayoutController {
 
     public void showLatex() {
 
-	String latex = "\\sqrt{ \\frac{-b \\pm \\sqrt {b^2-4ac}} {2a} } \\\\"
-		+ "\\textrm{Text im Schriftmodus } \\\\" + "Text im Mathemodus";
-
-	TeXFormula tex = new TeXFormula(latex);
+	TeXFormula tex = new TeXFormula(latexString);
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
 
@@ -108,8 +105,14 @@ public class RootLayoutController {
 	JTextPane pane = new JTextPane();
 	pane.setEditable(false);
 	pane.insertIcon(icon);
+	pane.repaint();
+
 	swingNode.setContent(pane);
 
+    }
+
+    public void setLatexString(String latexString) {
+	this.latexString = latexString;
     }
 
     @FXML

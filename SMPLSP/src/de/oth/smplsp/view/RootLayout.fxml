@@ -72,7 +72,7 @@
             <Separator prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ScrollPane onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="100.0" prefWidth="628.0">
+                  <ScrollPane fx:id="scrollpane" onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="100.0" prefWidth="628.0">
                      <content>
                         <SwingNode fx:id="swingNode" />
                      </content>

@@ -6,14 +6,18 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
+import de.oth.smplsp.formula.ClassicLotSchedulingFormula;
+import de.oth.smplsp.formula.ProductFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.model.ProductionProcess;
@@ -55,10 +59,6 @@ public class Tab2Controller implements Initializable {
 
     }
 
-    // public void setRootController(RootLayoutController controller) {
-    // rootcontroller = controller;
-    // }
-
     @FXML
     public void setData() {
 	IBasicLotSchedulingAlgorithm algorithm = Tab1Controller.results
@@ -97,14 +97,33 @@ public class Tab2Controller implements Initializable {
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
+	addListenerForTableView();
+
     }
 
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
     }
 
-    public ObservableList getScheduling() {
+    public ObservableList<Product> getScheduling() {
 	return schedulingResult;
+    }
+
+    public void addListenerForTableView() {
+	losgroessenTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+	    @Override
+	    public void handle(MouseEvent event) {
+		Product product = losgroessenTableView.getSelectionModel()
+			.getSelectedItem();
+		String formula = ClassicLotSchedulingFormula
+			.getLosgroessenFormel(product);
+		formula += ProductFormula.getProduktionsdauerFormel(product);
+		root.setLatexString(formula);
+		root.showLatex();
+
+	    }
+	});
     }
 
     /**

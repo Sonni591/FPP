@@ -63,15 +63,16 @@ public class ProductFormula {
     }
 
     public static String getProduktionsdauerFormel(Product product) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} t_{opt}:";
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } t_{p}:";
+	formula += getNewLine();
 	formula += getAllgemeineProduktionsdauerFormel();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
 		+ product.getK() + ":";
+	formula += getNewLine();
 	formula += getProduktionsdauerMitParameterFormel(product);
 	formula += getNewLine();
 	return formula;
     }
-
 }

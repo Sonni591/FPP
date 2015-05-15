@@ -36,6 +36,25 @@ public class ClassicLotSchedulingFormula {
 	return formel;
     }
 
+    public static String getNewLine() {
+	return "\\\\";
+    }
+
+    public static String getProduktspezifischeProdukzionszyklusFormel(
+	    Product product) {
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} T_{opt}:";
+	formula += getNewLine();
+	formula += getAllgemeineProduktspezifischeProdukzionszyklusFormel();
+	formula += getNewLine();
+	formula += getNewLine();
+	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
+		+ product.getK() + ":";
+	formula += getNewLine();
+	formula += getProduktspezifischeProdukzionszyklusMitParameterFormel(product);
+	formula += getNewLine();
+	return formula;
+    }
+
     public static String getAllgemeineLosgroessenFormel() {
 	initialize();
 	String formel = "\\textcolor{OliveGreen}{q_{k}^{opt}} = \\sqrt{\\frac{2 \\cdot \\textcolor{Blue} {D_k} \\cdot \\textcolor{Red}{s_k}}{\\textcolor{Green}{h_k} \\cdot (1 - \\frac{\\textcolor{Blue}  {D_k}}{ \\textcolor{Plum}{p_k}})}}";
@@ -44,43 +63,27 @@ public class ClassicLotSchedulingFormula {
 
     public static String getLosgroessenmitParameternFormel(Product product) {
 	initialize();
-	String formel = "\\textcolor{OliveGreen}{q_{k}^{opt}} = \\sqrt{\\frac{2 \\cdot \\textcolor{Blue}{"
+	String formel = "\\textcolor{OliveGreen}{q_{" + product.getK()
+		+ "}^{opt}} = \\sqrt{\\frac{2 \\cdot \\textcolor{Blue}{"
 		+ formatter.format(product.getD())
 		+ "}\\cdot \\textcolor{Red}{"
-		+ formatter.format(product.getS())
-		+ "}}{\\textcolor{Green}{"
+		+ formatter.format(product.getS()) + "}}{\\textcolor{Green}{"
 		+ formatter.format(product.getH())
 		+ "}\\cdot (1 - \\frac{ \\textcolor{Blue}{"
-		+ formatter.format(product.getD())
-		+ "}}{ \\textcolor{Plum}{"
+		+ formatter.format(product.getD()) + "}}{ \\textcolor{Plum}{"
 		+ formatter.format(product.getP()) + "}})}}";
 	return formel;
     }
 
-    public static String getNewLine() {
-	return "\\\\";
-    }
-
-    public static String getProduktspezifischeProdukzionszyklusFormel(
-	    Product product) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} T_{opt}:";
-	formula += getAllgemeineProduktspezifischeProdukzionszyklusFormel();
-	formula += getNewLine();
-	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
-		+ product.getK() + ":";
-	formula += getProduktspezifischeProdukzionszyklusMitParameterFormel(product);
-	formula += getNewLine();
-	return formula;
-    }
-
     public static String getLosgroessenFormel(Product product) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} q_{opt}:";
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } q_{opt}:";
+	formula += getNewLine();
 	formula += getAllgemeineLosgroessenFormel();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
 		+ product.getK() + ":";
+	formula += getNewLine();
 	formula += getLosgroessenmitParameternFormel(product);
 	formula += getNewLine();
 	return formula;
