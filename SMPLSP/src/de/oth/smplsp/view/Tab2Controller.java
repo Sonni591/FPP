@@ -45,6 +45,9 @@ public class Tab2Controller implements Initializable {
 
     // Reference to the main application.
     private Main main;
+    private RootLayoutController root;
+
+    public ObservableList<Product> schedulingResult;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -75,6 +78,7 @@ public class Tab2Controller implements Initializable {
 	    ObservableList processesList = FXCollections
 		    .observableArrayList(processes);
 	    prodablaufTableView.setItems(processesList);
+
 	}
     }
 
@@ -95,6 +99,14 @@ public class Tab2Controller implements Initializable {
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
+    }
+
+    public void init(RootLayoutController rootLayoutController) {
+	root = rootLayoutController;
+    }
+
+    public ObservableList getScheduling() {
+	return schedulingResult;
     }
 
     /**

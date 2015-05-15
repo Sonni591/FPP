@@ -26,33 +26,25 @@ public class RootLayoutController {
     @FXML
     private AnchorPane tab1;
 
+    // References to all Controllers
     @FXML
     private Tab1Controller tab1Controller;
-
-    @FXML
-    private AnchorPane tab2;
-
     @FXML
     private Tab2Controller tab2Controller;
-
     @FXML
-    private AnchorPane tab3;
-
+    private Tab3Controller tab3Controller;
     @FXML
-    private AnchorPane tab4;
-
+    private Tab4Controller tab4Controller;
     @FXML
-    private AnchorPane tab5;
+    private Tab5Controller tab5Controller;
 
+    // References all Buttons
     @FXML
     private Label lblZoom;
-
     @FXML
     private Button btnZoomPlus;
-
     @FXML
     private Button btnZoomMinus;
-
     @FXML
     private SwingNode swingNode;
 
@@ -78,6 +70,13 @@ public class RootLayoutController {
      */
     @FXML
     private void initialize() {
+	// Init all controller first
+	tab1Controller.init(this);
+	tab2Controller.init(this);
+	tab3Controller.init(this);
+	tab4Controller.init(this);
+	tab5Controller.init(this);
+
 	// customize the look of the Zoom area
 	customizeUIZoom();
 
@@ -208,6 +207,26 @@ public class RootLayoutController {
      */
     public void setMainApp(Main main) {
 	this.main = main;
+    }
+
+    public Tab1Controller getTab1Controller() {
+	return tab1Controller;
+    }
+
+    public Tab2Controller getTab2Controller() {
+	return tab2Controller;
+    }
+
+    public Tab3Controller getTab3Controller() {
+	return tab3Controller;
+    }
+
+    public Tab4Controller getTab4Controller() {
+	return tab4Controller;
+    }
+
+    public Tab5Controller getTab5Controller() {
+	return tab5Controller;
     }
 
 }

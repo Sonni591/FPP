@@ -69,6 +69,7 @@ public class Tab1Controller {
 
     // Reference to the main application.
     private Main main;
+    private RootLayoutController root;
 
     private Tab2Controller controller2;
 
@@ -108,6 +109,10 @@ public class Tab1Controller {
 
 	customizeTable();
 
+    }
+
+    public void init(RootLayoutController rootLayoutController) {
+	root = rootLayoutController;
     }
 
     // @Override
@@ -343,5 +348,4 @@ public class Tab1Controller {
 		.<Product, Number> forTableColumn(new NumberStringConverter()));
 
     }
-
 }

@@ -9,6 +9,7 @@ public class Tab4Controller {
 
     // Reference to the main application.
     private Main main;
+    private RootLayoutController root;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -25,6 +26,10 @@ public class Tab4Controller {
     @FXML
     private void initialize() {
 
+    }
+
+    public void init(RootLayoutController rootLayoutController) {
+	root = rootLayoutController;
     }
 
     /**

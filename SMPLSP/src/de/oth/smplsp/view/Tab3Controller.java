@@ -28,6 +28,7 @@ public class Tab3Controller {
 
     // Reference to the main application.
     private Main main;
+    private RootLayoutController root;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -43,12 +44,16 @@ public class Tab3Controller {
      */
     @FXML
     private void initialize() {
-	String[] cities = { "Regensburg", "Hamburg", "München" };
+	String[] cities = { "Regensburg", "Hamburg", "Mï¿½nchen" };
 	categories.addAll(Arrays.asList(cities));
 	xAxis.setCategories(categories);
 	yAxis.setLabel("Einwohner");
 	barChart.setTitle("Einwohner Vergleich");
 	setCiticenData();
+    }
+
+    public void init(RootLayoutController rootLayoutController) {
+	root = rootLayoutController;
     }
 
     /**

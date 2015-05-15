@@ -1,6 +1,5 @@
 package de.oth.smplsp.view;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javafx.fxml.FXML;
@@ -8,7 +7,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.data.category.IntervalCategoryDataset;
@@ -18,6 +16,7 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.util.MyGanttChartFactory;
 
 public class Tab5Controller {
 
@@ -31,6 +30,7 @@ public class Tab5Controller {
 
     // Reference to the main application.
     private Main main;
+    private RootLayoutController root;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -38,6 +38,10 @@ public class Tab5Controller {
      */
     public Tab5Controller() {
 
+    }
+
+    public void init(RootLayoutController rootLayoutController) {
+	root = rootLayoutController;
     }
 
     /**
@@ -51,16 +55,12 @@ public class Tab5Controller {
 
 	// ChartViewer for displaying JFreeChart with JavaFX
 	ChartViewer viewer = new ChartViewer(chart);
+	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
+	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
 	// viewer.addChartMouseListener(this);
 
 	myStackPane.getChildren().add(viewer);
 
-	// old code - add Chart in a JPanel (BUG: does not work on OS X 10.10
-	// and Java 8)
-	// final ChartPanel chartPanel = new ChartPanel(chart);
-	// final SwingNode node = new SwingNode();
-	// // node.setContent(chartPanel);
-	// chartPane.getChildren().add(node);
     }
 
     /**
@@ -72,99 +72,40 @@ public class Tab5Controller {
 	this.main = main;
     }
 
-    public static IntervalCategoryDataset createDataset() {
-
+    public TaskSeriesCollection createDataset() {
 	final TaskSeries s1 = new TaskSeries("Scheduled");
-	s1.add(new Task("Write Proposal", new SimpleTimePeriod(date(1,
-		Calendar.APRIL, 2001), date(5, Calendar.APRIL, 2001))));
-	s1.add(new Task("Obtain Approval", new SimpleTimePeriod(date(9,
-		Calendar.APRIL, 2001), date(9, Calendar.APRIL, 2001))));
-	s1.add(new Task("Requirements Analysis", new SimpleTimePeriod(date(10,
-		Calendar.APRIL, 2001), date(5, Calendar.MAY, 2001))));
-	s1.add(new Task("Design Phase", new SimpleTimePeriod(date(6,
-		Calendar.MAY, 2001), date(30, Calendar.MAY, 2001))));
-	s1.add(new Task("Design Signoff", new SimpleTimePeriod(date(2,
-		Calendar.JUNE, 2001), date(2, Calendar.JUNE, 2001))));
-	s1.add(new Task("Alpha Implementation", new SimpleTimePeriod(date(3,
-		Calendar.JUNE, 2001), date(31, Calendar.JULY, 2001))));
-	s1.add(new Task("Design Review", new SimpleTimePeriod(date(1,
-		Calendar.AUGUST, 2001), date(8, Calendar.AUGUST, 2001))));
-	s1.add(new Task("Revised Design Signoff", new SimpleTimePeriod(date(10,
-		Calendar.AUGUST, 2001), date(10, Calendar.AUGUST, 2001))));
-	s1.add(new Task("Beta Implementation", new SimpleTimePeriod(date(12,
-		Calendar.AUGUST, 2001), date(12, Calendar.SEPTEMBER, 2001))));
-	s1.add(new Task("Testing", new SimpleTimePeriod(date(13,
-		Calendar.SEPTEMBER, 2001), date(31, Calendar.OCTOBER, 2001))));
-	s1.add(new Task("Final Implementation", new SimpleTimePeriod(date(1,
-		Calendar.NOVEMBER, 2001), date(15, Calendar.NOVEMBER, 2001))));
-	s1.add(new Task("Signoff", new SimpleTimePeriod(date(28,
-		Calendar.NOVEMBER, 2001), date(30, Calendar.NOVEMBER, 2001))));
-
-	final TaskSeries s2 = new TaskSeries("Actual");
-	s2.add(new Task("Write Proposal", new SimpleTimePeriod(date(1,
-		Calendar.APRIL, 2001), date(5, Calendar.APRIL, 2001))));
-	s2.add(new Task("Obtain Approval", new SimpleTimePeriod(date(9,
-		Calendar.APRIL, 2001), date(9, Calendar.APRIL, 2001))));
-	s2.add(new Task("Requirements Analysis", new SimpleTimePeriod(date(10,
-		Calendar.APRIL, 2001), date(15, Calendar.MAY, 2001))));
-	s2.add(new Task("Design Phase", new SimpleTimePeriod(date(15,
-		Calendar.MAY, 2001), date(17, Calendar.JUNE, 2001))));
-	s2.add(new Task("Design Signoff", new SimpleTimePeriod(date(30,
-		Calendar.JUNE, 2001), date(30, Calendar.JUNE, 2001))));
-	s2.add(new Task("Alpha Implementation", new SimpleTimePeriod(date(1,
-		Calendar.JULY, 2001), date(12, Calendar.SEPTEMBER, 2001))));
-	s2.add(new Task("Design Review", new SimpleTimePeriod(date(12,
-		Calendar.SEPTEMBER, 2001), date(22, Calendar.SEPTEMBER, 2001))));
-	s2.add(new Task("Revised Design Signoff", new SimpleTimePeriod(date(25,
-		Calendar.SEPTEMBER, 2001), date(27, Calendar.SEPTEMBER, 2001))));
-	s2.add(new Task("Beta Implementation", new SimpleTimePeriod(date(27,
-		Calendar.SEPTEMBER, 2001), date(30, Calendar.OCTOBER, 2001))));
-	s2.add(new Task("Testing", new SimpleTimePeriod(date(31,
-		Calendar.OCTOBER, 2001), date(17, Calendar.NOVEMBER, 2001))));
-	s2.add(new Task("Final Implementation", new SimpleTimePeriod(date(18,
-		Calendar.NOVEMBER, 2001), date(5, Calendar.DECEMBER, 2001))));
-	s2.add(new Task("Signoff", new SimpleTimePeriod(date(10,
-		Calendar.DECEMBER, 2001), date(11, Calendar.DECEMBER, 2001))));
-
+	Double d = new Double(10.5);
+	int i = d.intValue();
+	Double e = new Double(20.7);
+	int j = e.intValue();
+	s1.add(new Task("Signoff", new SimpleTimePeriod(new Date(10), new Date(
+		j))));
+	s1.add(new Task("Task1", new SimpleTimePeriod(new Date(10),
+		new Date(20))));
+	s1.add(new Task("Task2",
+		new SimpleTimePeriod(new Date(0), new Date(15))));
+	s1.add(new Task("Task33", new SimpleTimePeriod(new Date(15), new Date(
+		30))));
 	final TaskSeriesCollection collection = new TaskSeriesCollection();
 	collection.add(s1);
-	collection.add(s2);
 
 	return collection;
-    }
-
-    private static Date date(final int day, final int month, final int year) {
-
-	final Calendar calendar = Calendar.getInstance();
-	calendar.set(year, month, day);
-	final Date result = calendar.getTime();
-	return result;
 
     }
 
     private JFreeChart createChart(final IntervalCategoryDataset dataset) {
-	final JFreeChart chart = ChartFactory.createGanttChart(
+	// final JFreeChart chart = MyGanttChartFactory.createGanttChart(
+	final JFreeChart chart = MyGanttChartFactory.createGanttChart(
 		"Gantt Chart Demo", // chart title
 		"Task", // domain axis label
-		"Date", // range axis label
+		"Time", // range axis label
 		dataset, // data
 		true, // include legend
 		true, // tooltips
 		false // urls
 		);
-
-	// TODO set font size
-	// CategoryPlot plot = chart.getCategoryPlot();
-	//
-	// ValueAxis valueAxis = plot.getRangeAxis();
-	// CategoryAxis categoryAxis = plot.getDomainAxis();
-	//
-	// Font font = new Font("Dialog", Font.PLAIN, 100);
-	//
-	// valueAxis.setLabelFont(font); // label y-axis
-	// categoryAxis.setLabelFont(font); // label x-axis
-
 	return chart;
+
     }
 
 }
