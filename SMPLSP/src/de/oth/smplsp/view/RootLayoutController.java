@@ -77,14 +77,12 @@ public class RootLayoutController {
 	tab4Controller.init(this);
 	tab5Controller.init(this);
 
+	tab1Controller.setController2(tab2Controller);
+
 	// customize the look of the Zoom area
 	customizeUIZoom();
 
 	showLatex();
-
-	tab1Controller.setController2(tab2Controller);
-	tab2Controller.setRootController(this);
-	// tab2Controller.setData();
     }
 
     /**
