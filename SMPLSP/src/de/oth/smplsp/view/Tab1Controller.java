@@ -29,6 +29,7 @@ import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
 import de.oth.smplsp.error.MinimalProductionCycleError;
+import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
@@ -191,8 +192,8 @@ public class Tab1Controller {
 
     private void fillTableTestData() {
 
-	List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
-	productsList.addAll(products);
+	productsList.add(new Product(1, 10.4, 128.5714, 2.0000, 190, 0.000689));
+	productsList.add(new Product(2, 0.8, 32.43243, 2.0, 210, 0.010208));
 
 	productsTableView.setItems(productsList);
 
@@ -273,6 +274,7 @@ public class Tab1Controller {
 
     @FXML
     private void handleLoad(ActionEvent e) throws IOException {
+	// controller2.setData();
 
     }
 
@@ -284,61 +286,35 @@ public class Tab1Controller {
     @FXML
     private void handleCalculate() {
 
+	// TODO: code below is just for test!!
+	// run complete algorithm and print result in console
+
 	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
+	List<Product> productsClassic = LotSchedulingAlgorithmTester
+		.getTestProducts();
+	List<Product> productsMehrprodukt = LotSchedulingAlgorithmTester
+		.getTestProducts();
 
-	// get real products
-	ObservableList<Product> productsClassic = productsTableView.getItems();
-	ObservableList<Product> productsMehrprodukt = FXCollections
-		.observableArrayList();
-	cloneProductValues(productsClassic, productsMehrprodukt);
+	algorithms.add(new ClassicLotScheduling(productsClassic));
+	algorithms.add(new MehrproduktLosgroessen(productsMehrprodukt));
 
-	boolean hasEmptyFields = false;
-	for (Product product : productsClassic) {
-	    if (hasEmptyFields(product)) {
-		hasEmptyFields = true;
-	    }
-	}
-	if (hasEmptyFields) {
-	    showProductHasEmptyValuesAlert();
-	} else {
-	    algorithms.add(new ClassicLotScheduling(productsClassic));
-	    algorithms.add(new MehrproduktLosgroessen(productsMehrprodukt));
-	    for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
-		try {
-		    algorithm.calculateInTotal();
-		} catch (MinimalProductionCycleError e) {
-		    // TODO display error Message
-		    e.printStackTrace();
-		}
+	// String ausgabe = "";
+	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
+	    // ausgabe += algorithm.getDescriptionToString();
+	    // LotSchedulingResult result;
+	    try {
+		LotSchedulingResult testresult = algorithm.calculateInTotal();
 		results.put(algorithm.getClass().toString(), algorithm);
+		// ausgabe += result.getTotalErgebnis();
+		// System.out.println(ausgabe);
+	    } catch (MinimalProductionCycleError e) {
+		// TODO Abfangen der Exception: Öffnen eines Error-Overlays mit
+		// Anzeige der Fehlermeldung
+		e.printStackTrace();
 	    }
-	    controller2.setData();
+	    // ausgabe = "";
 	}
-    }
-
-    public void cloneProductValues(ObservableList<Product> listFrom,
-	    ObservableList<Product> listTo) {
-	for (Product product : listFrom) {
-	    Product productClone = product.clone();
-	    listTo.add(productClone);
-	}
-    }
-
-    private void showProductHasEmptyValuesAlert() {
-	Alert alert = new Alert(AlertType.CONFIRMATION);
-	alert.setTitle("Ungültige Eingabe");
-	alert.setHeaderText("Ihre Eingabe enthält ungültige Werte!");
-	alert.setContentText("Ihre Eingabe enthält Parameter mit Wert 0. Um den Algorithmus auszuführen ergänzen Sie hierfür Werte > 0!");
-
-	Optional<ButtonType> result = alert.showAndWait();
-    }
-
-    private boolean hasEmptyFields(Product product) {
-	if (product.getD() == 0 || product.getH() == 0 || product.getP() == 0
-		|| product.getS() == 0 || product.getTau() == 0) {
-	    return true;
-	}
-	return false;
+	controller2.setData();
     }
 
     private void refactorIndexes(ObservableList<Product> products) {

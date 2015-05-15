@@ -345,12 +345,6 @@ public class Product {
 	this.roh = new SimpleDoubleProperty(roh);
     }
 
-    public Product clone() {
-	return new Product(this.getK(), this.getD(), this.getP(),
-		this.getTau(), this.getS(), this.getH());
-
-    }
-
     /**
      * @param roh
      *            the roh property to set
@@ -394,5 +388,4 @@ public class Product {
 
 	return productValues;
     }
-
 }

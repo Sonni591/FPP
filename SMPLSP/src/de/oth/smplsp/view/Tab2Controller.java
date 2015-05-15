@@ -29,6 +29,8 @@ public class Tab2Controller implements Initializable {
     @FXML
     private TableColumn<Product, Number> lgColumn3;
 
+    private RootLayoutController rootcontroller;
+
     @FXML
     private TableView<ProductionProcess> prodablaufTableView;
 
@@ -55,9 +57,9 @@ public class Tab2Controller implements Initializable {
 
     }
 
-    // public void setRootController(RootLayoutController controller) {
-    // rootcontroller = controller;
-    // }
+    public void setRootController(RootLayoutController controller) {
+	rootcontroller = controller;
+    }
 
     @FXML
     public void setData() {
