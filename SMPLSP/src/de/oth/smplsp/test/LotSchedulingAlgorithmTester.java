@@ -1,4 +1,4 @@
-package de.oth.smpslp.test;
+package de.oth.smplsp.test;
 
 import static org.junit.Assert.assertEquals;
 

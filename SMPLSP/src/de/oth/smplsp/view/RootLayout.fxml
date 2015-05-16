@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.embed.swing.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.paint.*?>
@@ -9,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.RootLayoutController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -35,59 +37,9 @@
         </menus>
       </MenuBar>
    </top>
-   <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Eingabe">
-               <content>
-                  <fx:include fx:id="tab1" source="Tab1.fxml" />
-               </content>
-          </Tab>
-          <Tab text="Lösungsweg Konflikt">
-            <content>
-              <fx:include fx:id="tab2" source="Tab2.fxml" />
-            </content>
-          </Tab>
-            <Tab text="Lösung Konflikt">
-              <content>
-               <fx:include fx:id="tab3" source="Tab3.fxml" />
-              </content>
-            </Tab>
-            <Tab text="Lösungsweg Konfliktfrei">
-              <content>
-                <fx:include fx:id="tab4" source="Tab4.fxml" />
-              </content>
-            </Tab>
-            <Tab text="Lösung Konfliktfrei">
-              <content>
-                <fx:include fx:id="tab5" source="Tab5.fxml" />
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </center>
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <Separator prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ScrollPane fx:id="scrollpane" onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="100.0" prefWidth="628.0">
-                     <content>
-                        <SwingNode fx:id="swingNode" />
-                     </content>
-                  </ScrollPane>
-                  <AnchorPane nodeOrientation="RIGHT_TO_LEFT" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="weiter" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                        <Button mnemonicParsing="false" text="zurück" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="5.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </AnchorPane>
-               </children>
-            </HBox>
             <Separator prefWidth="200.0" />
             <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="600.0" spacing="5.0">
                <children>
@@ -114,4 +66,66 @@
          </children>
       </VBox>
    </bottom>
+   <center>
+      <SplitPane dividerPositions="0.65" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TabPane prefHeight="112.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="Eingabe">
+                           <content>
+                              <fx:include fx:id="tab1" source="Tab1.fxml" />
+                           </content>
+                      </Tab>
+                      <Tab text="Lösungsweg Konflikt">
+                        <content>
+                          <fx:include fx:id="tab2" source="Tab2.fxml" />
+                        </content>
+                      </Tab>
+                        <Tab text="Lösung Konflikt">
+                          <content>
+                           <fx:include fx:id="tab3" source="Tab3.fxml" />
+                          </content>
+                        </Tab>
+                        <Tab text="Lösungsweg Konfliktfrei">
+                          <content>
+                            <fx:include fx:id="tab4" source="Tab4.fxml" />
+                          </content>
+                        </Tab>
+                        <Tab text="Lösung Konfliktfrei">
+                          <content>
+                            <fx:include fx:id="tab5" source="Tab5.fxml" />
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="170.0">
+               <children>
+                  <HBox prefHeight="161.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ScrollPane fx:id="scrollpane" onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="100.0" prefWidth="628.0" HBox.hgrow="ALWAYS">
+                           <content>
+                              <SwingNode fx:id="swingNode">
+                              </SwingNode>
+                           </content>
+                        </ScrollPane>
+                        <AnchorPane minWidth="72.0" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="SOMETIMES">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="zurück" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="weiter" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="5.0" />
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
 </BorderPane>

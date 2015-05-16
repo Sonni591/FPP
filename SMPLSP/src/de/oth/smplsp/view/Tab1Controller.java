@@ -36,8 +36,8 @@ import de.oth.smplsp.error.CSVFileWrongNumberOfValuesInFileError;
 import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.persistence.CSVFile;
+import de.oth.smplsp.test.LotSchedulingAlgorithmTester;
 import de.oth.smplsp.util.Decimals;
-import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
 public class Tab1Controller {
     // implements Initializable {
