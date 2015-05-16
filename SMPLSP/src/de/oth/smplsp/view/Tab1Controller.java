@@ -32,6 +32,7 @@ import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
+import de.oth.smplsp.error.CSVFileWrongNumberOfValuesInFileError;
 import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.persistence.CSVFile;
@@ -319,9 +320,18 @@ public class Tab1Controller {
 
 		// show loaded values in the view
 		productsTableView.setItems(productsList);
-	    } catch (Exception e1) {
+	    } catch (IOException e1) {
 		// show error dialog
-		showErrorDialogFileNotImported(csvFile.getName());
+		showErrorDialogFileNotImported(csvFile.getName(), "");
+		// undo changes and show old values
+		productsList.clear();
+		productsList.addAll(productsListTmp);
+		// show loaded values in the view
+		productsTableView.setItems(productsList);
+	    } catch (CSVFileWrongNumberOfValuesInFileError e2) {
+		// show error dialog with the correct errorLine
+		showErrorDialogFileNotImported(csvFile.getName(),
+			e2.getMessage());
 		// undo changes and show old values
 		productsList.clear();
 		productsList.addAll(productsListTmp);
@@ -362,14 +372,23 @@ public class Tab1Controller {
      * 
      * @param pathname
      */
-    private void showErrorDialogFileNotImported(String pathname) {
+    private void showErrorDialogFileNotImported(String pathname,
+	    String errorLine) {
 	// show error dialog
 	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Fehler");
 	alert.setHeaderText("Fehler beim Laden der Datei");
-	alert.setContentText("Die Datei "
-		+ pathname
-		+ " konnte nicht geladen werden. Die vorhergehenden Daten wurden wieder hergestellt.");
+	if (errorLine != "") {
+	    alert.setContentText("Die Datei "
+		    + pathname
+		    + " konnte nicht geladen werden. \nÜberprüfen Sie die Zeile "
+		    + errorLine
+		    + ". \nDie vorhergehenden Daten werden wieder hergestellt.");
+	} else {
+	    alert.setContentText("Die Datei "
+		    + pathname
+		    + " konnte nicht geladen werden. \nDie vorhergehenden Daten werden wieder hergestellt.");
+	}
 	alert.showAndWait();
     }
 

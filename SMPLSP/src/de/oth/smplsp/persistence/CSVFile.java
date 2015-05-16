@@ -13,7 +13,7 @@ import com.Ostermiller.util.CSVPrint;
 import com.Ostermiller.util.ExcelCSVParser;
 import com.Ostermiller.util.ExcelCSVPrinter;
 
-import de.oth.smplsp.messages.Messages;
+import de.oth.smplsp.error.CSVFileWrongNumberOfValuesInFileError;
 import de.oth.smplsp.model.Product;
 
 /**
@@ -69,7 +69,7 @@ public class CSVFile extends AbstractFile {
 
     @Override
     public ObservableList<Product> loadValuesAsProduct() throws IOException,
-	    Exception {
+	    CSVFileWrongNumberOfValuesInFileError {
 	ObservableList<Product> products = FXCollections.observableArrayList();
 	String[][] values = loadValues();
 
@@ -79,8 +79,7 @@ public class CSVFile extends AbstractFile {
 		products.add(new Product(strings));
 		i++;
 	    } else {
-		throw new Exception(Messages.CSVFile_WrongNumberOfValuesInFile
-			+ i);
+		throw new CSVFileWrongNumberOfValuesInFileError(i);
 	    }
 	}
 
