@@ -5,13 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.Ostermiller.util.CSVParse;
-import com.Ostermiller.util.CSVParser;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import com.Ostermiller.util.CSVPrint;
-import com.Ostermiller.util.CSVPrinter;
+import com.Ostermiller.util.ExcelCSVParser;
+import com.Ostermiller.util.ExcelCSVPrinter;
 
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.model.Product;
@@ -25,7 +25,10 @@ import de.oth.smplsp.model.Product;
  */
 public class CSVFile extends AbstractFile {
 
-    File file = null;
+    private static final long serialVersionUID = 1L;
+
+    // set the delimiter as a semicolon (for the German world of *.csv files)
+    char delimiter = ';';
 
     /**
      * Creating a new instance with the given pathname.
@@ -49,7 +52,8 @@ public class CSVFile extends AbstractFile {
 
     @Override
     public String[][] loadValues() throws IOException {
-	CSVParse parser = new CSVParser(new FileInputStream(file));
+	ExcelCSVParser parser = new ExcelCSVParser(new FileInputStream(
+		this.file), delimiter);
 	String[][] values = parser.getAllValues();
 	parser.close();
 	return values;
@@ -57,14 +61,16 @@ public class CSVFile extends AbstractFile {
 
     @Override
     public void saveValues(String[][] values) throws IOException {
-	CSVPrint printer = new CSVPrinter(new FileOutputStream(file));
+	CSVPrint printer = new ExcelCSVPrinter(new FileOutputStream(this.file));
+	printer.changeDelimiter(delimiter);
 	printer.println(values);
 	printer.close();
     }
 
     @Override
-    public List<Product> loadValuesAsProduct() throws IOException, Exception {
-	List<Product> products = new ArrayList<Product>();
+    public ObservableList<Product> loadValuesAsProduct() throws IOException,
+	    Exception {
+	ObservableList<Product> products = FXCollections.observableArrayList();
 	String[][] values = loadValues();
 
 	int i = 1;
@@ -82,7 +88,7 @@ public class CSVFile extends AbstractFile {
     }
 
     @Override
-    public void saveValuesFromProduct(List<Product> products)
+    public void saveValuesFromProduct(ObservableList<Product> products)
 	    throws IOException {
 	String[][] values = new String[products.size()][];
 

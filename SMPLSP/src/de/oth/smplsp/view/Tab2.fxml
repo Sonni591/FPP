@@ -11,18 +11,18 @@
          <children>
             <TableView fx:id="losgroessenTableView" prefHeight="313.0" prefWidth="334.0">
               <columns>
-                <TableColumn fx:id="lgColumn1" prefWidth="75.0" text="k" />
-                <TableColumn fx:id="lgColumn2" prefWidth="75.0" text="q" />
-                  <TableColumn fx:id="lgColumn3" prefWidth="75.0" text="t" />
+                <TableColumn fx:id="lgColumn1" prefWidth="75.0" text="k" sortable="false" />
+                <TableColumn fx:id="lgColumn2" prefWidth="75.0" text="q" sortable="false" />
+                  <TableColumn fx:id="lgColumn3" prefWidth="75.0" text="t" sortable="false" />
               </columns>
             </TableView>
             <Region prefHeight="313.0" prefWidth="50.0" />
             <TableView fx:id="prodablaufTableView" prefHeight="313.0" prefWidth="293.0">
               <columns>
-                <TableColumn fx:id="paColumn1" prefWidth="75.0" text="k" />
-                <TableColumn fx:id="paColumn2" prefWidth="75.0" text="Vorgang" />
-                  <TableColumn fx:id="paColumn3" prefWidth="75.0" text="Start" />
-                  <TableColumn fx:id="paColumn4" prefWidth="75.0" text="Ende" />
+                <TableColumn fx:id="paColumn1" prefWidth="75.0" text="k" sortable="false" />
+                <TableColumn fx:id="paColumn2" prefWidth="75.0" text="Vorgang" sortable="false" />
+                  <TableColumn fx:id="paColumn3" prefWidth="75.0" text="Start" sortable="false" />
+                  <TableColumn fx:id="paColumn4" prefWidth="75.0" text="Ende" sortable="false" />
               </columns>
             </TableView>
          </children>

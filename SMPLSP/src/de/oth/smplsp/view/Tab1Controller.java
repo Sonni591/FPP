@@ -1,5 +1,7 @@
 package de.oth.smplsp.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.converter.NumberStringConverter;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -27,9 +31,11 @@ import org.controlsfx.glyphfont.Glyph;
 import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
-import de.oth.smplsp.algorithms.MehrproduktLosgroessen;
+import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.Product;
+import de.oth.smplsp.persistence.CSVFile;
+import de.oth.smplsp.util.Decimals;
 import de.oth.smpslp.test.LotSchedulingAlgorithmTester;
 
 public class Tab1Controller {
@@ -75,6 +81,8 @@ public class Tab1Controller {
     private ObservableList<Product> productsList = FXCollections
 	    .observableArrayList();
 
+    private Decimals decimals;
+
     /**
      * The constructor. The constructor is called before the initialize()
      * method.
@@ -107,7 +115,6 @@ public class Tab1Controller {
 	fillTableTestData();
 
 	customizeTable();
-
     }
 
     public void init(RootLayoutController rootLayoutController) {
@@ -238,14 +245,21 @@ public class Tab1Controller {
 	    refactorIndexes(productsList);
 	} else {
 	    // Nothing selected.
-	    Alert alert = new Alert(AlertType.INFORMATION);
-	    // alert.initOwner(main.getPrimaryStage());
-	    alert.setTitle("Keine Auswahl");
-	    alert.setHeaderText("Es wurde keine Zeile markiert");
-	    alert.setContentText("Bitte markieren Sie zum Löschen eine Zeile.");
+	    showErrorDialogNoRowSelected();
 
-	    alert.showAndWait();
 	}
+    }
+
+    /**
+     * Show an error dialog, that no row was is selected
+     */
+    private void showErrorDialogNoRowSelected() {
+	Alert alert = new Alert(AlertType.INFORMATION);
+	// alert.initOwner(main.getPrimaryStage());
+	alert.setTitle("Keine Auswahl");
+	alert.setHeaderText("Es wurde keine Zeile markiert");
+	alert.setContentText("Bitte markieren Sie zum Löschen eine Zeile.");
+	alert.showAndWait();
     }
 
     /**
@@ -271,16 +285,129 @@ public class Tab1Controller {
 	}
     }
 
+    /**
+     * First ask the user if he wants so save the old data. Then show a dialog
+     * to select an input file and parse the data into the table. If there is a
+     * problem, an error alert will be shown.
+     * 
+     * @param e
+     * @throws IOException
+     */
     @FXML
     private void handleLoad(ActionEvent e) throws IOException {
+	// show dialog and ask the user if he wants to save the data first
+	showSaveDataBeforeLoadingNewFileAlert();
 
+	FileChooser fileChooser = new FileChooser();
+	fileChooser.setTitle("Eingabedaten laden");
+	fileChooser.getExtensionFilters().addAll(
+		new ExtensionFilter("CSV-Dateien", "*.csv"));
+	File selectedFile = fileChooser.showOpenDialog(null);
+
+	if (selectedFile != null) {
+	    // temperary save old values of the view table
+	    ObservableList<Product> productsListTmp = FXCollections
+		    .observableArrayList();
+	    productsListTmp.addAll(productsList);
+
+	    CSVFile csvFile = new CSVFile(selectedFile);
+	    try {
+		// clear table and load new values from the file
+		productsList.clear();
+		productsList = (ObservableList<Product>) csvFile
+			.loadValuesAsProduct();
+
+		// show loaded values in the view
+		productsTableView.setItems(productsList);
+	    } catch (Exception e1) {
+		// show error dialog
+		showErrorDialogFileNotImported(csvFile.getName());
+		// undo changes and show old values
+		productsList.clear();
+		productsList.addAll(productsListTmp);
+		// show loaded values in the view
+		productsTableView.setItems(productsList);
+	    }
+	}
     }
 
+    /**
+     * show dialog with Yes/No option to save the Data before loading a new file
+     */
+    private void showSaveDataBeforeLoadingNewFileAlert() {
+	Alert alert = new Alert(AlertType.CONFIRMATION);
+	alert.setTitle("Daten speichern?");
+	alert.setHeaderText("Wollen Sie alle Daten der Tabelle vorher sichern?");
+	alert.setContentText("Das Laden einer Datei überschreibt alle bisherigen Daten. Wollen Sie die aktuellen Daten nun sichern?");
+	alert.getButtonTypes().remove(ButtonType.OK);
+	alert.getButtonTypes().remove(ButtonType.CANCEL);
+	ButtonType buttonTypeJa = new ButtonType("Ja");
+	ButtonType buttonTypeNein = new ButtonType("Nein");
+	alert.getButtonTypes().add(buttonTypeJa);
+	alert.getButtonTypes().add(buttonTypeNein);
+	Optional<ButtonType> result = alert.showAndWait();
+	if (result.get() == buttonTypeJa) {
+	    // ... user chose Yes - save the actual data
+	    handleSave();
+	} else if (result.get() == buttonTypeNein) {
+	    // ... user chose No - do not save the data
+	    // do nothing
+	} else {
+	    // unwanted returncode
+	}
+    }
+
+    /**
+     * Show a dialog that the file @pathname could not be parsed into the table
+     * 
+     * @param pathname
+     */
+    private void showErrorDialogFileNotImported(String pathname) {
+	// show error dialog
+	Alert alert = new Alert(AlertType.ERROR);
+	alert.setTitle("Fehler");
+	alert.setHeaderText("Fehler beim Laden der Datei");
+	alert.setContentText("Die Datei "
+		+ pathname
+		+ " konnte nicht geladen werden. Die vorhergehenden Daten wurden wieder hergestellt.");
+	alert.showAndWait();
+    }
+
+    /**
+     * save the actual data of the table into a new *.csv file
+     */
     @FXML
     private void handleSave() {
-	// TODO
+	FileChooser fileChooser = new FileChooser();
+	fileChooser.setTitle("Eingabedaten speichern");
+	String defaultFileName = "smplsp_data.csv";
+	fileChooser.setInitialFileName(defaultFileName);
+	fileChooser.getExtensionFilters().addAll(
+		new ExtensionFilter("CSV-Dateien", "*.csv"));
+	File savedFile = fileChooser.showSaveDialog(null);
+
+	if (savedFile != null) {
+	    try {
+		CSVFile csvFile = new CSVFile(savedFile);
+		csvFile.saveValuesFromProduct(productsList);
+	    } catch (FileNotFoundException e) {
+		// File not found
+		System.out.println(getClass().toString() + "handleSave()"
+			+ "selected File not found");
+		e.printStackTrace();
+	    } catch (IOException e) {
+		// couldn't save products to file
+		System.out.println(getClass().toString() + "handleSave()"
+			+ "couldn't save products to file");
+		e.printStackTrace();
+	    }
+	}
     }
 
+    /**
+     * Execute the calculation of the algorithms First Algorithm: Classic Lot
+     * Scheduling Second Algorithm: More Product Scheduling
+     */
     @FXML
     private void handleCalculate() {
 
@@ -302,18 +429,26 @@ public class Tab1Controller {
 	    showProductHasEmptyValuesAlert();
 	} else {
 	    algorithms.add(new ClassicLotScheduling(productsClassic));
-	    algorithms.add(new MehrproduktLosgroessen(productsMehrprodukt));
+	    algorithms.add(new MoreProductLotScheduling(productsMehrprodukt));
 	    for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
 		try {
 		    algorithm.calculateInTotal();
 		} catch (MinimalProductionCycleError e) {
-		    // TODO display error Message
+		    showErrorMinimalProductionCycleAlert();
 		    e.printStackTrace();
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
 	    controller2.setData();
 	}
+    }
+
+    private void showErrorMinimalProductionCycleAlert() {
+	Alert alert = new Alert(AlertType.ERROR);
+	alert.setTitle("Fehler");
+	alert.setHeaderText("Fehler in den Eingabedaten");
+	alert.setContentText("Optimaler gemeinsamer Produktionszyklus ist kleiner als minimaler zulässiger Produktionszyklus! Bitte korrigieren Sie die Eingabedaten");
+	alert.showAndWait();
     }
 
     public void cloneProductValues(ObservableList<Product> listFrom,
@@ -325,12 +460,11 @@ public class Tab1Controller {
     }
 
     private void showProductHasEmptyValuesAlert() {
-	Alert alert = new Alert(AlertType.CONFIRMATION);
+	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Ungültige Eingabe");
 	alert.setHeaderText("Ihre Eingabe enthält ungültige Werte!");
 	alert.setContentText("Ihre Eingabe enthält Parameter mit Wert 0. Um den Algorithmus auszuführen ergänzen Sie hierfür Werte > 0!");
-
-	Optional<ButtonType> result = alert.showAndWait();
+	alert.showAndWait();
     }
 
     private boolean hasEmptyFields(Product product) {
@@ -359,17 +493,26 @@ public class Tab1Controller {
 		+ "τ: Rüstzeit\n" + "s: Rüstkostensatz\n"
 		+ "h: Lagerkostensatz"));
 
+	// create the decimal formatter
+	decimals = new Decimals(5);
+
 	// making columns 2-6 editable
 	column2.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter()));
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
 	column3.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter()));
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
 	column4.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter()));
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
 	column5.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter()));
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
 	column6.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter()));
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
 
     }
+
 }

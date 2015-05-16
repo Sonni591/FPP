@@ -6,14 +6,14 @@ import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 
-public class MehrproduktLosgroessen implements IBasicLotSchedulingAlgorithm {
+public class MoreProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 
     private List<Product> products;
     private LotSchedulingResult result;
     private Double tOpt;
     private Double tMin;
 
-    public MehrproduktLosgroessen(List<Product> products) {
+    public MoreProductLotScheduling(List<Product> products) {
 	super();
 	this.products = products;
 	tOpt = null;
