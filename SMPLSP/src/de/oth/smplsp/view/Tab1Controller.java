@@ -78,6 +78,7 @@ public class Tab1Controller {
     private RootLayoutController root;
 
     private Tab2Controller controller2;
+    private Tab4Controller controller4;
 
     private ObservableList<Product> productsList = FXCollections
 	    .observableArrayList();
@@ -217,6 +218,10 @@ public class Tab1Controller {
 
     public void setController2(Tab2Controller controller2) {
 	this.controller2 = controller2;
+    }
+
+    public void setController4(Tab4Controller controller4) {
+	this.controller4 = controller4;
     }
 
     /**
@@ -459,6 +464,7 @@ public class Tab1Controller {
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
 	    controller2.setData();
+	    controller4.setData();
 	}
     }
 

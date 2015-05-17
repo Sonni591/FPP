@@ -80,6 +80,7 @@ public class RootLayoutController {
 	tab5Controller.init(this);
 
 	tab1Controller.setController2(tab2Controller);
+	tab1Controller.setController4(tab4Controller);
 
 	// customize the look of the Zoom area
 	customizeUIZoom();
