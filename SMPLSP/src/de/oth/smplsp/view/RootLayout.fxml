@@ -27,6 +27,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#onActionEditAdd" text="%Menu_Edit_Add" />
               <MenuItem mnemonicParsing="false" onAction="#onActionEditDelete" text="%Menu_Edit_Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionEditDeleteAll" text="%Menu_Edit_DeleteAll" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%Menu_Help">

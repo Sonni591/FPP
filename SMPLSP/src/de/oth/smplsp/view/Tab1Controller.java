@@ -229,7 +229,7 @@ public class Tab1Controller {
      * table directly after the current selected one
      */
     @FXML
-    private void handleAddRow() {
+    void handleAddRow() {
 	Product newProductRow = new Product(productsList.size() + 1);
 	int selectedIndex = productsTableView.getSelectionModel()
 		.getSelectedIndex();
@@ -243,7 +243,7 @@ public class Tab1Controller {
      * row will be deleted from the table
      */
     @FXML
-    private void handleDeleteRow() {
+    void handleDeleteRow() {
 	int selectedIndex = productsTableView.getSelectionModel()
 		.getSelectedIndex();
 	if (selectedIndex >= 0) {
@@ -273,7 +273,7 @@ public class Tab1Controller {
      * Warning-Dialog the table will be cleared
      */
     @FXML
-    private void handleDeleteAll() {
+    void handleDeleteAll() {
 	// show dialog, with warning that all data will be deleted
 	Alert alert = new Alert(AlertType.CONFIRMATION);
 	alert.setTitle("Tabelle löschen?");
@@ -300,7 +300,7 @@ public class Tab1Controller {
      * @throws IOException
      */
     @FXML
-    private void handleLoad(ActionEvent e) throws IOException {
+    void handleLoad(ActionEvent e) throws IOException {
 	// show dialog and ask the user if he wants to save the data first
 	showSaveDataBeforeLoadingNewFileAlert();
 
@@ -401,7 +401,7 @@ public class Tab1Controller {
      * save the actual data of the table into a new *.csv file
      */
     @FXML
-    private void handleSave() {
+    void handleSave() {
 	FileChooser fileChooser = new FileChooser();
 	fileChooser.setTitle("Eingabedaten speichern");
 	String defaultFileName = "smplsp_data.csv";
@@ -433,7 +433,7 @@ public class Tab1Controller {
      * Scheduling Second Algorithm: More Product Scheduling
      */
     @FXML
-    private void handleCalculate() {
+    void handleCalculate() {
 
 	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
 

@@ -22,7 +22,7 @@ public class Configuration {
     // set this flag to true, if the settings were changed
     private boolean hasChanged = false;
 
-    private static String CONFIGPATH = "config.txt"; //$NON-NLS-1$
+    private static String CONFIGPATH = "config/config.txt"; //$NON-NLS-1$
     private static String DEFULTDECIMALPLACES = "5"; //$NON-NLS-1$
     private static String DECIMALPLACES = "DecimalPlaces"; //$NON-NLS-1$
 

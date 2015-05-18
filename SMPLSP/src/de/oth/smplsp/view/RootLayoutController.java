@@ -1,8 +1,12 @@
 package de.oth.smplsp.view;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.ZoomEvent;
@@ -19,6 +23,7 @@ import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.messages.Messages;
 
 public class RootLayoutController {
 
@@ -167,19 +172,25 @@ public class RootLayoutController {
 
     }
 
+    // Menu methods
     @FXML
     private void onActionFileOpen() {
-	System.out.println("Datei->Öffnen");
+	try {
+	    tab1Controller.handleLoad(null);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
     }
 
     @FXML
     private void onActionFileSave() {
-	System.out.println("Datei->Speichern");
+	tab1Controller.handleSave();
     }
 
     @FXML
     private void onActionFileSettings() {
-	System.out.println("Datei->Einstellungen");
+	SettingsDialog dia = new SettingsDialog();
+	dia.showAndWait();
     }
 
     @FXML
@@ -189,17 +200,27 @@ public class RootLayoutController {
 
     @FXML
     private void onActionEditAdd() {
-	System.out.println("Bearbeiten->Hinzufügen");
+	tab1Controller.handleAddRow();
     }
 
     @FXML
     private void onActionEditDelete() {
-	System.out.println("Bearbeiten->Entfernen");
+	tab1Controller.handleDeleteRow();
+    }
+
+    @FXML
+    private void onActionEditDeleteAll() {
+	tab1Controller.handleDeleteAll();
     }
 
     @FXML
     private void onActionHelpAbout() {
-	System.out.println("Hilfe->Über");
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle(Messages.RootLayoutController_AboutDialogTitle);
+	alert.setHeaderText(Messages.RootLayoutController_AboutDialogNameAndVerison);
+	alert.setContentText(Messages.RootLayoutController_AboutDialogLicense);
+
+	alert.showAndWait();
     }
 
     /**
