@@ -75,6 +75,7 @@ public class RootLayoutController {
 
     // global parameters for the font size
     private int fontsize = 20;
+    private double scalefactor = 1;
 
     // Reference to the main application.
     private Main main;
@@ -149,17 +150,21 @@ public class RootLayoutController {
     @FXML
     public void handleZoomIn() {
 	fontsize++;
+	setScalefactor(0.2);
 
 	// regenerate LaTeX image
 	showLatex();
+	tab4Controller.scale();
     }
 
     @FXML
     public void handleZoomOut() {
 	fontsize--;
+	setScalefactor(-0.2);
 
 	// regenerate LaTeX image
 	showLatex();
+	tab4Controller.scale();
     }
 
     /**
@@ -334,6 +339,14 @@ public class RootLayoutController {
 
     public Tab5Controller getTab5Controller() {
 	return tab5Controller;
+    }
+
+    private void setScalefactor(double scale) {
+	scalefactor += scale;
+    }
+
+    public double getScalefactor() {
+	return scalefactor;
     }
 
 }

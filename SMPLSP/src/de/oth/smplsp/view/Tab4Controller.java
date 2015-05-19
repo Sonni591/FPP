@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
@@ -31,6 +32,8 @@ import de.oth.smplsp.model.ProductionProcess;
 
 public class Tab4Controller implements Initializable {
 
+    @FXML
+    private HBox box;
     @FXML
     private TableView<Product> losgroessenTableView;
     @FXML
@@ -157,6 +160,14 @@ public class Tab4Controller implements Initializable {
 			+ "Start: Start des Vorgangs\n"
 			+ "Ende: Ende des Vorgangs\n"));
 
+    }
+
+    public void scale() {
+
+	double scalefactor = root.getScalefactor();
+
+	box.setScaleX(scalefactor);
+	box.setScaleY(scalefactor);
     }
 
     public void init(RootLayoutController rootLayoutController) {
