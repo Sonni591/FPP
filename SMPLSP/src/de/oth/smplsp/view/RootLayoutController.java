@@ -53,9 +53,9 @@ public class RootLayoutController {
     @FXML
     private SwingNode swingNode;
 
-    private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome");
+    private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome"); //$NON-NLS-1$
 
-    private String latexString = "";
+    private String latexString = ""; //$NON-NLS-1$
 
     // global parameters for the font size
     private int fontsize = 20;
@@ -95,7 +95,7 @@ public class RootLayoutController {
      * decorates the buttons of the zoom area with an corresponding icon font
      */
     private void customizeUIZoom() {
-	btnZoomMinus.setGraphic(new Glyph("FontAwesome",
+	btnZoomMinus.setGraphic(new Glyph("FontAwesome", //$NON-NLS-1$
 		FontAwesome.Glyph.SEARCH_MINUS));
 	btnZoomPlus.setGraphic(fontAwesome
 		.create(FontAwesome.Glyph.SEARCH_PLUS));
@@ -216,9 +216,9 @@ public class RootLayoutController {
     @FXML
     private void onActionHelpAbout() {
 	Alert alert = new Alert(AlertType.INFORMATION);
-	alert.setTitle(Messages.RootLayoutController_AboutDialogTitle);
-	alert.setHeaderText(Messages.RootLayoutController_AboutDialogNameAndVerison);
-	alert.setContentText(Messages.RootLayoutController_AboutDialogLicense);
+	alert.setTitle(Messages.RootLayoutController_AboutDialog_Title);
+	alert.setHeaderText(Messages.RootLayoutController_AboutDialog_NameAndVersion);
+	alert.setContentText(Messages.RootLayoutController_AboutDialog_License);
 
 	alert.showAndWait();
     }

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.view.RootLayoutController;
 import de.oth.smplsp.view.Tab1Controller;
 import de.oth.smplsp.view.Tab2Controller;
@@ -43,7 +44,7 @@ public class Main extends Application {
 
 	    // Set properties for internationalization.
 	    InputStream inputStream = Main.class.getResource(
-		    "messages/messages.properties").openStream();
+		    Messages.BUNDLE_NAME_FXML).openStream();
 	    ResourceBundle bundle = new PropertyResourceBundle(inputStream);
 	    loader.setResources(bundle);
 

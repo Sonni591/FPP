@@ -101,7 +101,7 @@ public class SettingsDialogController {
 		    Integer.toString(config.getDecimalPlaces()));
 	    Alert alert = new Alert(AlertType.ERROR);
 	    alert.setTitle(Messages.SettingsDialogController_DialogNoNumber_Title);
-	    alert.setHeaderText(Messages.SettingsDialogController_6DialogNoNumber_Header);
+	    alert.setHeaderText(Messages.SettingsDialogController_DialogNoNumber_Header);
 	    alert.setContentText(Messages.SettingsDialogController_DialogNoNumber_Content);
 
 	    alert.showAndWait();

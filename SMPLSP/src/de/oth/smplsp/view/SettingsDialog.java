@@ -24,7 +24,7 @@ public class SettingsDialog extends Stage implements Initializable {
 
 	try {
 	    InputStream inputStream = Main.class.getResource(
-		    "messages/messages.properties").openStream(); //$NON-NLS-1$
+		    Messages.BUNDLE_NAME_FXML).openStream(); //$NON-NLS-1$
 	    ResourceBundle bundle = new PropertyResourceBundle(inputStream);
 	    fxmlLoader.setResources(bundle);
 	    setScene(new Scene((Parent) fxmlLoader.load()));
