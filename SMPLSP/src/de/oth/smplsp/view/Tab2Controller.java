@@ -55,6 +55,10 @@ public class Tab2Controller implements Initializable {
 
     public ObservableList<Product> schedulingResult;
 
+    private ObservableList productList = FXCollections.observableArrayList();
+
+    private ObservableList processesList = FXCollections.observableArrayList();
+
     private Configuration config = Configuration.getInstance();
     private Decimals decimals;
 
@@ -74,7 +78,7 @@ public class Tab2Controller implements Initializable {
 	    LotSchedulingResult result = algorithm.getResult();
 	    ObservableList productList = FXCollections
 		    .observableArrayList(algorithm.getResult().getProducts());
-	    losgroessenTableView.setItems(productList);
+	    setProductsListAndShowInTableProduct(productList);
 
 	    ProductionProcessCalculator productionCalculator = new ProductionProcessCalculator(
 		    algorithm.getResult());
@@ -82,9 +86,27 @@ public class Tab2Controller implements Initializable {
 		    .getProductionProcessPlan();
 	    ObservableList processesList = FXCollections
 		    .observableArrayList(processes);
-	    prodablaufTableView.setItems(processesList);
+	    setProductsListAndShowInTableProcessing(processesList);
 
 	}
+    }
+
+    public void setProductsListAndShowInTableProduct(
+	    ObservableList<Product> newProductsList) {
+	refreshDecimals();
+	productList.clear();
+	productList = newProductsList;
+	losgroessenTableView.setItems(productList);
+
+    }
+
+    public void setProductsListAndShowInTableProcessing(
+	    ObservableList<Product> newProcessesList) {
+	refreshDecimals();
+	processesList.clear();
+	processesList = newProcessesList;
+	prodablaufTableView.setItems(processesList);
+
     }
 
     @Override

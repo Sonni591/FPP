@@ -121,6 +121,7 @@ public class Tab1Controller {
      */
     public void setProductsListAndShowInTable(
 	    ObservableList<Product> newProductsList) {
+	refreshDecimals();
 	// clear table and load new values from the file
 	productsList.clear();
 	productsList = newProductsList;
@@ -304,24 +305,23 @@ public class Tab1Controller {
 			.loadValuesAsProduct();
 
 		// show loaded values in the view
-		productsTableView.setItems(productsList);
+		// productsTableView.setItems(productsList);
+		setProductsListAndShowInTable(productsListTmp);
 	    } catch (IOException e1) {
 		// show error dialog
 		showErrorDialogFileNotImported(csvFile.getName(), "");
 		// undo changes and show old values
-		productsList.clear();
-		productsList.addAll(productsListTmp);
-		// show loaded values in the view
-		productsTableView.setItems(productsList);
+
 	    } catch (CSVFileWrongNumberOfValuesInFileError e2) {
 		// show error dialog with the correct errorLine
 		showErrorDialogFileNotImported(csvFile.getName(),
 			e2.getMessage());
 		// undo changes and show old values
-		productsList.clear();
-		productsList.addAll(productsListTmp);
-		// show loaded values in the view
-		productsTableView.setItems(productsList);
+		setProductsListAndShowInTable(productsListTmp);
+		// productsList.clear();
+		// productsList.addAll(productsListTmp);
+		// // show loaded values in the view
+		// productsTableView.setItems(productsList);
 	    }
 	}
     }
