@@ -19,6 +19,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#onActionFileOpen" text="%Menu_File_Open" />
                   <MenuItem mnemonicParsing="false" onAction="#onActionFileSave" text="%Menu_File_Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionTestData" text="%Menu_File_TestData" />
                   <MenuItem mnemonicParsing="false" onAction="#onActionFileSettings" text="%Menu_File_Settings" />
               <MenuItem mnemonicParsing="false" onAction="#onActionFileExit" text="%Menu_File_Exit" />
             </items>
@@ -54,8 +55,8 @@
                   </Label>
                   <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
                   <Label fx:id="lblZoom" font="$x3" maxWidth="-1.0" text="Zoom" textFill="$x4" HBox.hgrow="NEVER" />
-                  <Button fx:id="btnZoomMinus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleZoomOut" prefHeight="16.0" prefWidth="16.0" text="-" />
-                  <Button fx:id="btnZoomPlus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleZoomIn" prefHeight="16.0" prefWidth="16.0" text="+" />
+                  <Button fx:id="btnZoomMinus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleZoomOut" text="-" />
+                  <Button fx:id="btnZoomPlus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleZoomIn" text="+" />
                </children>
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

@@ -107,7 +107,7 @@ public class Tab2Controller implements Initializable {
 			+ "t: Produktionsdauer\n"));
 
 	prodablaufTableView.setTooltip(new Tooltip(
-		"Tabelle des Produktionsablaufs" + "k: Zeilenindex\n"
+		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
 			+ "Vorgang: Beschreibung des Vorgangs\n"
 			+ "Start: Start des Vorgangs\n"
 			+ "Ende: Ende des Vorgangs\n"));
@@ -127,14 +127,16 @@ public class Tab2Controller implements Initializable {
 
 	    @Override
 	    public void handle(MouseEvent event) {
-		Product product = losgroessenTableView.getSelectionModel()
-			.getSelectedItem();
-		String formula = ClassicLotSchedulingFormula
-			.getLosgroessenFormel(product);
-		formula += ProductFormula.getProduktionsdauerFormel(product);
-		root.setLatexString(formula);
-		root.showLatex();
-
+		if (!losgroessenTableView.getItems().isEmpty()) {
+		    Product product = losgroessenTableView.getSelectionModel()
+			    .getSelectedItem();
+		    String formula = ClassicLotSchedulingFormula
+			    .getLosgroessenFormel(product);
+		    formula += ProductFormula
+			    .getProduktionsdauerFormel(product);
+		    root.setLatexString(formula);
+		    root.showLatex();
+		}
 	    }
 	});
     }

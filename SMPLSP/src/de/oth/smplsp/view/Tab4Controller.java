@@ -152,7 +152,7 @@ public class Tab4Controller implements Initializable {
 			+ "q: optimale spezifische Losgröße\n"));
 
 	prodablaufTableView.setTooltip(new Tooltip(
-		"Tabelle des Produktionsablaufs" + "k: Zeilenindex\n"
+		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
 			+ "Vorgang: Beschreibung des Vorgangs\n"
 			+ "Start: Start des Vorgangs\n"
 			+ "Ende: Ende des Vorgangs\n"));

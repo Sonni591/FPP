@@ -14,7 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
-	<classpathentry kind="lib" path="lib/controlsfx-samples-8.20.8.jar"/>
 	<classpathentry kind="lib" path="lib/fxsampler-1.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/openjfx-dialogs-1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/ostermillerutils-1.08.02-javadoc.jar"/>

@@ -1,14 +1,20 @@
 package de.oth.smplsp.view;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -24,6 +30,8 @@ import org.scilab.forge.jlatexmath.TeXFormula;
 
 import de.oth.smplsp.Main;
 import de.oth.smplsp.messages.Messages;
+import de.oth.smplsp.model.Product;
+import de.oth.smplsp.test.LotSchedulingAlgorithmTester;
 
 public class RootLayoutController {
 
@@ -89,16 +97,25 @@ public class RootLayoutController {
 
 	// customize the look of the Zoom area
 	customizeUIZoom();
+
     }
 
     /**
      * decorates the buttons of the zoom area with an corresponding icon font
      */
     private void customizeUIZoom() {
+	// remove default text of the buttons
+	btnZoomMinus.setText("");
+	btnZoomPlus.setText("");
+	// set icon fonts to the buttons
 	btnZoomMinus.setGraphic(new Glyph("FontAwesome", //$NON-NLS-1$
 		FontAwesome.Glyph.SEARCH_MINUS));
 	btnZoomPlus.setGraphic(fontAwesome
 		.create(FontAwesome.Glyph.SEARCH_PLUS));
+	// set tooltip text
+	btnZoomMinus.setTooltip(new Tooltip("verkleinern"));
+	btnZoomPlus.setTooltip(new Tooltip("vergrößern"));
+
     }
 
     public void showLatex() {
@@ -185,6 +202,38 @@ public class RootLayoutController {
     @FXML
     private void onActionFileSave() {
 	tab1Controller.handleSave();
+    }
+
+    @FXML
+    private void onActionTestData() {
+	if (tab1Controller.getProductsList().isEmpty()) {
+	    loadAndShowTestData();
+	} else {
+	    // when the table is not empty, show an confirmation dialog to
+	    // overwrite
+	    // the actual table data
+	    Alert alert = new Alert(AlertType.CONFIRMATION);
+	    alert.setTitle("Daten überschreiben?");
+	    alert.setHeaderText("Wollen Sie alle Daten der Tabelle mit den Testdaten überschreiben?");
+	    alert.setContentText("Das Laden der Testdaten überschreibt alle bisherigen Daten. Wollen Sie fortfahren?");
+	    Optional<ButtonType> result = alert.showAndWait();
+	    if (result.get() == ButtonType.OK) {
+		// ... user chose OK - delete table and load test data
+		loadAndShowTestData();
+	    } else {
+		// ... user chose Cancel
+		// do nothing
+	    }
+	}
+    }
+
+    private void loadAndShowTestData() {
+	List<Product> productsList = LotSchedulingAlgorithmTester
+		.getTestProducts();
+	ObservableList<Product> ObservableProductsList = FXCollections
+		.observableArrayList();
+	ObservableProductsList.addAll(productsList);
+	tab1Controller.setProductsListAndShowInTable(ObservableProductsList);
     }
 
     @FXML
