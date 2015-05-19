@@ -12,11 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.util.converter.NumberStringConverter;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
@@ -24,7 +26,6 @@ import javax.swing.JTextPane;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
-import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
@@ -32,6 +33,8 @@ import de.oth.smplsp.formula.MehrproduktLosgroessenFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.model.ProductionProcess;
+import de.oth.smplsp.util.Configuration;
+import de.oth.smplsp.util.Decimals;
 
 //import de.oth.smplsp.util.jfreechartfx.ChartViewer;
 
@@ -66,11 +69,12 @@ public class Tab4Controller implements Initializable {
     private String latexString = "";
     private int fontsize = 20;
 
-    // Reference to the main application.
-    private Main main;
     private RootLayoutController root;
 
     public ObservableList<Product> schedulingResult;
+
+    private Configuration config = Configuration.getInstance();
+    private Decimals decimals;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -107,7 +111,9 @@ public class Tab4Controller implements Initializable {
 
 	    @Override
 	    public void handle(MouseEvent event) {
-		showExplanations();
+		if (!losgroessenTableView.getItems().isEmpty()) {
+		    showExplanations();
+		}
 	    }
 	});
 	losgroessenTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -115,9 +121,11 @@ public class Tab4Controller implements Initializable {
 	    @Override
 	    public void handle(KeyEvent event) {
 
-		if (event.getCode() == KeyCode.UP
-			|| event.getCode() == KeyCode.DOWN) {
-		    showExplanations();
+		if (!losgroessenTableView.getItems().isEmpty()) {
+		    if (event.getCode() == KeyCode.UP
+			    || event.getCode() == KeyCode.DOWN) {
+			showExplanations();
+		    }
 		}
 	    }
 
@@ -171,7 +179,9 @@ public class Tab4Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-	// TODO Auto-generated method stub
+
+	int decimal = config.getDecimalPlaces();
+	decimals = new Decimals(decimal);
 
 	lgColumn1.setCellValueFactory(cellData -> cellData.getValue()
 		.getKProperty());
@@ -187,6 +197,7 @@ public class Tab4Controller implements Initializable {
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
 	addListenerForTableView();
+	setColumnDecimals();
 	showTMin();
 	showTOpt();
 
@@ -203,6 +214,36 @@ public class Tab4Controller implements Initializable {
 
     }
 
+    public void refreshDecimals() {
+	int decimal = config.getDecimalPlaces();
+	decimals.setDecimals(decimal);
+	setColumnDecimals();
+    }
+
+    public boolean areTablesEmpty() {
+	return losgroessenTableView.getItems().isEmpty()
+		|| prodablaufTableView.getItems().isEmpty();
+    }
+
+    public void setColumnDecimals() {
+	lgColumn1.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+	lgColumn2.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+
+	paColumn3
+		.setCellFactory(TextFieldTableCell
+			.<ProductionProcess, Number> forTableColumn(new NumberStringConverter(
+				decimals.getDecimalFormat())));
+	paColumn4
+		.setCellFactory(TextFieldTableCell
+			.<ProductionProcess, Number> forTableColumn(new NumberStringConverter(
+				decimals.getDecimalFormat())));
+
+    }
+
     public void scale() {
 
 	double scalefactor = root.getScalefactor();
@@ -213,15 +254,6 @@ public class Tab4Controller implements Initializable {
 
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
-    }
-
-    /**
-     * Is called by the main application to give a reference back to itself.
-     * 
-     * @param mainApp
-     */
-    public void setMainApp(Main main) {
-	this.main = main;
     }
 
 }

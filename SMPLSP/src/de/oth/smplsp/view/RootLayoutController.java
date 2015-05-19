@@ -94,6 +94,7 @@ public class RootLayoutController {
      */
     @FXML
     private void initialize() {
+
 	// Init all controller first
 	tab1Controller.init(this);
 	tab2Controller.init(this);
@@ -304,6 +305,19 @@ public class RootLayoutController {
 	} else if ((tabPane.getSelectionModel().getSelectedIndex() == 3)
 		|| (tabPane.getSelectionModel().getSelectedIndex() == 4)) {
 	    lblLeftStatus.setText("Algorithmus: Mehrproduktlosgrößenplanung");
+	}
+
+    }
+
+    public void setDecimalsInAllTabs() {
+	if (tab1Controller.areProductsInTable()) {
+	    tab1Controller.refreshDecimals();
+	}
+	if (!tab2Controller.areTablesEmpty()) {
+	    tab2Controller.refreshDecimals();
+	}
+	if (!tab4Controller.areTablesEmpty()) {
+	    tab4Controller.refreshDecimals();
 	}
 
     }

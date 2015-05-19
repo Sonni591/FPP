@@ -14,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import de.oth.smplsp.Main;
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.util.Configuration;
 
@@ -39,6 +40,7 @@ public class SettingsDialogController {
     private CheckBox cbBlackAndWhite;
 
     private Configuration config;
+    private boolean hasChangedDecimals = false;
 
     public SettingsDialogController() {
 	config = Configuration.getInstance();
@@ -91,6 +93,9 @@ public class SettingsDialogController {
     @FXML
     public void onActionSave() {
 	config.saveSettingsToConfigFile();
+	if (hasChangedDecimals) {
+	    Main.controller.setDecimalsInAllTabs();
+	}
 	closeDialog();
     }
 
@@ -101,6 +106,7 @@ public class SettingsDialogController {
 		    && txtDecimalPlaces.textProperty().getValue() != null) {
 		config.setDecimalPlaces(Integer.parseInt(txtDecimalPlaces
 			.textProperty().getValue()));
+		hasChangedDecimals = true;
 	    }
 	} catch (NumberFormatException e) {
 	    txtDecimalPlaces.textProperty().setValue(

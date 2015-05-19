@@ -19,7 +19,9 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    public static RootLayoutController controller;
 
+    // TODO: Kommunikation mit Tabs über RootLayoutController
     public Tab1Controller controller1;
     public Tab2Controller controller2;
 
@@ -56,7 +58,8 @@ public class Main extends Application {
 	    primaryStage.setScene(scene);
 
 	    // Give the controller access to the main app
-	    RootLayoutController controller = loader.getController();
+	    // RootLayoutController controller = loader.getController();
+	    controller = loader.getController();
 	    controller.setMainApp(this);
 
 	    primaryStage.show();

@@ -1,4 +1,3 @@
-#Tue May 19 14:31:57 CEST 2015
-DecimalPlaces=7
-BlackAndWhite=true
-
+#Tue May 19 21:06:18 CEST 2015
+DecimalPlaces=2
+BlackAndWhite=false

@@ -28,7 +28,6 @@ import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 
-import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
@@ -36,7 +35,7 @@ import de.oth.smplsp.error.CSVFileWrongNumberOfValuesInFileError;
 import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.persistence.CSVFile;
-import de.oth.smplsp.test.LotSchedulingAlgorithmTester;
+import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
 
 public class Tab1Controller {
@@ -73,13 +72,12 @@ public class Tab1Controller {
     @FXML
     private TableColumn<Product, Number> column6;
 
-    // Reference to the main application.
-    private Main main;
     private RootLayoutController root;
 
     private ObservableList<Product> productsList = FXCollections
 	    .observableArrayList();
 
+    private Configuration config = Configuration.getInstance();
     private Decimals decimals;
 
     /**
@@ -103,6 +101,16 @@ public class Tab1Controller {
      */
     public void setProductsList(ObservableList<Product> productsList) {
 	this.productsList = productsList;
+    }
+
+    public boolean areProductsInTable() {
+	return !productsTableView.getItems().isEmpty();
+    }
+
+    public void refreshDecimals() {
+	int decimal = config.getDecimalPlaces();
+	decimals.setDecimals(decimal);
+	setColumnDecimals();
     }
 
     /**
@@ -130,6 +138,8 @@ public class Tab1Controller {
     private void initialize() {
 	// customize the look of the panel
 	customizeUI();
+	int decimal = config.getDecimalPlaces();
+	decimals = new Decimals(decimal);
 	column1.setCellValueFactory(cellData -> cellData.getValue()
 		.getKProperty());
 	column2.setCellValueFactory(cellData -> cellData.getValue()
@@ -142,8 +152,6 @@ public class Tab1Controller {
 		.getSProperty());
 	column6.setCellValueFactory(cellData -> cellData.getValue()
 		.getHProperty());
-
-	fillTableTestData();
 
 	customizeTable();
     }
@@ -186,23 +194,14 @@ public class Tab1Controller {
 
     }
 
-    private void fillTableTestData() {
-
-	List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
-	productsList.addAll(products);
-
-	productsTableView.setItems(productsList);
-
-    }
-
-    /**
-     * Is called by the main application to give a reference back to itself.
-     * 
-     * @param mainApp
-     */
-    public void setMainApp(Main main) {
-	this.main = main;
-    }
+    // private void fillTableTestData() {
+    //
+    // List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
+    // productsList.addAll(products);
+    //
+    // productsTableView.setItems(productsList);
+    //
+    // }
 
     /**
      * Called when the user clicks the add row button. A new row is added to the
@@ -444,10 +443,10 @@ public class Tab1Controller {
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
-    root.getTab2Controller().setData();
+	    root.getTab2Controller().setData();
 	    root.getTab4Controller().setData();
-   showInfoDialogCalculationFinished();
-	   
+	    showInfoDialogCalculationFinished();
+
 	}
     }
 
@@ -511,10 +510,11 @@ public class Tab1Controller {
 		+ "τ: Rüstzeit\n" + "s: Rüstkostensatz\n"
 		+ "h: Lagerkostensatz"));
 
-	// create the decimal formatter
-	decimals = new Decimals(5);
-
 	// making columns 2-6 editable
+	setColumnDecimals();
+    }
+
+    private void setColumnDecimals() {
 	column2.setCellFactory(TextFieldTableCell
 		.<Product, Number> forTableColumn(new NumberStringConverter(
 			decimals.getDecimalFormat())));

@@ -35,6 +35,7 @@ public class Decimals {
      */
     public void setDecimals(int decimals) {
 	this.decimals = decimals;
+	decimalFormat = dezimalFormater();
     }
 
     /**

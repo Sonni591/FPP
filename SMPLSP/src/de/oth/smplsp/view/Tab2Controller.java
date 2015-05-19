@@ -11,11 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-import de.oth.smplsp.Main;
+import javafx.util.converter.NumberStringConverter;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
@@ -24,6 +25,8 @@ import de.oth.smplsp.formula.ProductFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.model.ProductionProcess;
+import de.oth.smplsp.util.Configuration;
+import de.oth.smplsp.util.Decimals;
 
 public class Tab2Controller implements Initializable {
 
@@ -48,11 +51,12 @@ public class Tab2Controller implements Initializable {
     @FXML
     private TableColumn<ProductionProcess, Number> paColumn4;
 
-    // Reference to the main application.
-    private Main main;
     private RootLayoutController root;
 
     public ObservableList<Product> schedulingResult;
+
+    private Configuration config = Configuration.getInstance();
+    private Decimals decimals;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -85,6 +89,8 @@ public class Tab2Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+	int decimal = config.getDecimalPlaces();
+	decimals = new Decimals(decimal);
 	lgColumn1.setCellValueFactory(cellData -> cellData.getValue()
 		.getKProperty());
 	lgColumn2.setCellValueFactory(cellData -> cellData.getValue()
@@ -101,6 +107,7 @@ public class Tab2Controller implements Initializable {
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
 	addListenerForTableView();
+	setColumnDecimals();
 
 	// 2x tooltip for the whole table
 	losgroessenTableView.setTooltip(new Tooltip(
@@ -114,6 +121,38 @@ public class Tab2Controller implements Initializable {
 			+ "Start: Start des Vorgangs\n"
 			+ "Ende: Ende des Vorgangs\n"));
 
+    }
+
+    public void refreshDecimals() {
+	int decimal = config.getDecimalPlaces();
+	decimals.setDecimals(decimal);
+	setColumnDecimals();
+    }
+
+    public boolean areTablesEmpty() {
+	return losgroessenTableView.getItems().isEmpty()
+		|| prodablaufTableView.getItems().isEmpty();
+    }
+
+    public void setColumnDecimals() {
+	lgColumn1.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+	lgColumn2.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+	lgColumn3.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+
+	paColumn3
+		.setCellFactory(TextFieldTableCell
+			.<ProductionProcess, Number> forTableColumn(new NumberStringConverter(
+				decimals.getDecimalFormat())));
+	paColumn4
+		.setCellFactory(TextFieldTableCell
+			.<ProductionProcess, Number> forTableColumn(new NumberStringConverter(
+				decimals.getDecimalFormat())));
     }
 
     public void init(RootLayoutController rootLayoutController) {
@@ -130,22 +169,22 @@ public class Tab2Controller implements Initializable {
 	    @Override
 	    public void handle(MouseEvent event) {
 
-if (!losgroessenTableView.getItems().isEmpty()) {
-		showExplanations();
-}
+		if (!losgroessenTableView.getItems().isEmpty()) {
+		    showExplanations();
+		}
 	    }
 	});
 	losgroessenTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
 	    @Override
 	    public void handle(KeyEvent event) {
-if (!losgroessenTableView.getItems().isEmpty()) {
+		if (!losgroessenTableView.getItems().isEmpty()) {
 
-		if (event.getCode() == KeyCode.UP
-			|| event.getCode() == KeyCode.DOWN) {
-		    showExplanations();
+		    if (event.getCode() == KeyCode.UP
+			    || event.getCode() == KeyCode.DOWN) {
+			showExplanations();
 
-		   }
+		    }
 		}
 	    }
 
@@ -160,15 +199,6 @@ if (!losgroessenTableView.getItems().isEmpty()) {
 	formula += ProductFormula.getProduktionsdauerFormel(product);
 	root.setLatexString(formula);
 	root.showLatex();
-    }
-
-    /**
-     * Is called by the main application to give a reference back to itself.
-     * 
-     * @param mainApp
-     */
-    public void setMainApp(Main main) {
-	this.main = main;
     }
 
 }

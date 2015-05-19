@@ -4,7 +4,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import de.oth.smplsp.util.MathUtils;
 
 public class Product {
 
@@ -357,21 +356,6 @@ public class Product {
      */
     public void setRohProperty(DoubleProperty roh) {
 	this.roh = roh;
-    }
-
-    public String getQToString() {
-	return "Die optimale Losgröße für das Produkt mit Produktnummer "
-		+ getK() + " beträgt: " + MathUtils.round(getQ(), 2) + "\n";
-    }
-
-    public String getTToString() {
-	return "Die optimale Produktionsdauer für das Produkt mit Produktnummer "
-		+ getK() + " beträgt: " + MathUtils.round(getT(), 2) + "\n";
-    }
-
-    public String getRohToString() {
-	return "Die Auslastung der Anlage für das Produkt mit Produktnummer "
-		+ getK() + " beträgt: " + MathUtils.round(getRoh(), 2) + "\n";
     }
 
     /**

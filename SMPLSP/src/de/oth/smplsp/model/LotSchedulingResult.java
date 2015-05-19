@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.oth.smplsp.util.MathUtils;
-
 public class LotSchedulingResult {
 
     private List<Product> products;
@@ -47,47 +45,6 @@ public class LotSchedulingResult {
 
     public Map<Integer, Double> gettOptSingle() {
 	return tOptSingle;
-    }
-
-    public String getOptProductionCycleToString() {
-	if (tOptCommon != null) {
-	    return "Der optimale gemeinsame Produktionszyklus beträgt: "
-		    + MathUtils.round(tOptCommon, 2) + "\n";
-	}
-	return "";
-    }
-
-    public String getMinProductionCycleToString() {
-	if (tMin != null) {
-	    return "Der minimale gemeinsame Produktionszyklus beträgt: "
-		    + MathUtils.round(tMin, 2) + "\n";
-	}
-	return "";
-    }
-
-    public String getProductsToString() {
-	String s = "";
-	for (Product product : products) {
-	    s += product.getRohToString();
-	    s += product.getQToString();
-	    s += product.getTToString();
-	    if (tOptSingle.containsKey(product.getK())) {
-		s += "Der optimale, produktspezifische Produkionszyklus für das Produkt mit der Produktnummer "
-			+ product.getK()
-			+ " beträgt "
-			+ MathUtils.round(tOptSingle.get(product.getK()), 2)
-			+ "\n";
-	    }
-	}
-	return s;
-    }
-
-    public String getTotalErgebnis() {
-	String s = "";
-	s += getOptProductionCycleToString();
-	s += getMinProductionCycleToString();
-	s += getProductsToString();
-	return s;
     }
 
 }
