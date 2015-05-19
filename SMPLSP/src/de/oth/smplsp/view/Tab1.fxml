@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="303.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.Tab1Controller">
    <children>
-      <ToolBar prefHeight="30.0">
+      <ToolBar prefHeight="38.0" prefWidth="497.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <Button fx:id="btnAddRow" focusTraversable="false" mnemonicParsing="false" onAction="#handleAddRow" text="+" />
             <Button fx:id="btnRemoveRow" focusTraversable="false" mnemonicParsing="false" onAction="#handleDeleteRow" text="-" />

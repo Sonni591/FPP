@@ -90,7 +90,6 @@ public class Tab5Controller {
 	collection.add(s1);
 
 	return collection;
-
     }
 
     private JFreeChart createChart(final IntervalCategoryDataset dataset) {

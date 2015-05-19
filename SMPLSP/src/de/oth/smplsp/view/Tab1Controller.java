@@ -463,9 +463,20 @@ public class Tab1Controller {
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
+	    showInfoDialogCalculationFinished();
 	    controller2.setData();
 	    controller4.setData();
 	}
+    }
+
+    /**
+     * Show an information dialog, that the calculation is finished
+     */
+    private void showInfoDialogCalculationFinished() {
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Berechnung durchgeführt");
+	alert.setHeaderText("Die Berechnung wurde erfolgreich durchgeführt.");
+	alert.showAndWait();
     }
 
     private void showErrorMinimalProductionCycleAlert() {

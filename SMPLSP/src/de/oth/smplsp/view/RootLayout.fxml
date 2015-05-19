@@ -103,6 +103,17 @@
                   </TabPane>
                </children>
             </AnchorPane>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="170.0">
+               <children>
+                  <ScrollPane fx:id="scrollpane" onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="183.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <SwingNode fx:id="swingNode">
+                              </SwingNode>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+           <!--  // save the code with forward/back buttons
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="170.0">
                <children>
                   <HBox prefHeight="161.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -126,6 +137,7 @@
                   </HBox>
                </children>
             </AnchorPane>
+            -->
         </items>
       </SplitPane>
    </center>
