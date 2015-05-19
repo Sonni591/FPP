@@ -7,10 +7,14 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
@@ -22,6 +26,7 @@ import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
+import de.oth.smplsp.formula.MehrproduktLosgroessenFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.model.ProductionProcess;
@@ -93,6 +98,41 @@ public class Tab4Controller implements Initializable {
 	}
     }
 
+    public void addListenerForTableView() {
+	losgroessenTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+	    @Override
+	    public void handle(MouseEvent event) {
+		showExplanations();
+	    }
+	});
+	losgroessenTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+	    @Override
+	    public void handle(KeyEvent event) {
+
+		if (event.getCode() == KeyCode.UP
+			|| event.getCode() == KeyCode.DOWN) {
+		    showExplanations();
+		}
+	    }
+
+	});
+    }
+
+    public void showExplanations() {
+	Product product = losgroessenTableView.getSelectionModel()
+		.getSelectedItem();
+	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
+		product,
+		Tab1Controller.results.get(
+			MoreProductLotScheduling.class.toString()).getResult());
+
+	root.setLatexString(formula);
+	root.showLatex();
+
+    }
+
     public void showTOpt() {
 
 	latexString = "T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}";
@@ -142,6 +182,7 @@ public class Tab4Controller implements Initializable {
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
+	addListenerForTableView();
 	showTMin();
 	showTOpt();
 

@@ -141,12 +141,14 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getLosgroessenFormel(Product product,
 	    LotSchedulingResult result) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} q_{opt}:";
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } q_{opt}:";
+	formula += getNewLine();
 	formula += getAllgemeineLosgroessenFormel();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
 		+ product.getK() + ":";
+	formula += getNewLine();
 	formula += getLosgroessenMitParameterFormel(product, result);
 	formula += getNewLine();
 	return formula;

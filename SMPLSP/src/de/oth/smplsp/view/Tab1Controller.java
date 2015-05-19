@@ -77,9 +77,6 @@ public class Tab1Controller {
     private Main main;
     private RootLayoutController root;
 
-    private Tab2Controller controller2;
-    private Tab4Controller controller4;
-
     private ObservableList<Product> productsList = FXCollections
 	    .observableArrayList();
 
@@ -122,49 +119,6 @@ public class Tab1Controller {
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
     }
-
-    // @Override
-    // public void initialize(URL arg0, ResourceBundle arg1) {
-    // customizeUI();
-    // column1.setCellValueFactory(cellData -> cellData.getValue()
-    // .getKProperty());
-    // column2.setCellValueFactory(cellData -> cellData.getValue()
-    // .getDProperty());
-    // column3.setCellValueFactory(cellData -> cellData.getValue()
-    // .getPProperty());
-    // column4.setCellValueFactory(cellData -> cellData.getValue()
-    // .getTauProperty());
-    // column5.setCellValueFactory(cellData -> cellData.getValue()
-    // .getSProperty());
-    // column6.setCellValueFactory(cellData -> cellData.getValue()
-    // .getHProperty());
-    //
-    // btnLoad.setOnAction(new EventHandler<ActionEvent>() {
-    //
-    // @Override
-    // public void handle(ActionEvent event) {
-    //
-    // Tab2Controller controller;
-    // try {
-    // controller = Tab2Controller.class.newInstance();
-    // } catch (InstantiationException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (IllegalAccessException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // // controller.setData();
-    // // main.setButtonText();
-    // }
-    // });
-    // ;
-    //
-    // fillTableTestData();
-    //
-    // customizeTable();
-    //
-    // }
 
     /**
      * //TODO documentation!!
@@ -214,14 +168,6 @@ public class Tab1Controller {
      */
     public void setMainApp(Main main) {
 	this.main = main;
-    }
-
-    public void setController2(Tab2Controller controller2) {
-	this.controller2 = controller2;
-    }
-
-    public void setController4(Tab4Controller controller4) {
-	this.controller4 = controller4;
     }
 
     /**
@@ -463,8 +409,8 @@ public class Tab1Controller {
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
-	    controller2.setData();
-	    controller4.setData();
+	    root.getTab2Controller().setData();
+	    root.getTab4Controller().setData();
 	}
     }
 

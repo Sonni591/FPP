@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import de.oth.smplsp.Main;
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
@@ -114,16 +116,31 @@ public class Tab2Controller implements Initializable {
 
 	    @Override
 	    public void handle(MouseEvent event) {
-		Product product = losgroessenTableView.getSelectionModel()
-			.getSelectedItem();
-		String formula = ClassicLotSchedulingFormula
-			.getLosgroessenFormel(product);
-		formula += ProductFormula.getProduktionsdauerFormel(product);
-		root.setLatexString(formula);
-		root.showLatex();
-
+		showExplanations();
 	    }
 	});
+	losgroessenTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+	    @Override
+	    public void handle(KeyEvent event) {
+
+		if (event.getCode() == KeyCode.UP
+			|| event.getCode() == KeyCode.DOWN) {
+		    showExplanations();
+		}
+	    }
+
+	});
+    }
+
+    public void showExplanations() {
+	Product product = losgroessenTableView.getSelectionModel()
+		.getSelectedItem();
+	String formula = ClassicLotSchedulingFormula
+		.getLosgroessenFormel(product);
+	formula += ProductFormula.getProduktionsdauerFormel(product);
+	root.setLatexString(formula);
+	root.showLatex();
     }
 
     /**
