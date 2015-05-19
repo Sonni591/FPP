@@ -21,7 +21,7 @@
             <TableView fx:id="losgroessenTableView" HBox.hgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />
-                <TableColumn fx:id="lgColumn2" editable="false" sortable="false" text="q(k)" />
+                <TableColumn fx:id="lgColumn2" editable="false" sortable="false" text="q" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

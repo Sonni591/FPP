@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
@@ -144,6 +145,17 @@ public class Tab4Controller implements Initializable {
 
 	showTMin();
 	showTOpt();
+
+	// 2x tooltip for the whole table
+	losgroessenTableView.setTooltip(new Tooltip(
+		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
+			+ "q: optimale spezifische Losgröße\n"));
+
+	prodablaufTableView.setTooltip(new Tooltip(
+		"Tabelle des Produktionsablaufs" + "k: Zeilenindex\n"
+			+ "Vorgang: Beschreibung des Vorgangs\n"
+			+ "Start: Start des Vorgangs\n"
+			+ "Ende: Ende des Vorgangs\n"));
 
     }
 

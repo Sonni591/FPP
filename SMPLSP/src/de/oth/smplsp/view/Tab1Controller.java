@@ -174,6 +174,9 @@ public class Tab1Controller {
 	btnAddRow.setText("");
 	btnRemoveRow.setText("");
 	btnRemoveAll.setText("");
+	btnLoad.setText("");
+	btnSave.setText("");
+	btnCalculate.setText("");
 
 	// set icon fonts to the buttons
 	btnAddRow.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PLUS));
