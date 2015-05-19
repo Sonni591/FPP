@@ -155,6 +155,9 @@ public class Tab1Controller {
 		.getHProperty());
 
 	customizeTable();
+
+	// initially combine the observable product list with the table view
+	productsTableView.setItems(productsList);
     }
 
     public void init(RootLayoutController rootLayoutController) {
