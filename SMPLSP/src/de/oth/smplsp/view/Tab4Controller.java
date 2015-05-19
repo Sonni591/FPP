@@ -1,4 +1,4 @@
-package de.oth.smplsp.view;
+﻿package de.oth.smplsp.view;
 
 import java.net.URL;
 import java.util.List;
@@ -15,6 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
@@ -35,6 +37,8 @@ import de.oth.smplsp.model.ProductionProcess;
 
 public class Tab4Controller implements Initializable {
 
+    @FXML
+    private HBox box;
     @FXML
     private TableView<Product> losgroessenTableView;
     @FXML
@@ -186,6 +190,25 @@ public class Tab4Controller implements Initializable {
 	showTMin();
 	showTOpt();
 
+	// 2x tooltip for the whole table
+	losgroessenTableView.setTooltip(new Tooltip(
+		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
+			+ "q: optimale spezifische Losgröße\n"));
+
+	prodablaufTableView.setTooltip(new Tooltip(
+		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
+			+ "Vorgang: Beschreibung des Vorgangs\n"
+			+ "Start: Start des Vorgangs\n"
+			+ "Ende: Ende des Vorgangs\n"));
+
+    }
+
+    public void scale() {
+
+	double scalefactor = root.getScalefactor();
+
+	box.setScaleX(scalefactor);
+	box.setScaleY(scalefactor);
     }
 
     public void init(RootLayoutController rootLayoutController) {

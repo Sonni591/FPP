@@ -1,4 +1,4 @@
-package de.oth.smplsp.view;
+﻿package de.oth.smplsp.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -91,6 +91,38 @@ public class Tab1Controller {
     }
 
     /**
+     * @return the productsList
+     */
+    public ObservableList<Product> getProductsList() {
+	return productsList;
+    }
+
+    /**
+     * @param productsList
+     *            the productsList to set
+     */
+    public void setProductsList(ObservableList<Product> productsList) {
+	this.productsList = productsList;
+    }
+
+    /**
+     * Set the productList and show it in the table
+     * 
+     * @param set
+     *            theproductsList
+     */
+    public void setProductsListAndShowInTable(
+	    ObservableList<Product> newProductsList) {
+	// clear table and load new values from the file
+	productsList.clear();
+	productsList = newProductsList;
+
+	// show loaded values in the view
+	productsTableView.setItems(productsList);
+
+    }
+
+    /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
@@ -128,6 +160,9 @@ public class Tab1Controller {
 	btnAddRow.setText("");
 	btnRemoveRow.setText("");
 	btnRemoveAll.setText("");
+	btnLoad.setText("");
+	btnSave.setText("");
+	btnCalculate.setText("");
 
 	// set icon fonts to the buttons
 	btnAddRow.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PLUS));
@@ -142,7 +177,6 @@ public class Tab1Controller {
 		FontAwesome.Glyph.PLAY_CIRCLE_ALT));
 
 	// set tooltip text
-	// TODO: Strings auslagern?
 	btnAddRow.setTooltip(new Tooltip("Zeile hinzufügen"));
 	btnRemoveRow.setTooltip(new Tooltip("Zeile löschen"));
 	btnRemoveAll.setTooltip(new Tooltip("Tabelle leeren"));
@@ -175,7 +209,7 @@ public class Tab1Controller {
      * table directly after the current selected one
      */
     @FXML
-    void handleAddRow() {
+    public void handleAddRow() {
 	Product newProductRow = new Product(productsList.size() + 1);
 	int selectedIndex = productsTableView.getSelectionModel()
 		.getSelectedIndex();
@@ -189,7 +223,7 @@ public class Tab1Controller {
      * row will be deleted from the table
      */
     @FXML
-    void handleDeleteRow() {
+    public void handleDeleteRow() {
 	int selectedIndex = productsTableView.getSelectionModel()
 		.getSelectedIndex();
 	if (selectedIndex >= 0) {
@@ -219,7 +253,7 @@ public class Tab1Controller {
      * Warning-Dialog the table will be cleared
      */
     @FXML
-    void handleDeleteAll() {
+    public void handleDeleteAll() {
 	// show dialog, with warning that all data will be deleted
 	Alert alert = new Alert(AlertType.CONFIRMATION);
 	alert.setTitle("Tabelle löschen?");
@@ -246,10 +280,11 @@ public class Tab1Controller {
      * @throws IOException
      */
     @FXML
-    void handleLoad(ActionEvent e) throws IOException {
-	// show dialog and ask the user if he wants to save the data first
-	showSaveDataBeforeLoadingNewFileAlert();
-
+    public void handleLoad(ActionEvent e) throws IOException {
+	if (!productsList.isEmpty()) {
+	    // show dialog and ask the user if he wants to save the data first
+	    showSaveDataBeforeLoadingNewFileAlert();
+	}
 	FileChooser fileChooser = new FileChooser();
 	fileChooser.setTitle("Eingabedaten laden");
 	fileChooser.getExtensionFilters().addAll(
@@ -347,7 +382,7 @@ public class Tab1Controller {
      * save the actual data of the table into a new *.csv file
      */
     @FXML
-    void handleSave() {
+    public void handleSave() {
 	FileChooser fileChooser = new FileChooser();
 	fileChooser.setTitle("Eingabedaten speichern");
 	String defaultFileName = "smplsp_data.csv";
@@ -379,7 +414,7 @@ public class Tab1Controller {
      * Scheduling Second Algorithm: More Product Scheduling
      */
     @FXML
-    void handleCalculate() {
+    public void handleCalculate() {
 
 	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
 
@@ -409,9 +444,21 @@ public class Tab1Controller {
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
-	    root.getTab2Controller().setData();
+    root.getTab2Controller().setData();
 	    root.getTab4Controller().setData();
+   showInfoDialogCalculationFinished();
+	   
 	}
+    }
+
+    /**
+     * Show an information dialog, that the calculation is finished
+     */
+    private void showInfoDialogCalculationFinished() {
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Berechnung durchgeführt");
+	alert.setHeaderText("Die Berechnung wurde erfolgreich durchgeführt.");
+	alert.showAndWait();
     }
 
     private void showErrorMinimalProductionCycleAlert() {

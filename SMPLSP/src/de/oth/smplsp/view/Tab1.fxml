@@ -7,14 +7,14 @@
 
 <AnchorPane prefHeight="303.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.Tab1Controller">
    <children>
-      <ToolBar prefHeight="30.0">
+      <ToolBar prefHeight="38.0" prefWidth="497.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <Button fx:id="btnAddRow" focusTraversable="false" mnemonicParsing="false" onAction="#handleAddRow" text="+" />
             <Button fx:id="btnRemoveRow" focusTraversable="false" mnemonicParsing="false" onAction="#handleDeleteRow" text="-" />
             <Button fx:id="btnRemoveAll" focusTraversable="false" mnemonicParsing="false" onAction="#handleDeleteAll" text="d" />
-            <Button fx:id="btnLoad" focusTraversable="false" mnemonicParsing="false" onAction="#handleLoad" text="öffnen" />
-            <Button fx:id="btnSave" focusTraversable="false" mnemonicParsing="false" onAction="#handleSave" text="speichern" />
-            <Button fx:id="btnCalculate" focusTraversable="false" mnemonicParsing="false" onAction="#handleCalculate" text="berechnen" />
+            <Button fx:id="btnLoad" focusTraversable="false" mnemonicParsing="false" onAction="#handleLoad" text="ö" />
+            <Button fx:id="btnSave" focusTraversable="false" mnemonicParsing="false" onAction="#handleSave" text="s" />
+            <Button fx:id="btnCalculate" focusTraversable="false" mnemonicParsing="false" onAction="#handleCalculate" text="b" />
          </items>
       </ToolBar>
       <TableView fx:id="productsTableView" editable="true" layoutY="37.0" prefHeight="266.0" prefWidth="540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">

@@ -7,39 +7,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="429.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.Tab4Controller">
-   <children>
-      <HBox layoutX="222.0" layoutY="138.0" prefHeight="429.0" prefWidth="736.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <SwingNode fx:id="tOptNode" />
-                  <SplitPane orientation="VERTICAL" />
-                  <SwingNode fx:id="tMinNode" />
-               </children>
-            </VBox>
-            <SplitPane />
-            <TableView fx:id="losgroessenTableView" HBox.hgrow="ALWAYS">
-              <columns>
-                <TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />
-                <TableColumn fx:id="lgColumn2" editable="false" sortable="false" text="q(k)" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <SplitPane />
-            <TableView fx:id="prodablaufTableView" HBox.hgrow="ALWAYS">
-              <columns>
-                <TableColumn fx:id="paColumn1" editable="false" sortable="false" text="k" />
-                <TableColumn fx:id="paColumn2" editable="false" sortable="false" text="Vorgang" />
-                  <TableColumn fx:id="paColumn3" editable="false" sortable="false" text="Start" />
-                  <TableColumn fx:id="paColumn4" editable="false" sortable="false" text="Ende" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-         </children>
-      </HBox>
-   </children>
+	<children>
+		<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" pannable="true" prefHeight="429.0" prefWidth="736.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+			<content>
+				<HBox fx:id="box" prefHeight="429.0" prefWidth="736.0">
+					<children>
+						<VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+							<children>
+								<SwingNode fx:id="tOptNode" />
+								<SplitPane orientation="VERTICAL" />
+								<SwingNode fx:id="tMinNode" />
+							</children>
+						</VBox>
+						<SplitPane />
+						<TableView fx:id="losgroessenTableView" HBox.hgrow="ALWAYS">
+							<columns>
+								<TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />
+								<TableColumn fx:id="lgColumn2" editable="false" sortable="false" text="q" />
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+						<SplitPane />
+						<TableView fx:id="prodablaufTableView" HBox.hgrow="ALWAYS">
+							<columns>
+								<TableColumn fx:id="paColumn1" editable="false" sortable="false" text="k" />
+								<TableColumn fx:id="paColumn2" editable="false" sortable="false" text="Vorgang" />
+								<TableColumn fx:id="paColumn3" editable="false" sortable="false" text="Start" />
+								<TableColumn fx:id="paColumn4" editable="false" sortable="false" text="Ende" />
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+					</children>
+				</HBox>
+			</content>
+		</ScrollPane>
+	</children>
 </AnchorPane>

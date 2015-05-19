@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
+import de.oth.smplsp.util.Configuration;
 
 public class MehrproduktLosgroessenFormula {
 
@@ -14,27 +15,58 @@ public class MehrproduktLosgroessenFormula {
     // default=8
     private static int fractionDigits = 8;
 
+    private static String red;
+    private static String green;
+    private static String blue;
+    private static String rubineRed;
+    private static String oliveGreen;
+    private static String dandelion;
+
     public static void initialize() {
 	formatter.setMaximumFractionDigits(fractionDigits);
+
+	// Check weather the text should be with color, or just black and white
+	if (Configuration.getInstance().getBlackAndWhiteMode()) {
+	    red = "Black";
+	    green = "Black";
+	    blue = "Black";
+	    rubineRed = "Black";
+	    oliveGreen = "Black";
+	    dandelion = "Black";
+	} else {
+	    green = "Green";
+	    red = "Red";
+	    blue = "Blue";
+	    rubineRed = "RubineRed";
+	    oliveGreen = "OliveGreen";
+	    dandelion = "Dandelion";
+	}
     }
 
     public static String getAllgemeineGemeinsameProduktionszyklusFormel() {
 	initialize();
-	String formel = "\\textcolor{Dandelion}{T_{opt}} = \\sqrt{\\frac{2 \\cdot \\sum_{k=1}^{K} \\textcolor{Red}{s_k}}{\\sum_{k=1}^{K}{\\textcolor{Green}{h_k} \\cdot \\textcolor{Blue}{D_k} \\cdot (1- \\textcolor{RubineRed}{{\\rho}_k})}}}";
+	String formel = "\\textcolor{"
+		+ dandelion
+		+ "}{T_{opt}} = \\sqrt{\\frac{2 \\cdot \\sum_{k=1}^{K} \\textcolor{"
+		+ red + "}{s_k}}{\\sum_{k=1}^{K}{\\textcolor{" + green
+		+ "}{h_k} \\cdot \\textcolor{" + blue
+		+ "}{D_k} \\cdot (1- \\textcolor{" + rubineRed
+		+ "}{{\\rho}_k})}}}";
 	return formel;
     }
 
     public static String getGemeinsameProduktionszyklusMitParameternFormel(
 	    LotSchedulingResult result) {
 	initialize();
-	String formel = "\\textcolor{Dandelion}{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
+	String formel = "\\textcolor{" + dandelion
+		+ "}{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += " \\textcolor{Red}{"
+		formel += " \\textcolor{" + red + "}{"
 			+ formatter.format(product.getS()) + "})}";
 	    } else {
-		formel += " \\textcolor{Red}{"
+		formel += " \\textcolor{" + red + "}{"
 			+ formatter.format(product.getS()) + "} + ";
 	    }
 
@@ -44,18 +76,18 @@ public class MehrproduktLosgroessenFormula {
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += "\\textcolor{Green}{"
+		formel += "\\textcolor{" + green + "}{"
 			+ formatter.format(product.getH())
-			+ "} \\cdot \\textcolor{Blue}{"
+			+ "} \\cdot \\textcolor{" + blue + "}{"
 			+ formatter.format(product.getD())
-			+ "} \\cdot (1 - \\textcolor{RubineRed}{"
+			+ "} \\cdot (1 - \\textcolor{" + rubineRed + "}{"
 			+ formatter.format(product.getRoh()) + "})";
 	    } else {
-		formel += "\\textcolor{Green}{"
+		formel += "\\textcolor{" + green + "}{"
 			+ formatter.format(product.getH())
-			+ "} \\cdot \\textcolor{Blue}{"
+			+ "} \\cdot \\textcolor{" + blue + "}{"
 			+ formatter.format(product.getD())
-			+ "} \\cdot (1 - \\textcolor{RubineRed}{"
+			+ "} \\cdot (1 - \\textcolor{" + rubineRed + "}{"
 			+ formatter.format(product.getRoh()) + "}) + ";
 	    }
 	}
@@ -66,7 +98,8 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getAllgemeineMinimalenProduktionszyklusFormel() {
 	initialize();
-	String formel = "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{RubineRed}{{\\rho}_k}}} \\leq T";
+	String formel = "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{"
+		+ rubineRed + "}{{\\rho}_k}}} \\leq T";
 	return formel;
     }
 
@@ -86,10 +119,10 @@ public class MehrproduktLosgroessenFormula {
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += "\\textcolor{RubineRed}{"
+		formel += "\\textcolor{" + rubineRed + "}{"
 			+ formatter.format(product.getRoh()) + "})}";
 	    } else {
-		formel += " \\textcolor{RubineRed}{"
+		formel += " \\textcolor{" + rubineRed + "}{"
 			+ formatter.format(product.getRoh()) + "} + ";
 	    }
 	}
@@ -98,15 +131,17 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getAllgemeineLosgroessenFormel() {
 	initialize();
-	String formel = "\\textcolor{OliveGreen}{q_k} = \\textcolor{Blue}{D_k} \\cdot \\textcolor{Dandelion}{T_{opt}}";
+	String formel = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
+		+ blue + "}{D_k} \\cdot \\textcolor{" + dandelion
+		+ "}{T_{opt}}";
 	return formel;
     }
 
     public static String getLosgroessenMitParameterFormel(Product product,
 	    LotSchedulingResult result) {
-	String formel = "\\textcolor{OliveGreen}{q_k} = \\textcolor{Blue}{"
-		+ formatter.format(product.getD())
-		+ "} \\cdot \\textcolor{Dandelion}{"
+	String formel = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
+		+ blue + "}{" + formatter.format(product.getD())
+		+ "} \\cdot \\textcolor{" + dandelion + "}{"
 		+ formatter.format(result.gettOpt()) + "}";
 	return formel;
     }

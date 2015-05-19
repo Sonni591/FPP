@@ -23,8 +23,10 @@ public class Configuration {
     private boolean hasChanged = false;
 
     private static String CONFIGPATH = "config/config.txt"; //$NON-NLS-1$
-    private static String DEFULTDECIMALPLACES = "5"; //$NON-NLS-1$
+    private static String DEFAULTDECIMALPLACES = "5"; //$NON-NLS-1$
     private static String DECIMALPLACES = "DecimalPlaces"; //$NON-NLS-1$
+    private static String DEFAULTBLACKANDWHITEMODE = "false"; //$NON-NLS-1$
+    private static String BLACKANDWHITEMODE = "BlackAndWhite"; //$NON-NLS-1$
 
     private Configuration() {
 	hasChanged = false;
@@ -53,7 +55,7 @@ public class Configuration {
      */
     public int getDecimalPlaces() {
 	return Integer.parseInt(props.getProperty(DECIMALPLACES,
-		DEFULTDECIMALPLACES));
+		DEFAULTDECIMALPLACES));
     }
 
     /**
@@ -64,6 +66,27 @@ public class Configuration {
     public void setDecimalPlaces(int decimalPlaces) {
 	hasChanged = true;
 	props.setProperty(DECIMALPLACES, Integer.toString(decimalPlaces));
+    }
+
+    /**
+     * Returns true, if the GUI is only black and white
+     * 
+     * @return
+     */
+    public boolean getBlackAndWhiteMode() {
+	boolean blackAndWhite = false;
+	if (props.getProperty(BLACKANDWHITEMODE, DEFAULTBLACKANDWHITEMODE)
+		.compareTo("true") == 0) {
+	    blackAndWhite = true;
+	}
+
+	return blackAndWhite;
+    }
+
+    public void setBlackAndWhiteMode(boolean blackAndWhiteMode) {
+	hasChanged = true;
+	props.setProperty(BLACKANDWHITEMODE,
+		Boolean.toString(blackAndWhiteMode));
     }
 
     /**
