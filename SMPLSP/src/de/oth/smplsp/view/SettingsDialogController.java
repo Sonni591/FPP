@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -34,6 +35,9 @@ public class SettingsDialogController {
     @FXML
     private TextField txtDecimalPlaces;
 
+    @FXML
+    private CheckBox cbBlackAndWhite;
+
     private Configuration config;
 
     public SettingsDialogController() {
@@ -48,7 +52,7 @@ public class SettingsDialogController {
     private void initialize() {
 	txtDecimalPlaces.textProperty().setValue(
 		Integer.toString(config.getDecimalPlaces()));
-
+	cbBlackAndWhite.setSelected(config.getBlackAndWhiteMode());
     }
 
     @FXML
@@ -59,8 +63,10 @@ public class SettingsDialogController {
 	    alert.setHeaderText(Messages.SettingsDialogController_CloseDialog_Header);
 	    alert.setContentText(Messages.SettingsDialogController_CloseDialog_Content);
 
-	    ButtonType btnTSave = new ButtonType(Messages.SettingsDialogController_SaveButton);
-	    ButtonType btnTClose = new ButtonType(Messages.SettingsDialogController_CloseButton);
+	    ButtonType btnTSave = new ButtonType(
+		    Messages.SettingsDialogController_SaveButton);
+	    ButtonType btnTClose = new ButtonType(
+		    Messages.SettingsDialogController_CloseButton);
 
 	    alert.getButtonTypes().setAll(btnTSave, btnTClose);
 
@@ -108,6 +114,12 @@ public class SettingsDialogController {
 
 	}
 
+    }
+
+    @FXML
+    public void onActionCBBlackAndWhiteChanged() {
+	config.setBlackAndWhiteMode(cbBlackAndWhite.selectedProperty()
+		.getValue());
     }
 
 }
