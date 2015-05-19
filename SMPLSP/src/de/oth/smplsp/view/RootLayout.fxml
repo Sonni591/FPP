@@ -24,7 +24,7 @@
               <MenuItem mnemonicParsing="false" onAction="#onActionFileExit" text="%Menu_File_Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="%Menu_Edit">
+          <Menu fx:id="menuEdit" mnemonicParsing="false" text="%Menu_Edit">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#onActionEditAdd" text="%Menu_Edit_Add" />
               <MenuItem mnemonicParsing="false" onAction="#onActionEditDelete" text="%Menu_Edit_Delete" />
@@ -73,29 +73,29 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TabPane prefHeight="112.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="tabPane" prefHeight="112.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
-                      <Tab text="Eingabe">
+                      <Tab onSelectionChanged="#onTabSelectionChanged" text="Eingabe">
                            <content>
                               <fx:include fx:id="tab1" source="Tab1.fxml" />
                            </content>
                       </Tab>
-                      <Tab text="Lösungsweg Konflikt">
+                      <Tab onSelectionChanged="#onTabSelectionChanged" text="Lösungsweg Konflikt">
                         <content>
                           <fx:include fx:id="tab2" source="Tab2.fxml" />
                         </content>
                       </Tab>
-                        <Tab text="Lösung Konflikt">
+                        <Tab onSelectionChanged="#onTabSelectionChanged" text="Lösung Konflikt">
                           <content>
                            <fx:include fx:id="tab3" source="Tab3.fxml" />
                           </content>
                         </Tab>
-                        <Tab text="Lösungsweg Konfliktfrei">
+                        <Tab onSelectionChanged="#onTabSelectionChanged" text="Lösungsweg Konfliktfrei">
                           <content>
                             <fx:include fx:id="tab4" source="Tab4.fxml" />
                           </content>
                         </Tab>
-                        <Tab text="Lösung Konfliktfrei">
+                        <Tab onSelectionChanged="#onTabSelectionChanged" text="Lösung Konfliktfrei">
                           <content>
                             <fx:include fx:id="tab5" source="Tab5.fxml" />
                           </content>

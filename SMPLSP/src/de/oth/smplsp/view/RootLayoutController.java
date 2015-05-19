@@ -14,6 +14,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
@@ -60,6 +62,10 @@ public class RootLayoutController {
     private Button btnZoomMinus;
     @FXML
     private SwingNode swingNode;
+    @FXML
+    private Menu menuEdit;
+    @FXML
+    private TabPane tabPane;
 
     private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome"); //$NON-NLS-1$
 
@@ -270,6 +276,20 @@ public class RootLayoutController {
 	alert.setContentText(Messages.RootLayoutController_AboutDialog_License);
 
 	alert.showAndWait();
+    }
+
+    @FXML
+    private void onTabSelectionChanged() {
+	setMenuEditDisable();
+    }
+
+    private void setMenuEditDisable() {
+	tabPane.getTabs().get(0);
+	if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+	    menuEdit.setDisable(false);
+	} else {
+	    menuEdit.setDisable(true);
+	}
     }
 
     /**
