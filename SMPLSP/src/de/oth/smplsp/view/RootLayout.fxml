@@ -45,7 +45,7 @@
             <Separator prefWidth="200.0" />
             <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="600.0" spacing="5.0">
                <children>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+                  <Label fx:id="lblLeftStatus" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="11.0" fx:id="x3" />
                      </font>

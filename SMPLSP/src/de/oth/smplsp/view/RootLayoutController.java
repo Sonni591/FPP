@@ -55,6 +55,8 @@ public class RootLayoutController {
 
     // References all Buttons
     @FXML
+    private Label lblLeftStatus;
+    @FXML
     private Label lblZoom;
     @FXML
     private Button btnZoomPlus;
@@ -281,15 +283,28 @@ public class RootLayoutController {
     @FXML
     private void onTabSelectionChanged() {
 	setMenuEditDisable();
+	setBottomLeftStatusLabel();
     }
 
     private void setMenuEditDisable() {
-	tabPane.getTabs().get(0);
 	if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
 	    menuEdit.setDisable(false);
 	} else {
 	    menuEdit.setDisable(true);
 	}
+    }
+
+    private void setBottomLeftStatusLabel() {
+	if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+	    lblLeftStatus.setText("");
+	} else if ((tabPane.getSelectionModel().getSelectedIndex() == 1)
+		|| (tabPane.getSelectionModel().getSelectedIndex() == 2)) {
+	    lblLeftStatus.setText("Algorithmus: klassische Losgrößenplanung");
+	} else if ((tabPane.getSelectionModel().getSelectedIndex() == 3)
+		|| (tabPane.getSelectionModel().getSelectedIndex() == 4)) {
+	    lblLeftStatus.setText("Algorithmus: Mehrproduktlosgrößenplanung");
+	}
+
     }
 
     /**
