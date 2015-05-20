@@ -1,5 +1,6 @@
 package de.oth.smplsp.util;
 
+import java.awt.Color;
 import java.text.NumberFormat;
 
 import org.jfree.chart.ChartFactory;
@@ -40,6 +41,7 @@ public class MyGanttChartFactory extends ChartFactory {
 		renderer);
 
 	plot.setOrientation(PlotOrientation.HORIZONTAL);
+	plot.getRenderer().setSeriesPaint(1, Color.BLACK);
 	JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
 		plot, legend);
 	currentTheme.apply(chart);

@@ -19,7 +19,7 @@
 	<classpathentry kind="lib" path="lib/ostermillerutils-1.08.02-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/ostermillerutils-1.08.02-sources.jar"/>
 	<classpathentry kind="lib" path="lib/fxgraphics2d-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.19-fx.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19-fx.jar" sourcepath="lib/source"/>
 	<classpathentry kind="lib" path="lib/controlsfx-8.20.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,6 @@
 package de.oth.smplsp.view;
 
-import java.util.Date;
+import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -10,13 +10,13 @@ import javafx.scene.layout.StackPane;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.data.category.IntervalCategoryDataset;
-import org.jfree.data.gantt.Task;
-import org.jfree.data.gantt.TaskSeries;
-import org.jfree.data.gantt.TaskSeriesCollection;
-import org.jfree.data.time.SimpleTimePeriod;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.model.ProductionProcess;
 import de.oth.smplsp.util.MyGanttChartFactory;
+import de.oth.smplsp.util.Task;
+import de.oth.smplsp.util.TaskSeries;
+import de.oth.smplsp.util.TaskSeriesCollection;
 
 public class Tab5Controller {
 
@@ -50,17 +50,7 @@ public class Tab5Controller {
      */
     @FXML
     private void initialize() {
-	final IntervalCategoryDataset dataset = createDataset();
-	JFreeChart chart = createChart(dataset);
-
-	// ChartViewer for displaying JFreeChart with JavaFX
-	ChartViewer viewer = new ChartViewer(chart);
-	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
-	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
-	// viewer.addChartMouseListener(this);
-
-	myStackPane.getChildren().add(viewer);
-
+	showChart();
     }
 
     /**
@@ -72,24 +62,69 @@ public class Tab5Controller {
 	this.main = main;
     }
 
-    public TaskSeriesCollection createDataset() {
-	final TaskSeries s1 = new TaskSeries("Scheduled");
-	Double d = new Double(10.5);
-	int i = d.intValue();
-	Double e = new Double(20.7);
-	int j = e.intValue();
-	s1.add(new Task("Signoff", new SimpleTimePeriod(new Date(10), new Date(
-		j))));
-	s1.add(new Task("Task1", new SimpleTimePeriod(new Date(10),
-		new Date(20))));
-	s1.add(new Task("Task2",
-		new SimpleTimePeriod(new Date(0), new Date(15))));
-	s1.add(new Task("Task33", new SimpleTimePeriod(new Date(15), new Date(
-		30))));
-	final TaskSeriesCollection collection = new TaskSeriesCollection();
-	collection.add(s1);
+    public void showChart() {
+	JFreeChart chart = createChart(createInitDataset());
+	ChartViewer viewer = new ChartViewer(chart);
+	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
+	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
+	// viewer.addChartMouseListener(this);
+	myStackPane.getChildren().add(viewer);
+    }
 
-	return collection;
+    public void showChart(List<ProductionProcess> processes) {
+	JFreeChart chart = createChart(createDataset(processes));
+	ChartViewer viewer = new ChartViewer(chart);
+	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
+	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
+	// viewer.addChartMouseListener(this);
+	myStackPane.getChildren().add(viewer);
+    }
+
+    // Create emptydataset when no Data available
+    public IntervalCategoryDataset createInitDataset() {
+	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
+	return taskseriescollection;
+    }
+
+    // Create Dataset for Chart
+    public TaskSeriesCollection createDataset(List<ProductionProcess> processes) {
+	TaskSeries taskseries = new TaskSeries("Schedule");
+	Task tmpTask = new Task("desc", 0, 0);
+	for (ProductionProcess a : processes) {
+	    if (a.getK() != null) {
+		tmpTask = new Task("desc", 0, 0);
+		tmpTask.setDescription(a.getK().getValue().toString());
+		tmpTask.setStart(a.getStart().doubleValue());
+		tmpTask.setEnd(a.getEnde().doubleValue());
+	    } else {
+		Task subTask1 = new Task("Rüstzeit", tmpTask.getStart(),
+			tmpTask.getEnd());
+		Task subTask2 = new Task("Produktion", a.getStart()
+			.doubleValue(), a.getEnde().doubleValue());
+		tmpTask.setEnd(tmpTask.getEnd() + a.getEnde().doubleValue());
+		tmpTask.addSubtask(subTask1);
+		tmpTask.addSubtask(subTask2);
+		taskseries.add(tmpTask);
+	    }
+
+	}
+	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
+	taskseriescollection.add(taskseries);
+	return taskseriescollection;
+
+	// Task task = new Task("1", 0, 10);
+	// task.addSubtask(new Task("Rüstzeit", 0, 4.5));
+	// task.addSubtask(new Task("Produktion", 5, 10));
+	// taskseries.add(task);
+	// Task task1 = new Task("task2", 2.2D, 10.8D);
+	// taskseries.add(task1);
+	// Task task2 = new Task("task3", 7.5D, 8.6D);
+	// taskseries.add(task2);
+	// TaskSeriesCollection taskseriescollection = new
+	// TaskSeriesCollection();
+	// taskseriescollection.add(taskseries);
+	// return taskseriescollection;
+
     }
 
     private JFreeChart createChart(final IntervalCategoryDataset dataset) {
@@ -103,8 +138,8 @@ public class Tab5Controller {
 		true, // tooltips
 		false // urls
 		);
-	return chart;
 
+	return chart;
     }
 
 }
