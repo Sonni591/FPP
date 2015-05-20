@@ -12,6 +12,9 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "de.oth.smplsp.messages.messages"; //$NON-NLS-1$
     public static final String BUNDLE_NAME_FXML = "messages/messagesFXML.properties";
+    public static String ExceptionDialog_Header;
+    public static String ExceptionDialog_LabelOfTextArea;
+    public static String ExceptionDialog_Title;
     public static String RootLayoutController_AboutDialog_License;
     public static String RootLayoutController_AboutDialog_NameAndVersion;
     public static String RootLayoutController_AboutDialog_Title;
