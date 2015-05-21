@@ -9,7 +9,7 @@ import org.jfree.chart.renderer.category.GanttRenderer;
 
 public class MyRenderer extends GanttRenderer {
 
-    private static final int PASS = 2; // assumes two passes
+    private static final int PASS = 1; // assumes two passes
     private final List<Color> clut = new ArrayList<Color>();
     private final TaskSeriesCollection model;
     private int row;
@@ -20,25 +20,17 @@ public class MyRenderer extends GanttRenderer {
 	this.model = model;
 	clut.add(0, new Color(50, 50, 50));
 	clut.add(1, new Color(150, 150, 150));
-	clut.add(2, new Color(150, 150, 150));
-	clut.add(3, new Color(50, 50, 50));
     }
 
     @Override
     public Paint getItemPaint(int row, int col) {
-
-	if (this.row == row && this.col == col) {
-
-	    if (index < 3) {
-		index++;
-	    } else {
-		index = 0;
-	    }
-	} else {
+	if (this.row != row || this.col != col) {
 	    this.row = row;
 	    this.col = col;
 	    index = 0;
 	}
-	return clut.get(index);
+	int clutIndex = index++ / PASS;
+	return clut.get(clutIndex);
     }
+
 }
