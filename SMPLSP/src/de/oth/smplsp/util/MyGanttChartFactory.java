@@ -1,21 +1,22 @@
 package de.oth.smplsp.util;
 
 import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.text.NumberFormat;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartTheme;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.IntervalCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.GanttRenderer;
 import org.jfree.chart.urls.StandardCategoryURLGenerator;
-import org.jfree.data.category.IntervalCategoryDataset;
 
 public class MyGanttChartFactory extends ChartFactory {
 
@@ -23,12 +24,13 @@ public class MyGanttChartFactory extends ChartFactory {
 
     public static JFreeChart createGanttChart(String title,
 	    String categoryAxisLabel, String valueAxisLabel,
-	    IntervalCategoryDataset dataset, boolean legend, boolean tooltips,
+	    TaskSeriesCollection dataset, boolean legend, boolean tooltips,
 	    boolean urls) {
 
 	CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
 	NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
-	CategoryItemRenderer renderer = new GanttRenderer();
+	// CategoryItemRenderer renderer = new GanttRenderer();
+	MyRenderer renderer = new MyRenderer(dataset);
 	if (tooltips) {
 	    renderer.setBaseToolTipGenerator(new IntervalCategoryToolTipGenerator(
 		    "{1}: {3} - {4}", NumberFormat.getNumberInstance()));
@@ -36,15 +38,25 @@ public class MyGanttChartFactory extends ChartFactory {
 	if (urls) {
 	    renderer.setBaseItemURLGenerator(new StandardCategoryURLGenerator());
 	}
+	renderer.setSeriesPaint(0, Color.GRAY);
+	renderer.setSeriesPaint(0, Color.GRAY);
+	renderer.setShadowVisible(false);
+
+	LegendItemCollection chartLegend = new LegendItemCollection();
+
+	Shape shape = new Rectangle(10, 10);
+	chartLegend.add(new LegendItem("Rüstzeit", null, null, null, shape,
+		new Color(50, 50, 50)));
+	chartLegend.add(new LegendItem("Produktion", null, null, null, shape,
+		new Color(150, 150, 150)));
 
 	CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
 		renderer);
 
 	plot.setOrientation(PlotOrientation.HORIZONTAL);
-	plot.getRenderer().setSeriesPaint(1, Color.BLACK);
+	plot.setFixedLegendItems(chartLegend);
 	JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
 		plot, legend);
-	currentTheme.apply(chart);
 	return chart;
     }
 }

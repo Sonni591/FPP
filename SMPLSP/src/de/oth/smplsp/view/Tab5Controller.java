@@ -9,7 +9,6 @@ import javafx.scene.layout.StackPane;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
-import org.jfree.data.category.IntervalCategoryDataset;
 
 import de.oth.smplsp.Main;
 import de.oth.smplsp.model.ProductionProcess;
@@ -81,7 +80,7 @@ public class Tab5Controller {
     }
 
     // Create emptydataset when no Data available
-    public IntervalCategoryDataset createInitDataset() {
+    public TaskSeriesCollection createInitDataset() {
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	return taskseriescollection;
     }
@@ -111,28 +110,14 @@ public class Tab5Controller {
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	taskseriescollection.add(taskseries);
 	return taskseriescollection;
-
-	// Task task = new Task("1", 0, 10);
-	// task.addSubtask(new Task("Rüstzeit", 0, 4.5));
-	// task.addSubtask(new Task("Produktion", 5, 10));
-	// taskseries.add(task);
-	// Task task1 = new Task("task2", 2.2D, 10.8D);
-	// taskseries.add(task1);
-	// Task task2 = new Task("task3", 7.5D, 8.6D);
-	// taskseries.add(task2);
-	// TaskSeriesCollection taskseriescollection = new
-	// TaskSeriesCollection();
-	// taskseriescollection.add(taskseries);
-	// return taskseriescollection;
-
     }
 
-    private JFreeChart createChart(final IntervalCategoryDataset dataset) {
+    private JFreeChart createChart(final TaskSeriesCollection dataset) {
 	// final JFreeChart chart = MyGanttChartFactory.createGanttChart(
-	final JFreeChart chart = MyGanttChartFactory.createGanttChart(
-		"Gantt Chart Demo", // chart title
-		"Task", // domain axis label
-		"Time", // range axis label
+	final JFreeChart chart = MyGanttChartFactory.createGanttChart("", // chart
+									  // title
+		"k", // domain axis label
+		"Zeit", // range axis label
 		dataset, // data
 		true, // include legend
 		true, // tooltips
