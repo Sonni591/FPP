@@ -71,7 +71,7 @@ public class RootLayoutController {
 
     private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome"); //$NON-NLS-1$
 
-    private String latexString = ""; //$NON-NLS-1$
+    public String latexString = ""; //$NON-NLS-1$
 
     // global parameters for the font size
     private int fontsize = 20;
@@ -248,7 +248,7 @@ public class RootLayoutController {
 
     @FXML
     private void onActionFileSettings() {
-	SettingsDialog dia = new SettingsDialog();
+	SettingsDialog dia = new SettingsDialog(this);
 	dia.showAndWait();
     }
 
@@ -357,6 +357,10 @@ public class RootLayoutController {
 
     public double getScalefactor() {
 	return scalefactor;
+    }
+
+    public TabPane getTabPane() {
+	return tabPane;
     }
 
 }

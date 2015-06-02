@@ -16,8 +16,11 @@ import de.oth.smplsp.messages.Messages;
 
 public class SettingsDialog extends Stage implements Initializable {
 
-    public SettingsDialog() {
+    RootLayoutController root;
+
+    public SettingsDialog(RootLayoutController rootLayoutController) {
 	setTitle(Messages.SettingsDialog_Title);
+	root = rootLayoutController;
 
 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
 		"SettingsDialog.fxml")); //$NON-NLS-1$
@@ -30,6 +33,26 @@ public class SettingsDialog extends Stage implements Initializable {
 	    setScene(new Scene((Parent) fxmlLoader.load()));
 	} catch (IOException e1) {
 	    e1.printStackTrace();
+	}
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javafx.stage.Stage#showAndWait()
+     */
+    @Override
+    public void showAndWait() {
+	// TODO Auto-generated method stub
+	super.showAndWait();
+	int index = root.getTabPane().getSelectionModel().getSelectedIndex();
+
+	switch (index) {
+	case 1:
+	    root.getTab2Controller().showExplanations();
+	    break;
+	case 3:
+	    root.getTab4Controller().showExplanations();
 	}
     }
 
