@@ -144,7 +144,8 @@ public class Tab4Controller implements Initializable {
     public void showExplanations() {
 	Product product = losgroessenTableView.getSelectionModel()
 		.getSelectedItem();
-	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
+	String formula = root.getDefaultLatexStringTab4();
+	formula += MehrproduktLosgroessenFormula.getLosgroessenFormel(
 		product,
 		Tab1Controller.results.get(
 			MoreProductLotScheduling.class.toString()).getResult());

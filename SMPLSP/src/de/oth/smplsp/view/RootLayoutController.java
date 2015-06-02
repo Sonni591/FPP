@@ -360,7 +360,6 @@ public class RootLayoutController {
 
 	if (tabPane.getSelectionModel().getSelectedIndex() != selectedTab) {
 	    selectedTab = tabPane.getSelectionModel().getSelectedIndex();
-	    System.out.println(tabPane.getSelectionModel().getSelectedIndex());
 
 	    switch (tabPane.getSelectionModel().getSelectedIndex()) {
 	    case 0:
@@ -377,6 +376,7 @@ public class RootLayoutController {
 		break;
 	    case 4:
 		latexString = getDefaultLatexStringTab5();
+		latexString += getExplanationTextClickOnALine();
 		break;
 	    default:
 		latexString = getLatexNewLine();
@@ -385,25 +385,14 @@ public class RootLayoutController {
 
 	    showExplanationComponent();
 
-	    // if (tabPane.getSelectionModel().getSelectedIndex() >= 1) {
-	    // setLatexString(explanationStandardText);
-	    // } else {
-	    // setLatexString("\\textrm{}");
-	    // }
-	    //
-	    // if (tabPane.getSelectionModel().getSelectedIndex() != 3) {
-	    // showExplanationComponent();
-	    // }
 	}
 
-	// if (tabPane.getSelectionModel().getSelectedIndex() >= 1) {
-	// setLatexString("\\\\");
-	// showExplanationComponent();
-	// }
     }
 
     public String getDefaultLatexStringTab1() {
-	String s = "k: Zeilenindex";
+	String s = "\\textrm{Hinweise zur Dateneingabe:";
+	s += getLatexNewLine();
+	s += "k: Zeilenindex";
 	s += getLatexNewLine();
 	s += "D: Nachfragerate";
 	s += getLatexNewLine();
@@ -414,12 +403,12 @@ public class RootLayoutController {
 	s += getLatexNewLine();
 	s += "s: Rüstkostensatz";
 	s += getLatexNewLine();
-	s += "h: Lagerkostensatz";
+	s += "h: Lagerkostensatz}";
 	return s;
     }
 
     public String getDefaultLatexStringTab2() {
-	return getExplanationStandardText();
+	return getExplanationTextClickOnALine();
     }
 
     public String getDefaultLatexStringTab3() {
@@ -427,19 +416,16 @@ public class RootLayoutController {
     }
 
     public String getDefaultLatexStringTab4() {
-	String s = "\\textrm{Die Formel für den optimalen gemeinsamen Produktionszyklus lautet:";
+	String s = "\\textrm{Formel für den optimalen gemeinsamen Produktionszyklus:";
 	s += getLatexNewLine();
 	s += "\\mathrm{T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}}";
 	s += getLatexNewLine();
 	s += getLatexNewLine();
 
-	s += "\\textrm{Die Formel für den minimalen gemeinsamen Produktionszyklus lautet:";
+	s += "\\textrm{Formel für den minimalen gemeinsamen Produktionszyklus:";
 	s += getLatexNewLine();
 	s += "\\mathrm{T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}}";
 	s += getLatexNewLine();
-
-	s += getExplanationStandardText();
-
 	return s;
     }
 
@@ -451,7 +437,7 @@ public class RootLayoutController {
 	return "\\\\";
     }
 
-    public static String getExplanationStandardText() {
+    public static String getExplanationTextClickOnALine() {
 	return "\\textrm{Klicken Sie auf eine Zeile, um die detaillierte Berechnung anzuzeigen";
     }
 

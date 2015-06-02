@@ -164,7 +164,7 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getMinimalenProduktionszyklusFormel(
 	    LotSchedulingResult result) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} T_{min}:";
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} \\mathrm{T_{min}}:";
 	formula += getAllgemeineMinimalenProduktionszyklusFormel();
 	formula += getNewLine();
 	formula += getNewLine();
@@ -176,7 +176,7 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getLosgroessenFormel(Product product,
 	    LotSchedulingResult result) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } q_{opt}:";
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } \\mathrm{q_{opt}}:";
 	formula += getNewLine();
 	formula += getAllgemeineLosgroessenFormel();
 	formula += getNewLine();
