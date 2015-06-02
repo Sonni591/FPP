@@ -149,7 +149,11 @@ public class RootLayoutController {
 
 	// show an initial decription text of the input table in the explanation
 	// component
-	initExplanationTabTextTab1();
+	// WARNING: Does not work properly on Mac OS X and leads to an not
+	// responding-application
+	if (!System.getProperty("os.name").equals("Mac OS X")) {
+	    initExplanationTabTextTab1();
+	}
     }
 
     /**
@@ -176,17 +180,23 @@ public class RootLayoutController {
     }
 
     public void showExplanationComponent() {
-	TeXFormula tex = new TeXFormula(latexString);
+	try {
+	    TeXFormula tex = new TeXFormula(latexString);
 
-	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
+	    Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
 
-	// generate a JTextPane that will be displayed in a SwingNode in JavaFX
-	JTextPane pane = new JTextPane();
-	pane.setEditable(false);
-	pane.insertIcon(icon);
-	pane.repaint();
+	    // generate a JTextPane that will be displayed in a SwingNode in
+	    // JavaFX
+	    JTextPane pane = new JTextPane();
+	    pane.setEditable(false);
+	    pane.insertIcon(icon);
+	    pane.repaint();
 
-	this.swingNode.setContent(pane);
+	    this.swingNode.setContent(pane);
+	} catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 
     public void setLatexString(String latexString) {
@@ -335,7 +345,11 @@ public class RootLayoutController {
     private void onTabSelectionChanged() {
 	setMenuEditDisable();
 	setBottomLeftStatusLabel();
-	clearExplanationComponent();
+	// WARNING: Does not work properly on Mac OS X and leads to an not
+	// responding-application
+	if (!System.getProperty("os.name").equals("Mac OS X")) {
+	    clearExplanationComponent();
+	}
     }
 
     private void setMenuEditDisable() {

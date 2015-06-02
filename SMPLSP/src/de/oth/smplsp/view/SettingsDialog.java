@@ -49,10 +49,10 @@ public class SettingsDialog extends Stage implements Initializable {
 
 	switch (index) {
 	case 1:
-	    root.getTab2Controller().showExplanations();
+	    root.getTab2Controller().showExplanations(root.getLatexString());
 	    break;
 	case 3:
-	    root.getTab4Controller().showExplanations();
+	    root.getTab4Controller().showExplanations(root.getLatexString());
 	}
     }
 

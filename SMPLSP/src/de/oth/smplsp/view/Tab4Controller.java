@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingNode;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +24,9 @@ import javafx.util.converter.NumberStringConverter;
 import javax.swing.Icon;
 import javax.swing.JTextPane;
 
-import be.ugent.caagt.jmathtex.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
@@ -61,6 +64,11 @@ public class Tab4Controller implements Initializable {
     private TableColumn<ProductionProcess, Number> paColumn3;
     @FXML
     private TableColumn<ProductionProcess, Number> paColumn4;
+
+    @FXML
+    private SwingNode tOptNode;
+    @FXML
+    private SwingNode tMinNode;
 
     // private String latexString = "";
     private int fontsize = 20;
@@ -271,7 +279,8 @@ public class Tab4Controller implements Initializable {
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
 
-	// generate a JTextPane that will be displayed in a SwingNode in JavaFX
+	// generate a JTextPane that will be displayed in a SwingNode
+	// in JavaFX
 	JTextPane pane = new JTextPane();
 	pane.setEditable(false);
 	pane.insertIcon(icon);
@@ -290,11 +299,15 @@ public class Tab4Controller implements Initializable {
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
 
-	// generate a JTextPane that will be displayed in a SwingNode in JavaFX
+	// generate a JTextPane that will be displayed in a SwingNode
+	// in JavaFX
 	JTextPane pane = new JTextPane();
 	pane.setEditable(false);
 	pane.insertIcon(icon);
 	pane.repaint();
+
+	tMinNode.setContent(pane);
+
     }
 
     @Override
@@ -319,8 +332,8 @@ public class Tab4Controller implements Initializable {
 	initializeTables();
 	addListeners();
 	setColumnDecimals();
-	// showTMin();
-	// showTOpt();
+	showTMin();
+	showTOpt();
 
 	// 2x tooltip for the whole table
 	losgroessenTableView.setTooltip(new Tooltip(

@@ -54,7 +54,9 @@ public class MehrproduktLosgroessenFormula {
     public static String getGemeinsameProduktionszyklusMitParameternFormel(
 	    LotSchedulingResult result) {
 	initialize();
-	String formel = "\\textcolor{" + dandelion
+	String formel = "\\textrm{Eingesetzte Formel für den optimalen gemeinsamen Produktionszyklus:";
+	formel += "\\\\";
+	formel += "\\mathrm{\\textcolor{" + dandelion
 		+ "}{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
@@ -93,6 +95,7 @@ public class MehrproduktLosgroessenFormula {
 	}
 
 	formel += "}}";
+	formel += "}"; // close mathrm
 	return formel;
     }
 
@@ -110,7 +113,9 @@ public class MehrproduktLosgroessenFormula {
     public static String getMinimalenProduktionszyklusMitParameternFormel(
 	    LotSchedulingResult result) {
 	initialize();
-	String formel = "T_{min} = \\frac{";
+	String formel = "\\textrm{Eingesetzte Formel für den minimalen gemeinsamen Produktionszyklus:";
+	formel += "\\\\";
+	formel += "\\mathrm{T_{min} = \\frac{";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
@@ -134,6 +139,7 @@ public class MehrproduktLosgroessenFormula {
 			+ "} + ";
 	    }
 	}
+	formel += "}"; // close mathrm
 	return formel;
     }
 
