@@ -127,7 +127,10 @@ public class Tab2Controller implements Initializable {
 		.getStart());
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
-
+	ObservableList productList = FXCollections.observableArrayList();
+	setProductsListAndShowInTableProduct(productList);
+	ObservableList processingList = FXCollections.observableArrayList();
+	setProductsListAndShowInTableProcessing(processingList);
 	addListenerForTableView();
 	setColumnDecimals();
 
