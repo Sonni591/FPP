@@ -218,6 +218,10 @@ public class Tab4Controller implements Initializable {
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
+	ObservableList productList = FXCollections.observableArrayList();
+	setProductsListAndShowInTableProduct(productList);
+	ObservableList processingList = FXCollections.observableArrayList();
+	setProductsListAndShowInTableProcessing(processingList);
 	addListenerForTableView();
 	setColumnDecimals();
 	showTMin();
