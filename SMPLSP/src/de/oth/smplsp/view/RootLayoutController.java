@@ -507,6 +507,7 @@ public class RootLayoutController {
      */
     public void setResults(Map<String, IBasicLotSchedulingAlgorithm> results) {
 	this.results = results;
+    }
 
     public TabPane getTabPane() {
 	return tabPane;

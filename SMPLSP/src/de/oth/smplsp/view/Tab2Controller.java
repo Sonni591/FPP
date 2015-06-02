@@ -275,9 +275,11 @@ public class Tab2Controller implements Initializable {
     }
 
     public void initializeTables() {
-	ObservableList productList = FXCollections.observableArrayList();
+	ObservableList<Product> productList = FXCollections
+		.observableArrayList();
 	setProductsListAndShowInTableProduct(productList);
-	ObservableList processingList = FXCollections.observableArrayList();
+	ObservableList<ProductionProcess> processingList = FXCollections
+		.observableArrayList();
 	setProcessesListAndShowInTableProcessing(processingList);
     }
 

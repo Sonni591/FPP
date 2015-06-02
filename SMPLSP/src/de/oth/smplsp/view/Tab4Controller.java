@@ -19,6 +19,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
+
+import javax.swing.Icon;
+import javax.swing.JTextPane;
+
+import be.ugent.caagt.jmathtex.TeXConstants;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
@@ -195,15 +200,14 @@ public class Tab4Controller implements Initializable {
 
     public void showExplanations(String formula) {
 	root.setLatexString(formula);
-	root.showLatex();
+	root.showExplanationComponent();
     }
 
     public String getLosgroessenFormula() {
 	Product product = losgroessenTableView.getSelectionModel()
 		.getSelectedItem();
 	String formula = root.getDefaultLatexStringTab4();
-	formula += MehrproduktLosgroessenFormula.getLosgroessenFormel(
-		product,
+	formula += MehrproduktLosgroessenFormula.getLosgroessenFormel(product,
 		root.getResults()
 			.get(MoreProductLotScheduling.class.toString())
 			.getResult());
@@ -261,7 +265,7 @@ public class Tab4Controller implements Initializable {
 
 	// latexString =
 	// "T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}";
-	latexString = MehrproduktLosgroessenFormula
+	String latexString = MehrproduktLosgroessenFormula
 		.getAllgemeineGemeinsameProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
