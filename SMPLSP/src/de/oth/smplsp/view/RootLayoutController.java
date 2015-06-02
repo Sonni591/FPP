@@ -1,4 +1,4 @@
-package de.oth.smplsp.view;
+﻿package de.oth.smplsp.view;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,11 +74,13 @@ public class RootLayoutController {
 
     private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome"); //$NON-NLS-1$
 
-    private String latexString = ""; //$NON-NLS-1$
+    public String latexString = ""; //$NON-NLS-1$
 
     // global parameters for the font size
     private int fontsize = 20;
     private double scalefactor = 1;
+
+    private int selectedTab = 0;
 
     // Reference to the main application.
     private Main main;
@@ -89,6 +91,43 @@ public class RootLayoutController {
      */
     public RootLayoutController() {
 
+    }
+
+    /**
+     * @return the fontsize
+     */
+    public int getFontsize() {
+	return fontsize;
+    }
+
+    /**
+     * @param fontsize
+     *            the fontsize to set
+     */
+    public void setFontsize(int fontsize) {
+	this.fontsize = fontsize;
+    }
+
+    /**
+     * @return the swingNode
+     */
+    public SwingNode getSwingNode() {
+	return swingNode;
+    }
+
+    /**
+     * @param swingNode
+     *            the swingNode to set
+     */
+    public void setSwingNode(SwingNode swingNode) {
+	this.swingNode = swingNode;
+    }
+
+    /**
+     * @return the latexString
+     */
+    public String getLatexString() {
+	return latexString;
     }
 
     /**
@@ -108,6 +147,9 @@ public class RootLayoutController {
 	// customize the look of the Zoom area
 	customizeUIZoom();
 
+	// show an initial decription text of the input table in the explanation
+	// component
+	initExplanationTabTextTab1();
     }
 
     /**
@@ -128,8 +170,12 @@ public class RootLayoutController {
 
     }
 
-    public void showLatex() {
+    private void initExplanationTabTextTab1() {
+	latexString = getDefaultLatexStringTab1();
+	showExplanationComponent();
+    }
 
+    public void showExplanationComponent() {
 	TeXFormula tex = new TeXFormula(latexString);
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
@@ -138,9 +184,9 @@ public class RootLayoutController {
 	JTextPane pane = new JTextPane();
 	pane.setEditable(false);
 	pane.insertIcon(icon);
+	pane.repaint();
 
-	swingNode.setContent(pane);
-
+	this.swingNode.setContent(pane);
     }
 
     public void setLatexString(String latexString) {
@@ -153,7 +199,7 @@ public class RootLayoutController {
 	setScalefactor(0.2);
 
 	// regenerate LaTeX image
-	showLatex();
+	showExplanationComponent();
 	tab4Controller.scale();
     }
 
@@ -163,7 +209,7 @@ public class RootLayoutController {
 	setScalefactor(-0.2);
 
 	// regenerate LaTeX image
-	showLatex();
+	showExplanationComponent();
 	tab4Controller.scale();
     }
 
@@ -195,7 +241,7 @@ public class RootLayoutController {
     public void handleZoomFinished(ZoomEvent event) {
 
 	// regenerate LaTeX image
-	showLatex();
+	showExplanationComponent();
 
 	// stop further propagation of the event
 	event.consume();
@@ -251,7 +297,7 @@ public class RootLayoutController {
 
     @FXML
     private void onActionFileSettings() {
-	SettingsDialog dia = new SettingsDialog();
+	SettingsDialog dia = new SettingsDialog(this);
 	dia.showAndWait();
     }
 
@@ -289,6 +335,7 @@ public class RootLayoutController {
     private void onTabSelectionChanged() {
 	setMenuEditDisable();
 	setBottomLeftStatusLabel();
+	clearExplanationComponent();
     }
 
     private void setMenuEditDisable() {
@@ -310,6 +357,91 @@ public class RootLayoutController {
 	    lblLeftStatus.setText("Algorithmus: Mehrproduktlosgrößenplanung");
 	}
 
+    }
+
+    private void clearExplanationComponent() {
+
+	if (tabPane.getSelectionModel().getSelectedIndex() != selectedTab) {
+	    selectedTab = tabPane.getSelectionModel().getSelectedIndex();
+
+	    switch (tabPane.getSelectionModel().getSelectedIndex()) {
+	    case 0:
+		latexString = getDefaultLatexStringTab1();
+		break;
+	    case 1:
+		latexString = getDefaultLatexStringTab2();
+		break;
+	    case 2:
+		latexString = getDefaultLatexStringTab3();
+		break;
+	    case 3:
+		latexString = getDefaultLatexStringTab4();
+		break;
+	    case 4:
+		latexString = getDefaultLatexStringTab5();
+		latexString += getExplanationTextClickOnALine();
+		break;
+	    default:
+		latexString = getLatexNewLine();
+		break;
+	    }
+
+	    showExplanationComponent();
+
+	}
+
+    }
+
+    public String getDefaultLatexStringTab1() {
+	String s = "\\textrm{Hinweise zur Dateneingabe:";
+	s += getLatexNewLine();
+	s += "k: Zeilenindex";
+	s += getLatexNewLine();
+	s += "D: Nachfragerate";
+	s += getLatexNewLine();
+	s += getLatexNewLine();
+	s += "p: Produktionsrate";
+	s += getLatexNewLine();
+	s += "τ: Rüstzeit";
+	s += getLatexNewLine();
+	s += "s: Rüstkostensatz";
+	s += getLatexNewLine();
+	s += "h: Lagerkostensatz}";
+	return s;
+    }
+
+    public String getDefaultLatexStringTab2() {
+	return getExplanationTextClickOnALine();
+    }
+
+    public String getDefaultLatexStringTab3() {
+	return getLatexNewLine();
+    }
+
+    public String getDefaultLatexStringTab4() {
+	String s = "\\textrm{Formel für den optimalen gemeinsamen Produktionszyklus:";
+	s += getLatexNewLine();
+	s += "\\mathrm{T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}}";
+	s += getLatexNewLine();
+	s += getLatexNewLine();
+
+	s += "\\textrm{Formel für den minimalen gemeinsamen Produktionszyklus:";
+	s += getLatexNewLine();
+	s += "\\mathrm{T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}}";
+	s += getLatexNewLine();
+	return s;
+    }
+
+    public String getDefaultLatexStringTab5() {
+	return getLatexNewLine();
+    }
+
+    public static String getLatexNewLine() {
+	return "\\\\";
+    }
+
+    public static String getExplanationTextClickOnALine() {
+	return "\\textrm{Klicken Sie auf eine Zeile, um die detaillierte Berechnung anzuzeigen";
     }
 
     public void setDecimalsInAllTabs() {
@@ -375,6 +507,10 @@ public class RootLayoutController {
      */
     public void setResults(Map<String, IBasicLotSchedulingAlgorithm> results) {
 	this.results = results;
+
+    public TabPane getTabPane() {
+	return tabPane;
+
     }
 
 }

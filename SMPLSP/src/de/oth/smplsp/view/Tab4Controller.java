@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,13 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
-
-import javax.swing.Icon;
-import javax.swing.JTextPane;
-
-import org.scilab.forge.jlatexmath.TeXConstants;
-import org.scilab.forge.jlatexmath.TeXFormula;
-
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
@@ -65,12 +57,7 @@ public class Tab4Controller implements Initializable {
     @FXML
     private TableColumn<ProductionProcess, Number> paColumn4;
 
-    @FXML
-    private SwingNode tOptNode;
-    @FXML
-    private SwingNode tMinNode;
-
-    private String latexString = "";
+    // private String latexString = "";
     private int fontsize = 20;
 
     private RootLayoutController root;
@@ -214,7 +201,8 @@ public class Tab4Controller implements Initializable {
     public String getLosgroessenFormula() {
 	Product product = losgroessenTableView.getSelectionModel()
 		.getSelectedItem();
-	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
+	String formula = root.getDefaultLatexStringTab4();
+	formula += MehrproduktLosgroessenFormula.getLosgroessenFormel(
 		product,
 		root.getResults()
 			.get(MoreProductLotScheduling.class.toString())
@@ -303,8 +291,6 @@ public class Tab4Controller implements Initializable {
 	pane.setEditable(false);
 	pane.insertIcon(icon);
 	pane.repaint();
-
-	tMinNode.setContent(pane);
     }
 
     @Override
@@ -329,8 +315,8 @@ public class Tab4Controller implements Initializable {
 	initializeTables();
 	addListeners();
 	setColumnDecimals();
-	showTMin();
-	showTOpt();
+	// showTMin();
+	// showTOpt();
 
 	// 2x tooltip for the whole table
 	losgroessenTableView.setTooltip(new Tooltip(

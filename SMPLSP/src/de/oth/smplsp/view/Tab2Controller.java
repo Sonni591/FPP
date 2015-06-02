@@ -292,7 +292,7 @@ public class Tab2Controller implements Initializable {
 
     public void showExplanations(String formula) {
 	root.setLatexString(formula);
-	root.showLatex();
+	root.showExplanationComponent();
     }
 
 }

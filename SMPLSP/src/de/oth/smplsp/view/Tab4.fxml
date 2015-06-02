@@ -21,6 +21,7 @@
 							</children>
 						</VBox>
 						<SplitPane />
+
 						<TableView fx:id="losgroessenTableView" HBox.hgrow="ALWAYS">
 							<columns>
 								<TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />

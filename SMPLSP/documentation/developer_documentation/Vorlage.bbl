@@ -1,0 +1,49 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.4 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \sortlist{anyt}{anyt}
+    \entry{Herrmann.2009}{book}{}
+      \name{labelname}{1}{}{%
+        {{hash=26a0929de90e3eac13d18f7a2f2c16d8}{Herrmann}{H\bibinitperiod}{Frank}{F\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{hash=26a0929de90e3eac13d18f7a2f2c16d8}{Herrmann}{H\bibinitperiod}{Frank}{F\bibinitperiod}{}{}{}{}}%
+      }
+      \list{location}{1}{%
+        {M{ü}nchen}%
+      }
+      \list{publisher}{1}{%
+        {Oldenbourg, R}%
+      }
+      \strng{namehash}{26a0929de90e3eac13d18f7a2f2c16d8}
+      \strng{fullhash}{26a0929de90e3eac13d18f7a2f2c16d8}
+      \field{labelalpha}{Herr09}
+      \field{sortinit}{H}
+      \field{sortinithash}{95b2cb08933fe649b7e9f8beee2132b4}
+      \field{labeltitle}{Logik der Produktionslogistik}
+      \field{edition}{1. Aufl}
+      \field{isbn}{9783486588118}
+      \field{title}{Logik der Produktionslogistik}
+      \field{year}{2009}
+    \endentry
+  \endsortlist
+\endrefsection
+\endinput
+
