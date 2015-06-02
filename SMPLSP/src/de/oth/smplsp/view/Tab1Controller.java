@@ -39,9 +39,7 @@ import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
 
 public class Tab1Controller {
-    // implements Initializable {
 
-    public static Map<String, IBasicLotSchedulingAlgorithm> results = new HashMap();
     // References for the FXML layout
     @FXML
     private Button btnAddRow;
@@ -435,6 +433,7 @@ public class Tab1Controller {
 	if (hasEmptyFields) {
 	    showProductHasEmptyValuesAlert();
 	} else {
+	    Map<String, IBasicLotSchedulingAlgorithm> results = new HashMap();
 	    algorithms.add(new ClassicLotScheduling(productsClassic));
 	    algorithms.add(new MoreProductLotScheduling(productsMehrprodukt));
 	    for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
@@ -446,6 +445,7 @@ public class Tab1Controller {
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
+	    root.setResults(results);
 	    root.getTab2Controller().setData();
 	    root.getTab4Controller().setData();
 	    showInfoDialogCalculationFinished();

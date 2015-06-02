@@ -1,19 +1,14 @@
 package de.oth.smplsp.formula;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.util.Configuration;
+import de.oth.smplsp.util.Decimals;
 
 public class MehrproduktLosgroessenFormula {
 
     // Formatter to disable the scientific notation
-    private static NumberFormat formatter = DecimalFormat.getInstance();
-    // TODO: lade fraction digits aus settings
-    // default=8
-    private static int fractionDigits = 8;
+    private static Decimals decimals;
 
     private static String red;
     private static String green;
@@ -23,7 +18,8 @@ public class MehrproduktLosgroessenFormula {
     private static String dandelion;
 
     public static void initialize() {
-	formatter.setMaximumFractionDigits(fractionDigits);
+	int decimal = Configuration.getInstance().getDecimalPlaces();
+	decimals = new Decimals(decimal);
 
 	// Check weather the text should be with color, or just black and white
 	if (Configuration.getInstance().getBlackAndWhiteMode()) {
@@ -64,10 +60,12 @@ public class MehrproduktLosgroessenFormula {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
 		formel += " \\textcolor{" + red + "}{"
-			+ formatter.format(product.getS()) + "})}";
+			+ decimals.getDecimalFormat().format(product.getS())
+			+ "})}";
 	    } else {
 		formel += " \\textcolor{" + red + "}{"
-			+ formatter.format(product.getS()) + "} + ";
+			+ decimals.getDecimalFormat().format(product.getS())
+			+ "} + ";
 	    }
 
 	}
@@ -77,18 +75,20 @@ public class MehrproduktLosgroessenFormula {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
 		formel += "\\textcolor{" + green + "}{"
-			+ formatter.format(product.getH())
+			+ decimals.getDecimalFormat().format(product.getH())
 			+ "} \\cdot \\textcolor{" + blue + "}{"
-			+ formatter.format(product.getD())
+			+ decimals.getDecimalFormat().format(product.getD())
 			+ "} \\cdot (1 - \\textcolor{" + rubineRed + "}{"
-			+ formatter.format(product.getRoh()) + "})";
+			+ decimals.getDecimalFormat().format(product.getRoh())
+			+ "})";
 	    } else {
 		formel += "\\textcolor{" + green + "}{"
-			+ formatter.format(product.getH())
+			+ decimals.getDecimalFormat().format(product.getH())
 			+ "} \\cdot \\textcolor{" + blue + "}{"
-			+ formatter.format(product.getD())
+			+ decimals.getDecimalFormat().format(product.getD())
 			+ "} \\cdot (1 - \\textcolor{" + rubineRed + "}{"
-			+ formatter.format(product.getRoh()) + "}) + ";
+			+ decimals.getDecimalFormat().format(product.getRoh())
+			+ "}) + ";
 	    }
 	}
 
@@ -98,8 +98,12 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getAllgemeineMinimalenProduktionszyklusFormel() {
 	initialize();
-	String formel = "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{"
-		+ rubineRed + "}{{\\rho}_k}}} \\leq T";
+
+	// String formel =
+	// "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{"
+	// + rubineRed + "}{{\\rho}_k}}} \\leq T";
+	String formel = "T_{min} \\geq\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}\\textcolor{"
+		+ rubineRed + "}{\\rho}_k}";
 	return formel;
     }
 
@@ -110,9 +114,11 @@ public class MehrproduktLosgroessenFormula {
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += formatter.format(product.getTau()) + "}";
+		formel += decimals.getDecimalFormat().format(product.getTau())
+			+ "}";
 	    } else {
-		formel += formatter.format(product.getTau()) + " + ";
+		formel += decimals.getDecimalFormat().format(product.getTau())
+			+ " + ";
 	    }
 	}
 	formel += "{1 - (";
@@ -120,10 +126,12 @@ public class MehrproduktLosgroessenFormula {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
 		formel += "\\textcolor{" + rubineRed + "}{"
-			+ formatter.format(product.getRoh()) + "})}";
+			+ decimals.getDecimalFormat().format(product.getRoh())
+			+ "})}";
 	    } else {
 		formel += " \\textcolor{" + rubineRed + "}{"
-			+ formatter.format(product.getRoh()) + "} + ";
+			+ decimals.getDecimalFormat().format(product.getRoh())
+			+ "} + ";
 	    }
 	}
 	return formel;
@@ -140,9 +148,10 @@ public class MehrproduktLosgroessenFormula {
     public static String getLosgroessenMitParameterFormel(Product product,
 	    LotSchedulingResult result) {
 	String formel = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
-		+ blue + "}{" + formatter.format(product.getD())
+		+ blue + "}{"
+		+ decimals.getDecimalFormat().format(product.getD())
 		+ "} \\cdot \\textcolor{" + dandelion + "}{"
-		+ formatter.format(result.gettOpt()) + "}";
+		+ decimals.getDecimalFormat().format(result.gettOpt()) + "}";
 	return formel;
     }
 

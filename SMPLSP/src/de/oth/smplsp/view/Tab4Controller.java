@@ -18,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
 import javax.swing.Icon;
@@ -30,6 +31,7 @@ import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
 import de.oth.smplsp.formula.MehrproduktLosgroessenFormula;
+import de.oth.smplsp.formula.ProductionProcessFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.model.ProductionProcess;
@@ -42,6 +44,8 @@ public class Tab4Controller implements Initializable {
 
     @FXML
     private HBox box;
+    @FXML
+    private VBox vbox;
     @FXML
     private TableView<Product> losgroessenTableView;
     @FXML
@@ -71,13 +75,12 @@ public class Tab4Controller implements Initializable {
 
     private RootLayoutController root;
 
-    public ObservableList<Product> schedulingResult;
+    private ObservableList<Product> productList = FXCollections
+	    .observableArrayList();
 
-    private ObservableList productList = FXCollections.observableArrayList();
+    private ObservableList<ProductionProcess> processesList = FXCollections
+	    .observableArrayList();
 
-    private ObservableList processesList = FXCollections.observableArrayList();
-
-    private Configuration config = Configuration.getInstance();
     private Decimals decimals;
 
     /**
@@ -91,11 +94,10 @@ public class Tab4Controller implements Initializable {
     @FXML
     public void setData() {
 
-	IBasicLotSchedulingAlgorithm algorithm = Tab1Controller.results
-		.get(MoreProductLotScheduling.class.toString());
+	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
+		MoreProductLotScheduling.class.toString());
 	if (algorithm != null && algorithm.getResult() != null) {
-	    LotSchedulingResult result = algorithm.getResult();
-	    ObservableList productList = FXCollections
+	    ObservableList<Product> productList = FXCollections
 		    .observableArrayList(algorithm.getResult().getProducts());
 	    setProductsListAndShowInTableProduct(productList);
 
@@ -103,9 +105,9 @@ public class Tab4Controller implements Initializable {
 		    algorithm.getResult());
 	    List<ProductionProcess> processes = productionCalculator
 		    .getProductionProcessPlan();
-	    ObservableList processesList = FXCollections
+	    ObservableList<ProductionProcess> processesList = FXCollections
 		    .observableArrayList(processes);
-	    setProductsListAndShowInTableProcessing(processesList);
+	    setProcessesListAndShowInTableProcessing(processesList);
 
 	}
     }
@@ -119,8 +121,8 @@ public class Tab4Controller implements Initializable {
 
     }
 
-    public void setProductsListAndShowInTableProcessing(
-	    ObservableList<Product> newProcessesList) {
+    public void setProcessesListAndShowInTableProcessing(
+	    ObservableList<ProductionProcess> newProcessesList) {
 	refreshDecimals();
 	processesList.clear();
 	processesList = newProcessesList;
@@ -128,13 +130,39 @@ public class Tab4Controller implements Initializable {
 
     }
 
-    public void addListenerForTableView() {
+    public void addListenerForProdAblaufTableView() {
+	prodablaufTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+	    @Override
+	    public void handle(MouseEvent event) {
+		if (!prodablaufTableView.getItems().isEmpty()) {
+		    showExplanations(getProdAblaufFormula());
+		}
+	    }
+	});
+	prodablaufTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+	    @Override
+	    public void handle(KeyEvent event) {
+
+		if (!prodablaufTableView.getItems().isEmpty()) {
+		    if (event.getCode() == KeyCode.UP
+			    || event.getCode() == KeyCode.DOWN) {
+			showExplanations(getProdAblaufFormula());
+		    }
+		}
+	    }
+
+	});
+    }
+
+    public void addListenerForLosgroessenTableView() {
 	losgroessenTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    @Override
 	    public void handle(MouseEvent event) {
 		if (!losgroessenTableView.getItems().isEmpty()) {
-		    showExplanations();
+		    showExplanations(getLosgroessenFormula());
 		}
 	    }
 	});
@@ -146,7 +174,7 @@ public class Tab4Controller implements Initializable {
 		if (!losgroessenTableView.getItems().isEmpty()) {
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			showExplanations();
+			showExplanations(getLosgroessenFormula());
 		    }
 		}
 	    }
@@ -154,22 +182,99 @@ public class Tab4Controller implements Initializable {
 	});
     }
 
-    public void showExplanations() {
+    public void addListenerForTOpt() {
+	tOptNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+	    @Override
+	    public void handle(MouseEvent event) {
+		if (!prodablaufTableView.getItems().isEmpty()) {
+		    showExplanations(getTOptFormulaWithParameters());
+		}
+	    }
+	});
+    }
+
+    public void addListenerForTMin() {
+	tMinNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+	    @Override
+	    public void handle(MouseEvent event) {
+		if (!prodablaufTableView.getItems().isEmpty()) {
+		    showExplanations(getTMinFormulaWithParameters());
+		}
+	    }
+	});
+    }
+
+    public void showExplanations(String formula) {
+	root.setLatexString(formula);
+	root.showLatex();
+    }
+
+    public String getLosgroessenFormula() {
 	Product product = losgroessenTableView.getSelectionModel()
 		.getSelectedItem();
 	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
 		product,
-		Tab1Controller.results.get(
-			MoreProductLotScheduling.class.toString()).getResult());
+		root.getResults()
+			.get(MoreProductLotScheduling.class.toString())
+			.getResult());
+	return formula;
+    }
 
-	root.setLatexString(formula);
-	root.showLatex();
+    public String getTOptFormulaWithParameters() {
+	return MehrproduktLosgroessenFormula
+		.getGemeinsameProduktionszyklusMitParameternFormel(root
+			.getResults()
+			.get(MoreProductLotScheduling.class.toString())
+			.getResult());
+    }
 
+    public String getTMinFormulaWithParameters() {
+	return MehrproduktLosgroessenFormula
+		.getMinimalenProduktionszyklusMitParameternFormel(root
+			.getResults()
+			.get(MoreProductLotScheduling.class.toString())
+			.getResult());
+    }
+
+    public String getProdAblaufFormula() {
+	ProductionProcess process = prodablaufTableView.getSelectionModel()
+		.getSelectedItem();
+	String formula = "";
+	int k;
+	if (process.getK() != null) {
+	    k = process.getK().intValue();
+	} else {
+	    int index = processesList.indexOf(process);
+	    ProductionProcess parent = processesList.get(index - 1);
+	    k = parent.getK().intValue();
+	}
+	Product product = getProductByK(k);
+	formula += ProductionProcessFormula.getProductionProcessFormel(process,
+		product);
+	return formula;
+    }
+
+    public Product getProductByK(int k) {
+	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
+		MoreProductLotScheduling.class.toString());
+	LotSchedulingResult result = algorithm.getResult();
+	List<Product> products = result.getProducts();
+	for (Product product : products) {
+	    if (product.getK() == k) {
+		return product;
+	    }
+	}
+	return null;
     }
 
     public void showTOpt() {
 
-	latexString = "T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}";
+	// latexString =
+	// "T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}";
+	latexString = MehrproduktLosgroessenFormula
+		.getAllgemeineGemeinsameProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
@@ -185,7 +290,10 @@ public class Tab4Controller implements Initializable {
 
     public void showTMin() {
 
-	latexString = "T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}";
+	// latexString =
+	// "T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}";
+	latexString = MehrproduktLosgroessenFormula
+		.getAllgemeineMinimalenProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
@@ -202,7 +310,7 @@ public class Tab4Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-	int decimal = config.getDecimalPlaces();
+	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
 
 	lgColumn1.setCellValueFactory(cellData -> cellData.getValue()
@@ -218,11 +326,8 @@ public class Tab4Controller implements Initializable {
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 
-	ObservableList productList = FXCollections.observableArrayList();
-	setProductsListAndShowInTableProduct(productList);
-	ObservableList processingList = FXCollections.observableArrayList();
-	setProductsListAndShowInTableProcessing(processingList);
-	addListenerForTableView();
+	initializeTables();
+	addListeners();
 	setColumnDecimals();
 	showTMin();
 	showTOpt();
@@ -240,8 +345,24 @@ public class Tab4Controller implements Initializable {
 
     }
 
+    public void addListeners() {
+	addListenerForTOpt();
+	addListenerForTMin();
+	addListenerForLosgroessenTableView();
+	addListenerForProdAblaufTableView();
+    }
+
+    public void initializeTables() {
+	ObservableList<Product> productList = FXCollections
+		.observableArrayList();
+	setProductsListAndShowInTableProduct(productList);
+	ObservableList<ProductionProcess> processingList = FXCollections
+		.observableArrayList();
+	setProcessesListAndShowInTableProcessing(processingList);
+    }
+
     public void refreshDecimals() {
-	int decimal = config.getDecimalPlaces();
+	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals.setDecimals(decimal);
 	setColumnDecimals();
     }

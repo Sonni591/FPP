@@ -2,6 +2,7 @@ package de.oth.smplsp.view;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -31,6 +32,7 @@ import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
 import de.oth.smplsp.Main;
+import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.test.LotSchedulingAlgorithmTester;
@@ -41,6 +43,7 @@ public class RootLayoutController {
     @FXML
     private AnchorPane tab1;
 
+    private Map<String, IBasicLotSchedulingAlgorithm> results;
     // References to all Controllers
     @FXML
     private Tab1Controller tab1Controller;
@@ -357,6 +360,21 @@ public class RootLayoutController {
 
     public double getScalefactor() {
 	return scalefactor;
+    }
+
+    /**
+     * @return the results
+     */
+    public Map<String, IBasicLotSchedulingAlgorithm> getResults() {
+	return results;
+    }
+
+    /**
+     * @param results
+     *            the results to set
+     */
+    public void setResults(Map<String, IBasicLotSchedulingAlgorithm> results) {
+	this.results = results;
     }
 
 }

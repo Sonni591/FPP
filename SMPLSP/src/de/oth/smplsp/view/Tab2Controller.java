@@ -22,6 +22,7 @@ import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
 import de.oth.smplsp.formula.ClassicLotSchedulingFormula;
 import de.oth.smplsp.formula.ProductFormula;
+import de.oth.smplsp.formula.ProductionProcessFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.model.ProductionProcess;
@@ -55,11 +56,12 @@ public class Tab2Controller implements Initializable {
 
     public ObservableList<Product> schedulingResult;
 
-    private ObservableList productList = FXCollections.observableArrayList();
+    private ObservableList<Product> productList = FXCollections
+	    .observableArrayList();
 
-    private ObservableList processesList = FXCollections.observableArrayList();
+    private ObservableList<ProductionProcess> processesList = FXCollections
+	    .observableArrayList();
 
-    private Configuration config = Configuration.getInstance();
     private Decimals decimals;
 
     /**
@@ -72,8 +74,8 @@ public class Tab2Controller implements Initializable {
 
     @FXML
     public void setData() {
-	IBasicLotSchedulingAlgorithm algorithm = Tab1Controller.results
-		.get(ClassicLotScheduling.class.toString());
+	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
+		ClassicLotScheduling.class.toString());
 	if (algorithm != null && algorithm.getResult() != null) {
 	    LotSchedulingResult result = algorithm.getResult();
 	    ObservableList productList = FXCollections
@@ -84,9 +86,9 @@ public class Tab2Controller implements Initializable {
 		    algorithm.getResult());
 	    List<ProductionProcess> processes = productionCalculator
 		    .getProductionProcessPlan();
-	    ObservableList processesList = FXCollections
+	    ObservableList<ProductionProcess> processesList = FXCollections
 		    .observableArrayList(processes);
-	    setProductsListAndShowInTableProcessing(processesList);
+	    setProcessesListAndShowInTableProcessing(processesList);
 	    root.getTab5Controller().showChart(processes);
 	}
     }
@@ -100,8 +102,8 @@ public class Tab2Controller implements Initializable {
 
     }
 
-    public void setProductsListAndShowInTableProcessing(
-	    ObservableList<Product> newProcessesList) {
+    public void setProcessesListAndShowInTableProcessing(
+	    ObservableList<ProductionProcess> newProcessesList) {
 	refreshDecimals();
 	processesList.clear();
 	processesList = newProcessesList;
@@ -111,7 +113,7 @@ public class Tab2Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-	int decimal = config.getDecimalPlaces();
+	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
 	lgColumn1.setCellValueFactory(cellData -> cellData.getValue()
 		.getKProperty());
@@ -127,11 +129,9 @@ public class Tab2Controller implements Initializable {
 		.getStart());
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
-	ObservableList productList = FXCollections.observableArrayList();
-	setProductsListAndShowInTableProduct(productList);
-	ObservableList processingList = FXCollections.observableArrayList();
-	setProductsListAndShowInTableProcessing(processingList);
-	addListenerForTableView();
+	initializeTables();
+	addListenerForProdAblaufTableView();
+	addListenerForLosgroessenTableView();
 	setColumnDecimals();
 
 	// 2x tooltip for the whole table
@@ -149,7 +149,7 @@ public class Tab2Controller implements Initializable {
     }
 
     public void refreshDecimals() {
-	int decimal = config.getDecimalPlaces();
+	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals.setDecimals(decimal);
 	setColumnDecimals();
     }
@@ -188,14 +188,41 @@ public class Tab2Controller implements Initializable {
 	return schedulingResult;
     }
 
-    public void addListenerForTableView() {
+    public void addListenerForProdAblaufTableView() {
+	prodablaufTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+	    @Override
+	    public void handle(MouseEvent event) {
+		if (!prodablaufTableView.getItems().isEmpty()) {
+		    showExplanations(getProdAblaufFormula());
+		}
+	    }
+	});
+	prodablaufTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+	    @Override
+	    public void handle(KeyEvent event) {
+
+		if (!prodablaufTableView.getItems().isEmpty()) {
+		    if (event.getCode() == KeyCode.UP
+			    || event.getCode() == KeyCode.DOWN) {
+			showExplanations(getProdAblaufFormula());
+		    }
+		}
+	    }
+
+	});
+    }
+
+    public void addListenerForLosgroessenTableView() {
 	losgroessenTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    @Override
 	    public void handle(MouseEvent event) {
 
 		if (!losgroessenTableView.getItems().isEmpty()) {
-		    showExplanations();
+
+		    showExplanations(getLosgroessenFormula());
 		}
 	    }
 	});
@@ -207,7 +234,7 @@ public class Tab2Controller implements Initializable {
 
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			showExplanations();
+			showExplanations(getLosgroessenFormula());
 
 		    }
 		}
@@ -216,12 +243,54 @@ public class Tab2Controller implements Initializable {
 	});
     }
 
-    public void showExplanations() {
+    public String getProdAblaufFormula() {
+	ProductionProcess process = prodablaufTableView.getSelectionModel()
+		.getSelectedItem();
+	String formula = "";
+	int k;
+	if (process.getK() != null) {
+	    k = process.getK().intValue();
+	} else {
+	    int index = processesList.indexOf(process);
+	    ProductionProcess parent = processesList.get(index - 1);
+	    k = parent.getK().intValue();
+	}
+	Product product = getProductByK(k);
+	formula += ProductionProcessFormula.getProductionProcessFormel(process,
+		product);
+	return formula;
+    }
+
+    public Product getProductByK(int k) {
+	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
+		ClassicLotScheduling.class.toString());
+	LotSchedulingResult result = algorithm.getResult();
+	List<Product> products = result.getProducts();
+	for (Product product : products) {
+	    if (product.getK() == k) {
+		return product;
+	    }
+	}
+	return null;
+    }
+
+    public void initializeTables() {
+	ObservableList productList = FXCollections.observableArrayList();
+	setProductsListAndShowInTableProduct(productList);
+	ObservableList processingList = FXCollections.observableArrayList();
+	setProcessesListAndShowInTableProcessing(processingList);
+    }
+
+    public String getLosgroessenFormula() {
 	Product product = losgroessenTableView.getSelectionModel()
 		.getSelectedItem();
 	String formula = ClassicLotSchedulingFormula
 		.getLosgroessenFormel(product);
 	formula += ProductFormula.getProduktionsdauerFormel(product);
+	return formula;
+    }
+
+    public void showExplanations(String formula) {
 	root.setLatexString(formula);
 	root.showLatex();
     }

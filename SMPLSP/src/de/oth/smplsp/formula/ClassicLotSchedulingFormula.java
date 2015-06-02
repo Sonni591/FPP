@@ -1,18 +1,13 @@
 package de.oth.smplsp.formula;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.util.Configuration;
+import de.oth.smplsp.util.Decimals;
 
 public class ClassicLotSchedulingFormula {
 
     // Formatter to disable the scientific notation
-    private static NumberFormat formatter = DecimalFormat.getInstance();
-    // TODO: lade fraction digits aus settings
-    // default=8
-    private static int fractionDigits = 8;
+    private static Decimals decimals;
 
     private static String red;
     private static String green;
@@ -22,7 +17,8 @@ public class ClassicLotSchedulingFormula {
     private static String plum;
 
     private static void initialize() {
-	formatter.setMaximumFractionDigits(fractionDigits);
+	int decimal = Configuration.getInstance().getDecimalPlaces();
+	decimals = new Decimals(decimal);
 
 	// Check weather the text should be with color, or just black and white
 	if (Configuration.getInstance().getBlackAndWhiteMode()) {
@@ -55,12 +51,13 @@ public class ClassicLotSchedulingFormula {
 	    Product product) {
 	initialize();
 	String formel = "t_{opt} = \\sqrt{\\frac{2 \\cdot \\textcolor{" + red
-		+ "}{" + formatter.format(product.getS()) + "}}{\\textcolor{"
-		+ green + "}{" + formatter.format(product.getH())
+		+ "}{" + decimals.getDecimalFormat().format(product.getS())
+		+ "}}{\\textcolor{" + green + "}{"
+		+ decimals.getDecimalFormat().format(product.getH())
 		+ "} \\cdot \\textcolor{" + blue + "}{"
-		+ formatter.format(product.getD())
+		+ decimals.getDecimalFormat().format(product.getD())
 		+ "} \\cdot (1 - \\textcolor{" + rubineRed + "}{"
-		+ formatter.format(product.getRoh()) + "})}}";
+		+ decimals.getDecimalFormat().format(product.getRoh()) + "})}}";
 	return formel;
     }
 
@@ -97,13 +94,15 @@ public class ClassicLotSchedulingFormula {
 	initialize();
 	String formel = "\\textcolor{" + oliveGreen + "}{q_{" + product.getK()
 		+ "}^{opt}} = \\sqrt{\\frac{2 \\cdot \\textcolor{" + blue
-		+ "}{" + formatter.format(product.getD())
+		+ "}{" + decimals.getDecimalFormat().format(product.getD())
 		+ "}\\cdot \\textcolor{" + red + "}{"
-		+ formatter.format(product.getS()) + "}}{\\textcolor{" + green
-		+ "}{" + formatter.format(product.getH())
+		+ decimals.getDecimalFormat().format(product.getS())
+		+ "}}{\\textcolor{" + green + "}{"
+		+ decimals.getDecimalFormat().format(product.getH())
 		+ "}\\cdot (1 - \\frac{ \\textcolor{" + blue + "}{"
-		+ formatter.format(product.getD()) + "}}{ \\textcolor{" + plum
-		+ "}{" + formatter.format(product.getP()) + "}})}}";
+		+ decimals.getDecimalFormat().format(product.getD())
+		+ "}}{ \\textcolor{" + plum + "}{"
+		+ decimals.getDecimalFormat().format(product.getP()) + "}})}}";
 	return formel;
     }
 

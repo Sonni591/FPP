@@ -1,18 +1,13 @@
 package de.oth.smplsp.formula;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.util.Configuration;
+import de.oth.smplsp.util.Decimals;
 
 public class ProductFormula {
 
     // Formatter to disable the scientific notation
-    private static NumberFormat formatter = DecimalFormat.getInstance();
-    // TODO: lade fraction digits aus settings
-    // default=8
-    private static int fractionDigits = 8;
+    private static Decimals decimals;
 
     private static String blue;
     private static String rubineRed;
@@ -20,7 +15,8 @@ public class ProductFormula {
     private static String plum;
 
     public static void initialize() {
-	formatter.setMaximumFractionDigits(fractionDigits);
+	int decimal = Configuration.getInstance().getDecimalPlaces();
+	decimals = new Decimals(decimal);
 
 	// Check weather the text should be with color, or just black and white
 	if (Configuration.getInstance().getBlackAndWhiteMode()) {
@@ -48,8 +44,9 @@ public class ProductFormula {
 	initialize();
 	String formel = "\\textcolor{" + rubineRed
 		+ "}{\\rho} = \\frac{ \\textcolor{" + blue + "}{"
-		+ formatter.format(product.getD()) + "}}{ \\textcolor{" + plum
-		+ "}{" + formatter.format(product.getP()) + "}}";
+		+ decimals.getDecimalFormat().format(product.getD())
+		+ "}}{ \\textcolor{" + plum + "}{"
+		+ decimals.getDecimalFormat().format(product.getP()) + "}}";
 	return formel;
     }
 
@@ -63,8 +60,9 @@ public class ProductFormula {
     public static String getProduktionsdauerMitParameterFormel(Product product) {
 	initialize();
 	String formel = "t_p = \\frac{\\textcolor{" + oliveGreen + "}{"
-		+ formatter.format(product.getQ()) + "}}{ \\textcolor{" + plum
-		+ "}{" + formatter.format(product.getP()) + "}}";
+		+ decimals.getDecimalFormat().format(product.getQ())
+		+ "}}{ \\textcolor{" + plum + "}{"
+		+ decimals.getDecimalFormat().format(product.getP()) + "}}";
 	return formel;
     }
 
