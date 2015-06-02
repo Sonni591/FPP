@@ -223,7 +223,7 @@ public class Tab2Controller implements Initializable {
 		.getLosgroessenFormel(product);
 	formula += ProductFormula.getProduktionsdauerFormel(product);
 	root.setLatexString(formula);
-	root.showLatex();
+	root.showExplanationComponent();
     }
 
 }

@@ -420,6 +420,12 @@ public class Tab1Controller {
 
 	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
 
+	if (productsList.isEmpty()) {
+	    showProductListIsEmptyAlert();
+	    // exit the calculation
+	    return;
+	}
+
 	// get real products
 	ObservableList<Product> productsClassic = productsTableView.getItems();
 	ObservableList<Product> productsMehrprodukt = FXCollections
@@ -484,6 +490,14 @@ public class Tab1Controller {
 	alert.setTitle("Ungültige Eingabe");
 	alert.setHeaderText("Ihre Eingabe enthält ungültige Werte!");
 	alert.setContentText("Ihre Eingabe enthält Parameter mit Wert 0. Um den Algorithmus auszuführen ergänzen Sie hierfür Werte > 0!");
+	alert.showAndWait();
+    }
+
+    private void showProductListIsEmptyAlert() {
+	Alert alert = new Alert(AlertType.ERROR);
+	alert.setTitle("Ungültige Eingabe");
+	alert.setHeaderText("Ihre Eingabe enthält keine Werte!");
+	alert.setContentText("Geben Sie Werte in die Eingabetabelle ein, damit die Berechnung durchgeführt wrden kann!");
 	alert.showAndWait();
     }
 

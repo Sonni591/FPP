@@ -13,14 +13,6 @@
 			<content>
 				<HBox fx:id="box" prefHeight="429.0" prefWidth="736.0">
 					<children>
-						<VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-							<children>
-								<SwingNode fx:id="tOptNode" />
-								<SplitPane orientation="VERTICAL" />
-								<SwingNode fx:id="tMinNode" />
-							</children>
-						</VBox>
-						<SplitPane />
 						<TableView fx:id="losgroessenTableView" HBox.hgrow="ALWAYS">
 							<columns>
 								<TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />

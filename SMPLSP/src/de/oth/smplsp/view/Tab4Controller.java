@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,13 +18,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
-
-import javax.swing.Icon;
-import javax.swing.JTextPane;
-
-import org.scilab.forge.jlatexmath.TeXConstants;
-import org.scilab.forge.jlatexmath.TeXFormula;
-
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
@@ -61,12 +53,7 @@ public class Tab4Controller implements Initializable {
     @FXML
     private TableColumn<ProductionProcess, Number> paColumn4;
 
-    @FXML
-    private SwingNode tOptNode;
-    @FXML
-    private SwingNode tMinNode;
-
-    private String latexString = "";
+    // private String latexString = "";
     private int fontsize = 20;
 
     private RootLayoutController root;
@@ -163,40 +150,8 @@ public class Tab4Controller implements Initializable {
 			MoreProductLotScheduling.class.toString()).getResult());
 
 	root.setLatexString(formula);
-	root.showLatex();
+	root.showExplanationComponent();
 
-    }
-
-    public void showTOpt() {
-
-	latexString = "T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}";
-	TeXFormula tex = new TeXFormula(latexString);
-
-	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
-
-	// generate a JTextPane that will be displayed in a SwingNode in JavaFX
-	JTextPane pane = new JTextPane();
-	pane.setEditable(false);
-	pane.insertIcon(icon);
-	pane.repaint();
-
-	tOptNode.setContent(pane);
-    }
-
-    public void showTMin() {
-
-	latexString = "T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}";
-	TeXFormula tex = new TeXFormula(latexString);
-
-	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
-
-	// generate a JTextPane that will be displayed in a SwingNode in JavaFX
-	JTextPane pane = new JTextPane();
-	pane.setEditable(false);
-	pane.insertIcon(icon);
-	pane.repaint();
-
-	tMinNode.setContent(pane);
     }
 
     @Override
@@ -224,8 +179,8 @@ public class Tab4Controller implements Initializable {
 	setProductsListAndShowInTableProcessing(processingList);
 	addListenerForTableView();
 	setColumnDecimals();
-	showTMin();
-	showTOpt();
+	// showTMin();
+	// showTOpt();
 
 	// 2x tooltip for the whole table
 	losgroessenTableView.setTooltip(new Tooltip(
