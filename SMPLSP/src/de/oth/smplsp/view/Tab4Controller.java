@@ -284,7 +284,7 @@ public class Tab4Controller implements Initializable {
 
 	// latexString =
 	// "T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}";
-	latexString = MehrproduktLosgroessenFormula
+	String latexString = MehrproduktLosgroessenFormula
 		.getAllgemeineMinimalenProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
