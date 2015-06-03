@@ -3,6 +3,8 @@
 bin/
 /bin/
 
+/build/
+
 # ignore all target directories
 target/
 
