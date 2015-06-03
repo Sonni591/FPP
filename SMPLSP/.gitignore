@@ -3,7 +3,13 @@
 bin/
 /bin/
 
-build/
+# ignore custom build files
+build/build
+build/deploy
+build/dist
+build/externalLibs
+build/project
+
 
 # ignore all target directories
 target/
