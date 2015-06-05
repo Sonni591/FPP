@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.RootLayoutController">
+<BorderPane fx:id="rootBorderPane" onZoom="#handleZoom" onZoomFinished="#handleZoomFinished" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.RootLayoutController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="%Menu_File">
             <items>
@@ -46,15 +46,16 @@
             <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="600.0" spacing="5.0">
                <children>
                   <Label fx:id="lblLeftStatus" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
-                     <font>
+                    <!--  <font>
                         <Font size="11.0" fx:id="x3" />
-                     </font>
+                     </font>  -->
                      <textFill>
                         <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
                      </textFill>
                   </Label>
                   <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-                  <Label fx:id="lblZoom" font="$x3" maxWidth="-1.0" text="Zoom" textFill="$x4" HBox.hgrow="NEVER" />
+                  <!--  <Label fx:id="lblZoom" font="$x3" maxWidth="-1.0" text="Zoom" textFill="$x4" HBox.hgrow="NEVER" />  -->
+                  <Label fx:id="lblZoom" maxWidth="-1.0" text="Zoom" textFill="$x4" HBox.hgrow="NEVER" />
                   <Button fx:id="btnZoomMinus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleZoomOut" text="-" />
                   <Button fx:id="btnZoomPlus" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleZoomIn" text="+" />
                </children>

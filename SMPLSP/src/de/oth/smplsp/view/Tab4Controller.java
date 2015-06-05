@@ -1,4 +1,4 @@
-﻿package de.oth.smplsp.view;
+package de.oth.smplsp.view;
 
 import java.net.URL;
 import java.util.List;
@@ -277,7 +277,8 @@ public class Tab4Controller implements Initializable {
 		.getAllgemeineGemeinsameProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
-	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
+	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, root
+		.getZoomer().getLatexFontSize());
 
 	// generate a JTextPane that will be displayed in a SwingNode
 	// in JavaFX
@@ -297,7 +298,8 @@ public class Tab4Controller implements Initializable {
 		.getAllgemeineMinimalenProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
-	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
+	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, root
+		.getZoomer().getLatexFontSize());
 
 	// generate a JTextPane that will be displayed in a SwingNode
 	// in JavaFX
@@ -308,6 +310,11 @@ public class Tab4Controller implements Initializable {
 
 	tMinNode.setContent(pane);
 
+    }
+
+    public void showTOptAndTMinFormulas() {
+	showTMin();
+	showTOpt();
     }
 
     @Override
@@ -332,8 +339,6 @@ public class Tab4Controller implements Initializable {
 	initializeTables();
 	addListeners();
 	setColumnDecimals();
-	showTMin();
-	showTOpt();
 
 	// 2x tooltip for the whole table
 	losgroessenTableView.setTooltip(new Tooltip(

@@ -1,4 +1,4 @@
-﻿package de.oth.smplsp.view;
+package de.oth.smplsp.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -136,7 +136,7 @@ public class Tab1Controller {
     @FXML
     private void initialize() {
 	// customize the look of the panel
-	customizeUI();
+	customizeButtonBar();
 	int decimal = config.getDecimalPlaces();
 	decimals = new Decimals(decimal);
 	column1.setCellValueFactory(cellData -> cellData.getValue()
@@ -165,7 +165,7 @@ public class Tab1Controller {
     /**
      * //TODO documentation!!
      */
-    private void customizeUI() {
+    private void customizeButtonBar() {
 	// remove default text of the buttons
 	btnAddRow.setText("");
 	btnRemoveRow.setText("");
@@ -246,6 +246,7 @@ public class Tab1Controller {
 	alert.setTitle("Keine Auswahl");
 	alert.setHeaderText("Es wurde keine Zeile markiert");
 	alert.setContentText("Bitte markieren Sie zum Löschen eine Zeile.");
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -260,7 +261,7 @@ public class Tab1Controller {
 	alert.setTitle("Tabelle löschen?");
 	alert.setHeaderText("Wollen Sie alle Daten der Tabelle löschen?");
 	alert.setContentText("OK bestätigt das Löschen, Cancel bricht den Vorgang ab.");
-
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	Optional<ButtonType> result = alert.showAndWait();
 	if (result.get() == ButtonType.OK) {
 	    // ... user chose OK
@@ -308,6 +309,10 @@ public class Tab1Controller {
 		// show loaded values in the view
 		// productsTableView.setItems(productsList);
 		setProductsListAndShowInTable(productsListTmp);
+
+		// set the text in the correct fontsize
+		root.getZoomer().rescaleEverything();
+
 	    } catch (IOException e1) {
 		// show error dialog
 		showErrorDialogFileNotImported(csvFile.getName(), "");
@@ -341,6 +346,7 @@ public class Tab1Controller {
 	ButtonType buttonTypeNein = new ButtonType("Nein");
 	alert.getButtonTypes().add(buttonTypeJa);
 	alert.getButtonTypes().add(buttonTypeNein);
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	Optional<ButtonType> result = alert.showAndWait();
 	if (result.get() == buttonTypeJa) {
 	    // ... user chose Yes - save the actual data
@@ -375,6 +381,7 @@ public class Tab1Controller {
 		    + pathname
 		    + " konnte nicht geladen werden. \nDie vorhergehenden Daten werden wieder hergestellt.");
 	}
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -454,7 +461,10 @@ public class Tab1Controller {
 	    root.setResults(results);
 	    root.getTab2Controller().setData();
 	    root.getTab4Controller().setData();
-	    showInfoDialogCalculationFinished();
+	    if (!RootLayoutController.DEBUG_MODE) {
+		showInfoDialogCalculationFinished();
+	    }
+	    root.getZoomer().rescaleEverything();
 
 	}
     }
@@ -466,6 +476,7 @@ public class Tab1Controller {
 	Alert alert = new Alert(AlertType.INFORMATION);
 	alert.setTitle("Berechnung durchgeführt");
 	alert.setHeaderText("Die Berechnung wurde erfolgreich durchgeführt.");
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -474,6 +485,7 @@ public class Tab1Controller {
 	alert.setTitle("Fehler");
 	alert.setHeaderText("Fehler in den Eingabedaten");
 	alert.setContentText("Optimaler gemeinsamer Produktionszyklus ist kleiner als minimaler zulässiger Produktionszyklus! Bitte korrigieren Sie die Eingabedaten");
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -490,6 +502,7 @@ public class Tab1Controller {
 	alert.setTitle("Ungültige Eingabe");
 	alert.setHeaderText("Ihre Eingabe enthält ungültige Werte!");
 	alert.setContentText("Ihre Eingabe enthält Parameter mit Wert 0. Um den Algorithmus auszuführen ergänzen Sie hierfür Werte > 0!");
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -498,6 +511,7 @@ public class Tab1Controller {
 	alert.setTitle("Ungültige Eingabe");
 	alert.setHeaderText("Ihre Eingabe enthält keine Werte!");
 	alert.setContentText("Geben Sie Werte in die Eingabetabelle ein, damit die Berechnung durchgeführt wrden kann!");
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -549,5 +563,100 @@ public class Tab1Controller {
 			decimals.getDecimalFormat())));
 
     }
+
+    /**
+     * Zoom the table of to the actual fontsize. TableColumns will be zoomed and
+     * also the table content is zoomed using an custom cell factory
+     * 
+     * @param fontsize
+     */
+    // TODO: WARNING: DO NOT DELETE, maybe we need this, if the zoom is not as
+    // wished
+    // public void handleZoomTable() {
+    //
+    // // fontsize for table header
+    // column1.setStyle(root.getZoomer().getStyleFXFontSize());
+    // column2.setStyle(root.getZoomer().getStyleFXFontSize());
+    // column3.setStyle(root.getZoomer().getStyleFXFontSize());
+    // column4.setStyle(root.getZoomer().getStyleFXFontSize());
+    // column5.setStyle(root.getZoomer().getStyleFXFontSize());
+    // column6.setStyle(root.getZoomer().getStyleFXFontSize());
+    //
+    // // fontsize for table content
+    // column1.setCellFactory(getCustomCellFactory());
+    // column2.setCellFactory(getCustomCellFactory());
+    // column3.setCellFactory(getCustomCellFactory());
+    // column4.setCellFactory(getCustomCellFactory());
+    // column5.setCellFactory(getCustomCellFactory());
+    // column6.setCellFactory(getCustomCellFactory());
+    //
+    // }
+
+    /**
+     * Resize the Iconfont of the toolbar buttons using the @fontsize
+     * 
+     * @param fontsize
+     */
+    public void handleZoomButtons(int fontsize) {
+	// set icon fonts to the buttons
+	btnAddRow.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.PLUS)
+		.size((double) fontsize));
+	btnRemoveRow.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.MINUS).size((double) fontsize));
+	btnRemoveAll.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.TIMES).size((double) fontsize));
+	btnLoad.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.FOLDER_OPEN_ALT).size((double) fontsize));
+	btnSave.setGraphic(new Glyph("FontAwesome", FontAwesome.Glyph.SAVE)
+		.size((double) fontsize));
+	btnCalculate.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.PLAY_CIRCLE_ALT).size((double) fontsize));
+    }
+    /**
+     * Defines a custom callback to set the content of each table value and
+     * update its fontsize using the param @fontsize
+     * 
+     * @param fontsize
+     * @return
+     */
+    // TODO: WARNING: DO NOT DELETE, maybe we need this, if the zoom is not as
+    // wished
+    // private Callback<TableColumn<Product, Number>, TableCell<Product,
+    // Number>> getCustomCellFactory() {
+    // return new Callback<TableColumn<Product, Number>, TableCell<Product,
+    // Number>>() {
+    //
+    // @Override
+    // public TableCell<Product, Number> call(
+    // TableColumn<Product, Number> tableColumn) {
+    // TableCell<Product, Number> cell = new TableCell<Product, Number>() {
+    //
+    // @Override
+    // protected void updateItem(Number item, boolean empty) {
+    // if (item != null) {
+    //
+    // if (item instanceof Integer) {
+    // setText(Integer.toString((Integer) item));
+    // } else if (item instanceof Double) {
+    // setText(Double.toString((Double) item));
+    // } else {
+    // setText("N/A");
+    // }
+    //
+    // setStyle(root.getZoomer().getStyleFXFontSize());
+    //
+    // }
+    // }
+    // };
+    // return cell;
+    // }
+    //
+    // };
+    // }
+    // // TODO: Nachkommastellen berechnung (siehe unten) muss irgendwie in den
+    // // Callback integriert werden!!
+    // // TextFieldTableCell
+    // // .<Product, Number> forTableColumn(new NumberStringConverter(
+    // // decimals.getDecimalFormat()))
 
 }

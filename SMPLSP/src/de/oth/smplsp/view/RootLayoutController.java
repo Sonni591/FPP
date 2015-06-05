@@ -1,4 +1,4 @@
-﻿package de.oth.smplsp.view;
+package de.oth.smplsp.view;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,10 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
@@ -36,8 +38,16 @@ import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.model.Product;
 import de.oth.smplsp.test.LotSchedulingAlgorithmTester;
+import de.oth.smplsp.zoom.Zoomer;
 
 public class RootLayoutController {
+
+    // Examine debug mode
+    public static final boolean DEBUG_MODE = java.lang.management.ManagementFactory
+	    .getRuntimeMXBean().getInputArguments().toString().indexOf("jdwp") >= 0;
+
+    @FXML
+    private BorderPane rootBorderPane;
 
     // References to all panes of the tab bar
     @FXML
@@ -72,12 +82,15 @@ public class RootLayoutController {
     @FXML
     private TabPane tabPane;
 
+    @FXML
+    private MenuBar menuBar;
+
     private GlyphFont fontAwesome = GlyphFontRegistry.font("FontAwesome"); //$NON-NLS-1$
 
     public String latexString = ""; //$NON-NLS-1$
 
     // global parameters for the font size
-    private int fontsize = 20;
+    // private int fontsize = 20;
     private double scalefactor = 1;
 
     private int selectedTab = 0;
@@ -85,27 +98,36 @@ public class RootLayoutController {
     // Reference to the main application.
     private Main main;
 
+    private Zoomer zoomer;
+
     /**
      * The constructor. The constructor is called before the initialize()
      * method.
      */
     public RootLayoutController() {
-
+	zoomer = new Zoomer();
     }
 
-    /**
-     * @return the fontsize
-     */
-    public int getFontsize() {
-	return fontsize;
-    }
+    // /**
+    // * @return the fontsize
+    // */
+    // public int getFontsize() {
+    // return fontsize;
+    // }
+    //
+    // /**
+    // * @param fontsize
+    // * the fontsize to set
+    // */
+    // public void setFontsize(int fontsize) {
+    // this.fontsize = fontsize;
+    // }
 
     /**
-     * @param fontsize
-     *            the fontsize to set
+     * @return the zoomer
      */
-    public void setFontsize(int fontsize) {
-	this.fontsize = fontsize;
+    public Zoomer getZoomer() {
+	return zoomer;
     }
 
     /**
@@ -143,6 +165,9 @@ public class RootLayoutController {
 	tab3Controller.init(this);
 	tab4Controller.init(this);
 	tab5Controller.init(this);
+	zoomer.init(this);
+
+	tab4Controller.showTOptAndTMinFormulas();
 
 	// customize the look of the Zoom area
 	customizeUIZoom();
@@ -154,6 +179,12 @@ public class RootLayoutController {
 	if (!System.getProperty("os.name").equals("Mac OS X")) {
 	    initExplanationTabTextTab1();
 	}
+
+	// in debug mode: load data and calculate
+	if (DEBUG_MODE) {
+	    loadAndShowTestData();
+	    tab1Controller.handleCalculate();
+	}
     }
 
     /**
@@ -164,10 +195,10 @@ public class RootLayoutController {
 	btnZoomMinus.setText("");
 	btnZoomPlus.setText("");
 	// set icon fonts to the buttons
-	btnZoomMinus.setGraphic(new Glyph("FontAwesome", //$NON-NLS-1$
+	btnZoomMinus.setGraphic(new Glyph("FontAwesome",
 		FontAwesome.Glyph.SEARCH_MINUS));
-	btnZoomPlus.setGraphic(fontAwesome
-		.create(FontAwesome.Glyph.SEARCH_PLUS));
+	btnZoomPlus.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.SEARCH_PLUS));
 	// set tooltip text
 	btnZoomMinus.setTooltip(new Tooltip("verkleinern"));
 	btnZoomPlus.setTooltip(new Tooltip("vergrößern"));
@@ -180,22 +211,25 @@ public class RootLayoutController {
     }
 
     public void showExplanationComponent() {
-	try {
-	    TeXFormula tex = new TeXFormula(latexString);
+	if (!getLatexString().equals("")) {
+	    try {
+		TeXFormula tex = new TeXFormula(latexString);
 
-	    Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, fontsize);
+		Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER,
+			zoomer.getLatexFontSize());
 
-	    // generate a JTextPane that will be displayed in a SwingNode in
-	    // JavaFX
-	    JTextPane pane = new JTextPane();
-	    pane.setEditable(false);
-	    pane.insertIcon(icon);
-	    pane.repaint();
+		// generate a JTextPane that will be displayed in a SwingNode in
+		// JavaFX
+		JTextPane pane = new JTextPane();
+		pane.setEditable(false);
+		pane.insertIcon(icon);
+		pane.repaint();
 
-	    this.swingNode.setContent(pane);
-	} catch (Exception e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+		this.swingNode.setContent(pane);
+	    } catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	}
     }
 
@@ -205,22 +239,28 @@ public class RootLayoutController {
 
     @FXML
     public void handleZoomIn() {
-	fontsize++;
-	setScalefactor(0.2);
 
-	// regenerate LaTeX image
-	showExplanationComponent();
-	tab4Controller.scale();
+	zoomer.handleZoomIn();
+
+	// fontsize++;
+	// setScalefactor(0.2);
+	//
+	// // regenerate LaTeX image
+	// showExplanationComponent();
+	// tab4Controller.scale();
     }
 
     @FXML
     public void handleZoomOut() {
-	fontsize--;
-	setScalefactor(-0.2);
 
-	// regenerate LaTeX image
-	showExplanationComponent();
-	tab4Controller.scale();
+	zoomer.handleZoomOut();
+
+	// fontsize--;
+	// setScalefactor(-0.2);
+	//
+	// // regenerate LaTeX image
+	// showExplanationComponent();
+	// tab4Controller.scale();
     }
 
     /**
@@ -233,11 +273,15 @@ public class RootLayoutController {
 	Double zoomFactorDouble = event.getZoomFactor();
 	Integer zoomFactorInteger = zoomFactorDouble.intValue();
 
+	Integer fontsize = zoomer.getFontsize();
+
 	if (zoomFactorInteger >= 1) { // zoom in
 	    fontsize += zoomFactorInteger;
 	} else { // zoom out
 	    fontsize -= 1;
 	}
+
+	zoomer.setFontsize(fontsize);
 
 	// stop further propagation of the event
 	event.consume();
@@ -250,8 +294,7 @@ public class RootLayoutController {
      */
     public void handleZoomFinished(ZoomEvent event) {
 
-	// regenerate LaTeX image
-	showExplanationComponent();
+	zoomer.rescaleEverything();
 
 	// stop further propagation of the event
 	event.consume();
@@ -277,6 +320,7 @@ public class RootLayoutController {
     private void onActionTestData() {
 	if (tab1Controller.getProductsList().isEmpty()) {
 	    loadAndShowTestData();
+	    zoomer.rescaleEverything();
 	} else {
 	    // when the table is not empty, show an confirmation dialog to
 	    // overwrite
@@ -285,10 +329,12 @@ public class RootLayoutController {
 	    alert.setTitle("Daten überschreiben?");
 	    alert.setHeaderText("Wollen Sie alle Daten der Tabelle mit den Testdaten überschreiben?");
 	    alert.setContentText("Das Laden der Testdaten überschreibt alle bisherigen Daten. Wollen Sie fortfahren?");
+	    alert.getDialogPane().setStyle(zoomer.getStyleFXFontSize());
 	    Optional<ButtonType> result = alert.showAndWait();
 	    if (result.get() == ButtonType.OK) {
 		// ... user chose OK - delete table and load test data
 		loadAndShowTestData();
+		zoomer.rescaleEverything();
 	    } else {
 		// ... user chose Cancel
 		// do nothing
@@ -337,7 +383,7 @@ public class RootLayoutController {
 	alert.setTitle(Messages.RootLayoutController_AboutDialog_Title);
 	alert.setHeaderText(Messages.RootLayoutController_AboutDialog_NameAndVersion);
 	alert.setContentText(Messages.RootLayoutController_AboutDialog_License);
-
+	alert.getDialogPane().setStyle(zoomer.getStyleFXFontSize());
 	alert.showAndWait();
     }
 
@@ -526,6 +572,21 @@ public class RootLayoutController {
     public TabPane getTabPane() {
 	return tabPane;
 
+    }
+
+    // public void handleZoomMenuBar() {
+    // menuBar.setStyle(zoomer.getStyleFXFontSize());
+    // }
+
+    public void handleZoomEveryCSSStyle() {
+	rootBorderPane.setStyle(zoomer.getStyleFXFontSize());
+    }
+
+    public void handleZoomSouthBarButtons(int fontsize) {
+	btnZoomMinus.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.SEARCH_MINUS).size((double) fontsize));
+	btnZoomPlus.setGraphic(new Glyph("FontAwesome",
+		FontAwesome.Glyph.SEARCH_PLUS).size((double) fontsize));
     }
 
 }

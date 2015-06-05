@@ -6,12 +6,12 @@ package de.oth.smplsp.view;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import de.oth.smplsp.messages.Messages;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import de.oth.smplsp.messages.Messages;
 
 /**
  * @author Tobias Eichinger
@@ -19,11 +19,15 @@ import javafx.scene.layout.Priority;
  */
 public class ExceptionDialog extends Alert {
 
+    private RootLayoutController root;
+
     /**
      * @param alertType
      */
     public ExceptionDialog(Exception ex) {
 	super(AlertType.ERROR);
+
+	this.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 
 	this.setTitle(Messages.ExceptionDialog_Title);
 	this.setHeaderText(Messages.ExceptionDialog_Header);
@@ -54,5 +58,9 @@ public class ExceptionDialog extends Alert {
 	// Set expandable Exception into the dialog pane.
 	this.getDialogPane().setExpandableContent(expContent);
 
+    }
+
+    public void init(RootLayoutController rootLayoutController) {
+	root = rootLayoutController;
     }
 }

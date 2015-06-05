@@ -1,4 +1,4 @@
-﻿package de.oth.smplsp.view;
+package de.oth.smplsp.view;
 
 import java.net.URL;
 import java.util.List;
