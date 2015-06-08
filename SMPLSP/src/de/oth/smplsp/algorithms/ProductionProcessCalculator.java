@@ -38,6 +38,13 @@ public class ProductionProcessCalculator {
 	    double ende = processRuesten.getStart().doubleValue()
 		    + product.getTau();
 	    processRuesten.setEnde(new SimpleDoubleProperty(ende));
+
+	    // für zweiten Zyklus
+	    double zyklusdauer = product.getQ() / product.getD();
+	    processRuesten.setStart_zyklus2(new SimpleDoubleProperty(
+		    processRuesten.getStart().doubleValue() + zyklusdauer));
+	    processRuesten.setEnde_zyklus2(new SimpleDoubleProperty(
+		    processRuesten.getEnde().doubleValue() + zyklusdauer));
 	    processes.add(processRuesten);
 
 	    ProductionProcess processProduction = new ProductionProcess();
@@ -48,6 +55,12 @@ public class ProductionProcessCalculator {
 	    double endeProduktion = processProduction.getStart().doubleValue()
 		    + product.getT();
 	    processProduction.setEnde(new SimpleDoubleProperty(endeProduktion));
+
+	    // Für zweiten Zyklus
+	    processProduction.setStart_zyklus2(new SimpleDoubleProperty(
+		    processProduction.getStart().doubleValue() + zyklusdauer));
+	    processProduction.setEnde_zyklus2(new SimpleDoubleProperty(
+		    processProduction.getEnde().doubleValue() + zyklusdauer));
 	    processes.add(processProduction);
 	}
     }

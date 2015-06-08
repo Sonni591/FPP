@@ -11,9 +11,13 @@ public class ProductionProcess {
     // Vorgang
     private StringProperty vorgang;
     // Start
-    private DoubleProperty start;
+    private DoubleProperty start_zyklus1;
     // Ende
-    private DoubleProperty ende;
+    private DoubleProperty ende_zyklus1;
+
+    private DoubleProperty start_zyklus2;
+
+    private DoubleProperty ende_zyklus2;
 
     /**
      * @return the k
@@ -49,7 +53,7 @@ public class ProductionProcess {
      * @return the start
      */
     public DoubleProperty getStart() {
-	return start;
+	return start_zyklus1;
     }
 
     /**
@@ -57,14 +61,14 @@ public class ProductionProcess {
      *            the start to set
      */
     public void setStart(DoubleProperty start) {
-	this.start = start;
+	this.start_zyklus1 = start;
     }
 
     /**
      * @return the ende
      */
     public DoubleProperty getEnde() {
-	return ende;
+	return ende_zyklus1;
     }
 
     /**
@@ -72,7 +76,23 @@ public class ProductionProcess {
      *            the ende to set
      */
     public void setEnde(DoubleProperty ende) {
-	this.ende = ende;
+	this.ende_zyklus1 = ende;
+    }
+
+    public DoubleProperty getStart_zyklus2() {
+	return start_zyklus2;
+    }
+
+    public void setStart_zyklus2(DoubleProperty start_zyklus2) {
+	this.start_zyklus2 = start_zyklus2;
+    }
+
+    public DoubleProperty getEnde_zyklus2() {
+	return ende_zyklus2;
+    }
+
+    public void setEnde_zyklus2(DoubleProperty ende_zyklus2) {
+	this.ende_zyklus2 = ende_zyklus2;
     }
 
 }

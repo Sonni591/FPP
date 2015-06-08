@@ -89,7 +89,7 @@ public class Tab2Controller implements Initializable {
 	    ObservableList<ProductionProcess> processesList = FXCollections
 		    .observableArrayList(processes);
 	    setProcessesListAndShowInTableProcessing(processesList);
-	    root.getTab5Controller().showChart(processes);
+	    root.getTab3Controller().showChart(processes);
 	}
     }
 
