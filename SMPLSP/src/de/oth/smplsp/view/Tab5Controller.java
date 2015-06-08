@@ -86,6 +86,33 @@ public class Tab5Controller {
     }
 
     // Create Dataset for Chart
+    // public TaskSeriesCollection createDataset(List<ProductionProcess>
+    // processes) {
+    // TaskSeries taskseries = new TaskSeries("Schedule");
+    // Task tmpTask = new Task("desc", 0, 0);
+    // for (ProductionProcess a : processes) {
+    // if (a.getK() != null) {
+    // tmpTask = new Task("desc", 0, 0);
+    // tmpTask.setDescription(a.getK().getValue().toString());
+    // tmpTask.setStart(a.getStart().doubleValue());
+    // tmpTask.setEnd(a.getEnde().doubleValue());
+    // } else {
+    // Task subTask1 = new Task("Rüstzeit", tmpTask.getStart(),
+    // tmpTask.getEnd());
+    // Task subTask2 = new Task("Produktion", a.getStart()
+    // .doubleValue(), a.getEnde().doubleValue());
+    // tmpTask.setEnd(tmpTask.getEnd() + a.getEnde().doubleValue());
+    // tmpTask.addSubtask(subTask1);
+    // tmpTask.addSubtask(subTask2);
+    // taskseries.add(tmpTask);
+    // }
+    //
+    // }
+    // TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
+    // taskseriescollection.add(taskseries);
+    // return taskseriescollection;
+    // }
+    // Für 2 Zyklen
     public TaskSeriesCollection createDataset(List<ProductionProcess> processes) {
 	TaskSeries taskseries = new TaskSeries("Schedule");
 	Task tmpTask = new Task("desc", 0, 0);
@@ -94,15 +121,22 @@ public class Tab5Controller {
 		tmpTask = new Task("desc", 0, 0);
 		tmpTask.setDescription(a.getK().getValue().toString());
 		tmpTask.setStart(a.getStart().doubleValue());
-		tmpTask.setEnd(a.getEnde().doubleValue());
+		tmpTask.setEnd(a.getEnde_zyklus2().doubleValue());
+		Task subTask1 = new Task("Rüstzeit",
+			a.getStart().doubleValue(), a.getEnde().doubleValue());
+		Task subTask3 = new Task("Rüstzeit", a.getStart_zyklus2()
+			.doubleValue(), a.getEnde_zyklus2().doubleValue());
+		tmpTask.addSubtask(subTask1);
+		tmpTask.addSubtask(subTask3);
 	    } else {
-		Task subTask1 = new Task("Rüstzeit", tmpTask.getStart(),
-			tmpTask.getEnd());
 		Task subTask2 = new Task("Produktion", a.getStart()
 			.doubleValue(), a.getEnde().doubleValue());
-		tmpTask.setEnd(tmpTask.getEnd() + a.getEnde().doubleValue());
-		tmpTask.addSubtask(subTask1);
+		Task subTask4 = new Task("Produktion", a.getStart_zyklus2()
+			.doubleValue(), a.getEnde_zyklus2().doubleValue());
+
+		tmpTask.setEnd(a.getEnde_zyklus2().doubleValue());
 		tmpTask.addSubtask(subTask2);
+		tmpTask.addSubtask(subTask4);
 		taskseries.add(tmpTask);
 	    }
 
