@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.oth.smplsp.messages.Messages;
@@ -30,7 +31,10 @@ public class Main extends Application {
 	this.primaryStage = primaryStage;
 	this.primaryStage
 		.setTitle("statische Mehrproduktlosgrößenplanung, gemeinsamer Produktionszyklus");
-
+	this.primaryStage
+		.getIcons()
+		.add(new Image(
+			"/de/oth/smplsp/resources/images/Logo-OTH-128x128.png"));
 	initRootLayout();
 
     }
