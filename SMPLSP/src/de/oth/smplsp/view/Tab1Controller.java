@@ -113,7 +113,7 @@ public class Tab1Controller {
 
     /**
      * Set the productList and show it in the table
-     * 
+     *
      * @param set
      *            theproductsList
      */
@@ -307,8 +307,8 @@ public class Tab1Controller {
 			.loadValuesAsProduct();
 
 		// show loaded values in the view
-		// productsTableView.setItems(productsList);
-		setProductsListAndShowInTable(productsListTmp);
+		productsTableView.setItems(productsList);
+		// setProductsListAndShowInTable(productsList);
 
 		// set the text in the correct fontsize
 		root.getZoomer().rescaleEverything();
@@ -323,11 +323,11 @@ public class Tab1Controller {
 		showErrorDialogFileNotImported(csvFile.getName(),
 			e2.getMessage());
 		// undo changes and show old values
-		setProductsListAndShowInTable(productsListTmp);
-		// productsList.clear();
-		// productsList.addAll(productsListTmp);
-		// // show loaded values in the view
-		// productsTableView.setItems(productsList);
+		// setProductsListAndShowInTable(productsListTmp);
+		productsList.clear();
+		productsList.addAll(productsListTmp);
+		// show loaded values in the view
+		productsTableView.setItems(productsList);
 	    }
 	}
     }
