@@ -65,7 +65,6 @@ public class SettingsDialogController {
 	zoomer = new Zoomer();
 	zoomer.init(this);
 	zoomer.rescaleSettingsDialog();
-	zoomer.resetZoomLevel();
     }
 
     @FXML
