@@ -1,6 +1,7 @@
 package de.oth.smplsp.zoom;
 
 import de.oth.smplsp.view.RootLayoutController;
+import de.oth.smplsp.view.SettingsDialogController;
 import de.oth.smplsp.view.Tab1Controller;
 import de.oth.smplsp.view.Tab2Controller;
 import de.oth.smplsp.view.Tab3Controller;
@@ -16,10 +17,15 @@ public class Zoomer {
     private Tab3Controller tab3Controller;
     private Tab4Controller tab4Controller;
     private Tab5Controller tab5Controller;
+    private SettingsDialogController settingsDialogController;
 
     // global fontsize
-    private int fontsize = 13;
-    private int latexFontSize = 22;
+    private static int fontsize = 13;
+    private static int latexFontSize = 22;
+
+    // default font size
+    private final int defaultFontsize = 13;
+    private final int defaultLatexFontSize = 22;
 
     // TODO: unused now, remove if unnecessary
     // // difference the different fontsizes
@@ -50,7 +56,9 @@ public class Zoomer {
      *            the fontsize to set
      */
     public void setFontsize(int fontsize) {
-	this.fontsize = fontsize;
+	if (fontsize > 1) {
+	    this.fontsize = fontsize;
+	}
     }
 
     /**
@@ -74,50 +82,60 @@ public class Zoomer {
     public void handleZoomIn() {
 	fontsize++;
 	latexFontSize += 2;
-	rescaleEverything();
+	rescaleMainApplication();
+	rescaleSettingsDialog();
     }
 
     /**
      * decreases all fontsizes and rescales the application
      */
     public void handleZoomOut() {
-	fontsize--;
-	latexFontSize -= 2;
-	rescaleEverything();
+	if (fontsize > 1) {
+	    fontsize--;
+	}
+	if (latexFontSize > 2) {
+	    latexFontSize -= 2;
+	}
+	rescaleMainApplication();
+	rescaleSettingsDialog();
     }
 
     /**
      * resizes every font in the application
      */
-    public void rescaleEverything() {
+    public void rescaleMainApplication() {
+	if (root != null) {
+	    // zoom operations on the root layout
+	    root.handleZoomEveryCSSStyle();
+	    root.showExplanationComponent();
+	    root.handleZoomSouthBarButtons(fontsize);
 
-	// zoom operations on the root layout
-	root.handleZoomEveryCSSStyle();
-	root.showExplanationComponent();
-	root.handleZoomSouthBarButtons(fontsize);
-	// root.handleZoomMenuBar();
+	    // zoom operations on tab 1
+	    tab1Controller.handleZoomButtons(fontsize);
 
-	// zoom operations on tab 1
-	// tab1Controller.handleZoomTable(fontsize);
-	tab1Controller.handleZoomButtons(fontsize);
+	    // zoom operations on tab 2
+	    // TODO
 
-	// zoom operations on tab 2
-	// TODO
+	    // zoom operations on tab 3
+	    // TODO
 
-	// zoom operations on tab 3
-	// TODO
+	    // zoom operations on tab 4
+	    if (!System.getProperty("os.name").equals("Mac OS X")) {
+		tab4Controller.showTOptAndTMinFormulas();
+	    }
 
-	// zoom operations on tab 4
-	if (!System.getProperty("os.name").equals("Mac OS X")) {
-	    tab4Controller.showTOptAndTMinFormulas();
+	    // zoom operations on tab 5
+	    // TODO
+
+	    // other zoom operations
+	    // TODO
 	}
+    }
 
-	// zoom operations on tab 5
-	// TODO
-
-	// other zoom operations
-	// TODO
-
+    public void rescaleSettingsDialog() {
+	if (settingsDialogController != null) {
+	    settingsDialogController.handleZoomCSSStyle();
+	}
     }
 
     public void init(RootLayoutController rootLayoutController) {
@@ -129,13 +147,25 @@ public class Zoomer {
 	tab5Controller = root.getTab5Controller();
     }
 
-   /**
-    * modify the font size of the used stylesheet
-    * @return
-    */
+    public void init(SettingsDialogController settingsDialogController) {
+	this.settingsDialogController = settingsDialogController;
+    }
+
+    /**
+     * modify the font size of the used stylesheet
+     * 
+     * @return
+     */
     public String getStyleFXFontSize() {
 	String style = "-fx-font-size: " + fontsize + ";";
 	return style;
+    }
+
+    public void resetZoomLevel() {
+	fontsize = defaultFontsize;
+	latexFontSize = defaultLatexFontSize;
+	rescaleMainApplication();
+	rescaleSettingsDialog();
     }
 
 }

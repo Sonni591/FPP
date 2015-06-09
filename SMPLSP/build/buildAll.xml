@@ -21,47 +21,47 @@
 		<mkdir dir="externalLibs" />
 	
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="jdom.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="fxsampler-1.0.8.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="JMathTeX-0.7pre.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="openjfx-dialogs-1.0.2.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="ostermillerutils-1.08.02-sources.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="controlsfx-8.20.8.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="ostermillerutils-1.08.02-javadoc.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="jlatexmath-1.0.3.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="ostermillerutils-1.08.02.jar"/>
 			</fileset>
 		</copy>
@@ -76,29 +76,29 @@
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="jcommon-1.0.23.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="fxgraphics2d-1.1.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="org.eclipse.osgi_3.10.1.v20140909-1633.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/FPP/SMPLSP/lib">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib">
 				<filename name="jfreechart-1.0.19-fx.jar"/>
 			</fileset>
 		</copy>
 	
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="/FPP/SMPLSP">
+			<fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP">
 				<include name="src/**" />
 			</fileset>
 		</copy>

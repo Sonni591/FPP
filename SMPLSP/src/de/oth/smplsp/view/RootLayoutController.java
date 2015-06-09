@@ -294,7 +294,7 @@ public class RootLayoutController {
      */
     public void handleZoomFinished(ZoomEvent event) {
 
-	zoomer.rescaleEverything();
+	zoomer.rescaleMainApplication();
 
 	// stop further propagation of the event
 	event.consume();
@@ -320,7 +320,7 @@ public class RootLayoutController {
     private void onActionTestData() {
 	if (tab1Controller.getProductsList().isEmpty()) {
 	    loadAndShowTestData();
-	    zoomer.rescaleEverything();
+	    zoomer.rescaleMainApplication();
 	} else {
 	    // when the table is not empty, show an confirmation dialog to
 	    // overwrite
@@ -334,7 +334,7 @@ public class RootLayoutController {
 	    if (result.get() == ButtonType.OK) {
 		// ... user chose OK - delete table and load test data
 		loadAndShowTestData();
-		zoomer.rescaleEverything();
+		zoomer.rescaleMainApplication();
 	    } else {
 		// ... user chose Cancel
 		// do nothing

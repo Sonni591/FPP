@@ -13,16 +13,21 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.oth.smplsp.Main;
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.util.Configuration;
+import de.oth.smplsp.zoom.Zoomer;
 
 /**
  * @author Tobias Eichinger
  *
  */
 public class SettingsDialogController {
+
+    @FXML
+    private BorderPane borderPane;
 
     @FXML
     private Button btnClose;
@@ -42,6 +47,8 @@ public class SettingsDialogController {
     private Configuration config;
     private boolean hasChangedDecimals = false;
 
+    private Zoomer zoomer;
+
     public SettingsDialogController() {
 	config = Configuration.getInstance();
     }
@@ -55,6 +62,10 @@ public class SettingsDialogController {
 	txtDecimalPlaces.textProperty().setValue(
 		Integer.toString(config.getDecimalPlaces()));
 	cbBlackAndWhite.setSelected(config.getBlackAndWhiteMode());
+	zoomer = new Zoomer();
+	zoomer.init(this);
+	zoomer.rescaleSettingsDialog();
+	zoomer.resetZoomLevel();
     }
 
     @FXML
@@ -126,6 +137,10 @@ public class SettingsDialogController {
     public void onActionCBBlackAndWhiteChanged() {
 	config.setBlackAndWhiteMode(cbBlackAndWhite.selectedProperty()
 		.getValue());
+    }
+
+    public void handleZoomCSSStyle() {
+	borderPane.setStyle(zoomer.getStyleFXFontSize());
     }
 
 }

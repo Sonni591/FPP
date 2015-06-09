@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project SMPLSP with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/build/deploy/bundles/SMPLSP.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="de.oth.smplsp.Main"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ org.eclipse.fx.ide.css.jfx8_1.2.0.201501301049.jar org.eclipse.osgi_3.10.1.v20140909-1633.jar jdom.jar jlatexmath-1.0.3.jar JMathTeX-0.7pre.jar junit.jar org.hamcrest.core_1.3.0.v201303031735.jar ostermillerutils-1.08.02.jar jcommon-1.0.23.jar fxsampler-1.0.8.jar openjfx-dialogs-1.0.2.jar ostermillerutils-1.08.02-javadoc.jar ostermillerutils-1.08.02-sources.jar fxgraphics2d-1.1.jar jfreechart-1.0.19-fx.jar controlsfx-8.20.8.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/bin"/>
+            <zipfileset dir="/Applications/Eclipse Java 8/plugins" includes="org.eclipse.fx.ide.css.jfx8_1.2.0.201501301049.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="org.eclipse.osgi_3.10.1.v20140909-1633.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="jdom.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="jlatexmath-1.0.3.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="JMathTeX-0.7pre.jar"/>
+            <zipfileset dir="/Applications/Eclipse Java 8/plugins/org.junit_4.11.0.v201303080030" includes="junit.jar"/>
+            <zipfileset dir="/Applications/Eclipse Java 8/plugins" includes="org.hamcrest.core_1.3.0.v201303031735.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="ostermillerutils-1.08.02.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="jcommon-1.0.23.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="fxsampler-1.0.8.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="openjfx-dialogs-1.0.2.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="ostermillerutils-1.08.02-javadoc.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="ostermillerutils-1.08.02-sources.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="fxgraphics2d-1.1.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="jfreechart-1.0.19-fx.jar"/>
+            <zipfileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib" includes="controlsfx-8.20.8.jar"/>
+        </jar>
+    </target>
+</project>

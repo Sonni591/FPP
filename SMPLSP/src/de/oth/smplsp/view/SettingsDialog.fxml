@@ -1,21 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.SettingsDialogController">
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.SettingsDialogController">
    <top>
-      <AnchorPane prefHeight="200.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+      <AnchorPane BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="14.0" layoutY="33.0" text="%Settings_Dialog_Label_Decimalplaces" />
-            <TextField fx:id="txtDecimalPlaces" layoutX="150.0" layoutY="28.0" onKeyReleased="#onActionTxtDecimalPlacesChanged" prefHeight="25.0" prefWidth="30.0" />
-            <Button fx:id="btnClose" cancelButton="true" layoutX="121.0" layoutY="162.0" mnemonicParsing="false" onAction="#onActionClose" text="%Settings_Dialog_Button_Cancel" />
-            <Button fx:id="btnSave" defaultButton="true" layoutX="14.0" layoutY="162.0" mnemonicParsing="false" onAction="#onActionSave" text="%Settings_Dialog_Button_Save" />
-            <Label layoutX="14.0" layoutY="67.0" text="%Settings_Dialog_Label_BlackAndWhite" />
-            <CheckBox fx:id="cbBlackAndWhite" layoutX="153.0" layoutY="66.0" mnemonicParsing="false" onAction="#onActionCBBlackAndWhiteChanged" />
+            <HBox AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+               <children>
+                  <Button fx:id="btnSave" defaultButton="true" mnemonicParsing="false" onAction="#onActionSave" text="%Settings_Dialog_Button_Save">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="btnClose" cancelButton="true" mnemonicParsing="false" onAction="#onActionClose" text="%Settings_Dialog_Button_Cancel">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
-   </top>
+   </bottom>
+   <center>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="%Settings_Dialog_Label_Decimalplaces" />
+                        <Label text="%Settings_Dialog_Label_BlackAndWhite">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin></Label>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <TextField fx:id="txtDecimalPlaces" onKeyReleased="#onActionTxtDecimalPlacesChanged" prefWidth="50.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TextField>
+                        <CheckBox fx:id="cbBlackAndWhite" mnemonicParsing="false" onAction="#onActionCBBlackAndWhiteChanged">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin></CheckBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>

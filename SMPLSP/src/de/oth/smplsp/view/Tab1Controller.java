@@ -311,7 +311,7 @@ public class Tab1Controller {
 		// setProductsListAndShowInTable(productsList);
 
 		// set the text in the correct fontsize
-		root.getZoomer().rescaleEverything();
+		root.getZoomer().rescaleMainApplication();
 
 	    } catch (IOException e1) {
 		// show error dialog
@@ -429,6 +429,10 @@ public class Tab1Controller {
 	    showProductListIsEmptyAlert();
 	    // exit the calculation
 	    return;
+	} else if (productsList.size() == 1) {
+	    showProductListIsToShortAlert();
+	    // exit the calculation
+	    return;
 	}
 
 	// get real products
@@ -464,7 +468,7 @@ public class Tab1Controller {
 	    if (!RootLayoutController.DEBUG_MODE) {
 		showInfoDialogCalculationFinished();
 	    }
-	    root.getZoomer().rescaleEverything();
+	    root.getZoomer().rescaleMainApplication();
 
 	}
     }
@@ -510,7 +514,16 @@ public class Tab1Controller {
 	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Ungültige Eingabe");
 	alert.setHeaderText("Ihre Eingabe enthält keine Werte!");
-	alert.setContentText("Geben Sie Werte in die Eingabetabelle ein, damit die Berechnung durchgeführt wrden kann!");
+	alert.setContentText("Geben Sie Werte in die Eingabetabelle ein, damit die Berechnung durchgeführt werden kann!");
+	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
+	alert.showAndWait();
+    }
+
+    private void showProductListIsToShortAlert() {
+	Alert alert = new Alert(AlertType.ERROR);
+	alert.setTitle("Ungültige Eingabe");
+	alert.setHeaderText("Ihre Eingabe enthält zu wenige Werte!");
+	alert.setContentText("Geben Sie weitere Datensätze in die Eingabetabelle ein, damit die Berechnung durchgeführt werden kann!");
 	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
     }
