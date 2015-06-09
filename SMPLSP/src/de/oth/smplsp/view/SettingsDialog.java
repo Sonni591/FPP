@@ -45,6 +45,7 @@ public class SettingsDialog extends Stage implements Initializable {
     public void showAndWait() {
 	// TODO Auto-generated method stub
 	super.showAndWait();
+	root.setDecimalsInAllTabs();
 	int index = root.getTabPane().getSelectionModel().getSelectedIndex();
 
 	switch (index) {

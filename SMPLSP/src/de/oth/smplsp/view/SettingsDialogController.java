@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import de.oth.smplsp.Main;
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.zoom.Zoomer;
@@ -45,7 +44,6 @@ public class SettingsDialogController {
     private CheckBox cbBlackAndWhite;
 
     private Configuration config;
-    private boolean hasChangedDecimals = false;
 
     private Zoomer zoomer;
 
@@ -103,9 +101,6 @@ public class SettingsDialogController {
     @FXML
     public void onActionSave() {
 	config.saveSettingsToConfigFile();
-	if (hasChangedDecimals) {
-	    Main.controller.setDecimalsInAllTabs();
-	}
 	closeDialog();
     }
 
@@ -116,7 +111,6 @@ public class SettingsDialogController {
 		    && txtDecimalPlaces.textProperty().getValue() != null) {
 		config.setDecimalPlaces(Integer.parseInt(txtDecimalPlaces
 			.textProperty().getValue()));
-		hasChangedDecimals = true;
 	    }
 	} catch (NumberFormatException e) {
 	    txtDecimalPlaces.textProperty().setValue(
