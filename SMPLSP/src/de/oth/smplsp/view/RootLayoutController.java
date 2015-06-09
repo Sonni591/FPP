@@ -80,6 +80,8 @@ public class RootLayoutController {
     @FXML
     private Menu menuEdit;
     @FXML
+    private Menu menuZoom;
+    @FXML
     private TabPane tabPane;
 
     @FXML
@@ -317,6 +319,11 @@ public class RootLayoutController {
     }
 
     @FXML
+    private void onActionCalculate() {
+	tab1Controller.handleCalculate();
+    }
+
+    @FXML
     private void onActionTestData() {
 	if (tab1Controller.getProductsList().isEmpty()) {
 	    loadAndShowTestData();
@@ -340,6 +347,21 @@ public class RootLayoutController {
 		// do nothing
 	    }
 	}
+    }
+
+    @FXML
+    private void onActionZoomIn() {
+	zoomer.handleZoomIn();
+    }
+
+    @FXML
+    private void onActionEditZoomOut() {
+	zoomer.handleZoomOut();
+    }
+
+    @FXML
+    private void onActionEditResetZoom() {
+	zoomer.resetZoomLevel();
     }
 
     private void loadAndShowTestData() {
