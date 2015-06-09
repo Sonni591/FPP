@@ -9,20 +9,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Callback;
 import javafx.util.converter.NumberStringConverter;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -559,21 +569,34 @@ public class Tab1Controller {
     }
 
     private void setColumnDecimals() {
-	column2.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter(
-			decimals.getDecimalFormat())));
-	column3.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter(
-			decimals.getDecimalFormat())));
-	column4.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter(
-			decimals.getDecimalFormat())));
-	column5.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter(
-			decimals.getDecimalFormat())));
-	column6.setCellFactory(TextFieldTableCell
-		.<Product, Number> forTableColumn(new NumberStringConverter(
-			decimals.getDecimalFormat())));
+	// column2.setCellFactory(TextFieldTableCell
+	// .<Product, Number> forTableColumn(new NumberStringConverter(
+	// decimals.getDecimalFormat())));
+	// column3.setCellFactory(TextFieldTableCell
+	// .<Product, Number> forTableColumn(new NumberStringConverter(
+	// decimals.getDecimalFormat())));
+	// column4.setCellFactory(TextFieldTableCell
+	// .<Product, Number> forTableColumn(new NumberStringConverter(
+	// decimals.getDecimalFormat())));
+	// column5.setCellFactory(TextFieldTableCell
+	// .<Product, Number> forTableColumn(new NumberStringConverter(
+	// decimals.getDecimalFormat())));
+	// column6.setCellFactory(TextFieldTableCell
+	// .<Product, Number> forTableColumn(new NumberStringConverter(
+	// decimals.getDecimalFormat())));
+
+	Callback<TableColumn<Product, Number>, TableCell<Product, Number>> cellFactory = new Callback<TableColumn<Product, Number>, TableCell<Product, Number>>() {
+	    public TableCell call(TableColumn p) {
+		return new EditingCell();
+	    }
+	};
+
+	column1.setCellFactory(cellFactory);
+	column2.setCellFactory(cellFactory);
+	column3.setCellFactory(cellFactory);
+	column4.setCellFactory(cellFactory);
+	column5.setCellFactory(cellFactory);
+	column6.setCellFactory(cellFactory);
 
     }
 
@@ -625,6 +648,7 @@ public class Tab1Controller {
 	btnCalculate.setGraphic(new Glyph("FontAwesome",
 		FontAwesome.Glyph.PLAY_CIRCLE_ALT).size((double) fontsize));
     }
+
     /**
      * Defines a custom callback to set the content of each table value and
      * update its fontsize using the param @fontsize
@@ -666,10 +690,168 @@ public class Tab1Controller {
     //
     // };
     // }
-    // // TODO: Nachkommastellen berechnung (siehe unten) muss irgendwie in den
+
+    // // TODO: Nachkommastellen berechnung muss irgendwie in den
     // // Callback integriert werden!!
     // // TextFieldTableCell
     // // .<Product, Number> forTableColumn(new NumberStringConverter(
     // // decimals.getDecimalFormat()))
+    class EditingCell extends TableCell<Product, Number> {
+
+	private TextField textField;
+
+	public EditingCell() {
+	    setDecimals();
+	}
+
+	@Override
+	public void startEdit() {
+	    if (!isEmpty()) {
+		super.startEdit();
+		if (textField == null) {
+		    createTextField();
+		}
+
+		setGraphic(textField);
+		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+		// textField.selectAll();
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+			textField.requestFocus();
+			textField.selectAll();
+		    }
+		});
+	    }
+	}
+
+	@Override
+	public void cancelEdit() {
+	    super.cancelEdit();
+
+	    setGraphic(null);
+	    setText((String) getItem().toString());
+	}
+
+	@Override
+	public void updateItem(Number item, boolean empty) {
+	    super.updateItem(item, empty);
+
+	    if (empty) {
+		setText(null);
+		setGraphic(null);
+	    } else {
+		if (isEditing()) {
+		    if (textField != null) {
+			textField.setText(getString());
+		    }
+		    setGraphic(textField);
+		    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+		} else {
+		    setText(getString());
+		    setContentDisplay(ContentDisplay.TEXT_ONLY);
+		}
+	    }
+	}
+
+	private void createTextField() {
+	    textField = new TextField(getString());
+	    textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()
+		    * 2);
+
+	    textField.focusedProperty().addListener(
+		    new ChangeListener<Boolean>() {
+			@Override
+			public void changed(
+				ObservableValue<? extends Boolean> arg0,
+				Boolean arg1, Boolean arg2) {
+			    if (!arg2) {
+				commitEdit(Float.valueOf(textField.getText())
+					.floatValue());
+			    }
+			}
+		    });
+
+	    textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		@Override
+		public void handle(KeyEvent t) {
+		    if (t.getCode() == KeyCode.ENTER) {
+			commitEdit(Float.valueOf(textField.getText())
+				.floatValue());
+		    } else if (t.getCode() == KeyCode.ESCAPE) {
+			cancelEdit();
+		    } else if (t.getCode() == KeyCode.TAB) {
+			commitEdit(Float.valueOf(textField.getText())
+				.floatValue());
+			TableColumn nextColumn = getNextColumn(!t.isShiftDown());
+			if (nextColumn != null) {
+			    getTableView().edit(getTableRow().getIndex(),
+				    nextColumn);
+			}
+
+		    }
+		}
+
+	    });
+	}
+
+	private String getString() {
+	    return getItem() == null ? "" : getItem().toString();
+	}
+
+	private TableColumn<Product, ?> getNextColumn(boolean forward) {
+	    List<TableColumn<Product, ?>> columns = new ArrayList<>();
+	    for (TableColumn<Product, ?> column : getTableView().getColumns()) {
+		columns.addAll(getLeaves(column));
+	    }
+	    // There is no other column that supports editing.
+	    if (columns.size() < 2) {
+		return null;
+	    }
+	    int currentIndex = columns.indexOf(getTableColumn());
+	    int nextIndex = currentIndex;
+	    if (forward) {
+		nextIndex++;
+		if (nextIndex > columns.size() - 1) {
+		    nextIndex = 0;
+		}
+	    } else {
+		nextIndex--;
+		if (nextIndex < 0) {
+		    nextIndex = columns.size() - 1;
+		}
+	    }
+	    return columns.get(nextIndex);
+	}
+
+	private List<TableColumn<Product, ?>> getLeaves(
+		TableColumn<Product, ?> root) {
+	    List<TableColumn<Product, ?>> columns = new ArrayList<>();
+	    if (root.getColumns().isEmpty()) {
+		// We only want the leaves that are editable.
+		if (root.isEditable()) {
+		    columns.add(root);
+		}
+		return columns;
+	    } else {
+		for (TableColumn<Product, ?> column : root.getColumns()) {
+		    columns.addAll(getLeaves(column));
+		}
+		return columns;
+	    }
+	}
+
+	// WARNING: DOES NOT WORK LIKE THIS!
+	private void setDecimals() {
+	    TableColumn<Product, Number> column = getTableColumn();
+	    if (column != null) {
+		column.setCellFactory(TextFieldTableCell
+			.<Product, Number> forTableColumn(new NumberStringConverter(
+				decimals.getDecimalFormat())));
+	    }
+
+	}
+
+    }
 
 }
