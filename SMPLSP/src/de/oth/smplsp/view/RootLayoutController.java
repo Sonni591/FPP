@@ -276,14 +276,22 @@ public class RootLayoutController {
 	Integer zoomFactorInteger = zoomFactorDouble.intValue();
 
 	Integer fontsize = zoomer.getFontsize();
+	Integer latexFontsize = zoomer.getLatexFontSize();
+	Integer chartFontsize = zoomer.getChartFontSize();
 
 	if (zoomFactorInteger >= 1) { // zoom in
 	    fontsize += zoomFactorInteger;
+	    latexFontsize += zoomFactorInteger * 2;
+	    chartFontsize += zoomFactorInteger * 2;
 	} else { // zoom out
 	    fontsize -= 1;
+	    latexFontsize -= 2;
+	    chartFontsize -= 2;
 	}
 
 	zoomer.setFontsize(fontsize);
+	zoomer.setLatexFontSize(latexFontsize);
+	zoomer.setChartFontSize(chartFontsize);
 
 	// stop further propagation of the event
 	event.consume();

@@ -75,7 +75,9 @@ public class Zoomer {
      *            the latexFontSize to set
      */
     public void setLatexFontSize(int latexFontSize) {
-	this.latexFontSize = latexFontSize;
+	if (fontsize > 1) {
+	    this.latexFontSize = latexFontSize;
+	}
     }
 
     /**
@@ -83,6 +85,16 @@ public class Zoomer {
      */
     public int getChartFontSize() {
 	return chartFontSize;
+    }
+
+    /**
+     * @param chartFontSize
+     *            the chartFontSize to set
+     */
+    public void setChartFontSize(int chartFontSize) {
+	if (chartFontSize > 1) {
+	    this.chartFontSize = chartFontSize;
+	}
     }
 
     /**
