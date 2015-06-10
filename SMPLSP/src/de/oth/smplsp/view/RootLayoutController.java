@@ -457,7 +457,7 @@ public class RootLayoutController {
 		latexString = getDefaultLatexStringTab3();
 		break;
 	    case 3:
-		latexString = getDefaultLatexStringTab4();
+		// latexString = getDefaultLatexStringTab4();
 		break;
 	    case 4:
 		latexString = getDefaultLatexStringTab5();
@@ -500,19 +500,22 @@ public class RootLayoutController {
 	return getLatexNewLine();
     }
 
-    public String getDefaultLatexStringTab4() {
-	String s = "\\textrm{Formel für den optimalen gemeinsamen Produktionszyklus:";
-	s += getLatexNewLine();
-	s += "\\mathrm{T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}}";
-	s += getLatexNewLine();
-	s += getLatexNewLine();
-
-	s += "\\textrm{Formel für den minimalen gemeinsamen Produktionszyklus:";
-	s += getLatexNewLine();
-	s += "\\mathrm{T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}}";
-	s += getLatexNewLine();
-	return s;
-    }
+    // public String getDefaultLatexStringTab4() {
+    // String s =
+    // "\\textrm{Formel für den optimalen gemeinsamen Produktionszyklus:";
+    // s += getLatexNewLine();
+    // s +=
+    // "\\mathrm{T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}}";
+    // s += getLatexNewLine();
+    // s += getLatexNewLine();
+    //
+    // s += "\\textrm{Formel für den minimalen gemeinsamen Produktionszyklus:";
+    // s += getLatexNewLine();
+    // s +=
+    // "\\mathrm{T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}}";
+    // s += getLatexNewLine();
+    // return s;
+    // }
 
     public String getDefaultLatexStringTab5() {
 	return getLatexNewLine();

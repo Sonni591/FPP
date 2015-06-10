@@ -206,15 +206,6 @@ public class Tab1Controller {
 
     }
 
-    // private void fillTableTestData() {
-    //
-    // List<Product> products = LotSchedulingAlgorithmTester.getTestProducts();
-    // productsList.addAll(products);
-    //
-    // productsTableView.setItems(productsList);
-    //
-    // }
-
     /**
      * Called when the user clicks the add row button. A new row is added to the
      * table directly after the current selected one

@@ -72,7 +72,7 @@ public class ClassicLotSchedulingFormula {
 	formula += getAllgemeineProduktspezifischeProdukzionszyklusFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
+	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
 	formula += getProduktspezifischeProdukzionszyklusMitParameterFormel(product);
@@ -112,7 +112,7 @@ public class ClassicLotSchedulingFormula {
 	formula += getAllgemeineLosgroessenFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
+	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
 	formula += getLosgroessenmitParameternFormel(product);

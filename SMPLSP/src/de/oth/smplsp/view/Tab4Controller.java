@@ -215,8 +215,9 @@ public class Tab4Controller implements Initializable {
     public String getLosgroessenFormula() {
 	Product product = losgroessenTableView.getSelectionModel()
 		.getSelectedItem();
-	String formula = root.getDefaultLatexStringTab4();
-	formula += MehrproduktLosgroessenFormula.getLosgroessenFormel(product,
+	// String formula = root.getDefaultLatexStringTab4();
+	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
+		product,
 		root.getResults()
 			.get(MoreProductLotScheduling.class.toString())
 			.getResult());
@@ -272,8 +273,6 @@ public class Tab4Controller implements Initializable {
 
     public void showTOpt() {
 
-	// latexString =
-	// "T_{opt}=\\sqrt{\\frac{2*\\sum_{k=1}^{K}s_k}{\\sum_{k=1}^{K}h_k*D_k*(1-p_k)}}";
 	String latexString = MehrproduktLosgroessenFormula
 		.getAllgemeineGemeinsameProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
@@ -293,8 +292,6 @@ public class Tab4Controller implements Initializable {
 
     public void showTMin() {
 
-	// latexString =
-	// "T_{min}=\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}p_k}\\le{T}";
 	String latexString = MehrproduktLosgroessenFormula
 		.getAllgemeineMinimalenProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);

@@ -30,7 +30,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 	this.primaryStage = primaryStage;
 	this.primaryStage
-		.setTitle("statische Mehrproduktlosgrößenplanung, gemeinsamer Produktionszyklus");
+		.setTitle("Statische Mehrproduktlosgrößenplanung, gemeinsamer Produktionszyklus");
 	this.primaryStage
 		.getIcons()
 		.add(new Image(

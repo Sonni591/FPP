@@ -75,7 +75,7 @@ public class ProductFormula {
 	formula += getAllgemeineAuslastungFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
+	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getAuslastungFormel(product);
 	formula += getNewLine();
@@ -88,7 +88,7 @@ public class ProductFormula {
 	formula += getAllgemeineProduktionsdauerFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
+	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
 	formula += getProduktionsdauerMitParameterFormel(product);

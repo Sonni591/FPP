@@ -41,12 +41,14 @@ public class MehrproduktLosgroessenFormula {
 
     public static String getAllgemeineGemeinsameProduktionszyklusFormel() {
 	initialize();
-	String formel = "\\textcolor{"
-		+ dandelion
-		+ "}{T_{opt}} = \\sqrt{\\frac{2 \\cdot \\sum_{k=1}^{K} \\textcolor{"
-		+ red + "}{s_k}}{\\sum_{k=1}^{K}{\\textcolor{" + green
-		+ "}{h_k} \\cdot \\textcolor{" + blue
-		+ "}{D_k} \\cdot (1- \\textcolor{" + rubineRed
+	String formel = "T_{opt} = \\sqrt{\\frac{2 \\cdot \\sum_{k=1}^{K} \\textcolor{"
+		+ red
+		+ "}{s_k}}{\\sum_{k=1}^{K}{\\textcolor{"
+		+ green
+		+ "}{h_k} \\cdot \\textcolor{"
+		+ blue
+		+ "}{D_k} \\cdot (1- \\textcolor{"
+		+ rubineRed
 		+ "}{{\\rho}_k})}}}";
 	return formel;
     }
@@ -56,8 +58,7 @@ public class MehrproduktLosgroessenFormula {
 	initialize();
 	String formel = "\\textrm{Eingesetzte Formel für den optimalen gemeinsamen Produktionszyklus:";
 	formel += "\\\\";
-	formel += "\\mathrm{\\textcolor{" + dandelion
-		+ "}{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
+	formel += "\\mathrm{{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
@@ -69,7 +70,6 @@ public class MehrproduktLosgroessenFormula {
 			+ decimals.getDecimalFormat().format(product.getS())
 			+ "} + ";
 	    }
-
 	}
 	formel += "{";
 
@@ -94,7 +94,8 @@ public class MehrproduktLosgroessenFormula {
 	    }
 	}
 
-	formel += "}}";
+	formel += "}} = "
+		+ decimals.getDecimalFormat().format(result.gettOpt());
 	formel += "}"; // close mathrm
 	return formel;
     }
@@ -106,7 +107,7 @@ public class MehrproduktLosgroessenFormula {
 	// "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{"
 	// + rubineRed + "}{{\\rho}_k}}} \\leq T";
 	String formel = "T_{min} \\geq\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}\\textcolor{"
-		+ rubineRed + "}{\\rho}_k}";
+		+ rubineRed + "}{\\rho_k}}";
 	return formel;
     }
 
@@ -139,6 +140,7 @@ public class MehrproduktLosgroessenFormula {
 			+ "} + ";
 	    }
 	}
+	formel += " = " + decimals.getDecimalFormat().format(result.gettMin());
 	formel += "}"; // close mathrm
 	return formel;
     }
@@ -171,7 +173,7 @@ public class MehrproduktLosgroessenFormula {
 	formula += getAllgemeineGemeinsameProduktionszyklusFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten:}";
+	formula += "\\textrm{Formel mit eingesetzten Werten:}";
 	formula += getGemeinsameProduktionszyklusMitParameternFormel(result);
 	formula += getNewLine();
 	return formula;
@@ -183,7 +185,7 @@ public class MehrproduktLosgroessenFormula {
 	formula += getAllgemeineMinimalenProduktionszyklusFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten:}";
+	formula += "\\textrm{Formel mit eingesetzten Werten:}";
 	formula += getMinimalenProduktionszyklusMitParameternFormel(result);
 	formula += getNewLine();
 	return formula;
@@ -196,7 +198,7 @@ public class MehrproduktLosgroessenFormula {
 	formula += getAllgemeineLosgroessenFormel();
 	formula += getNewLine();
 	formula += getNewLine();
-	formula += "\\textrm{Formel mit eingestzten Werten für Produkt }"
+	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
 	formula += getLosgroessenMitParameterFormel(product, result);
