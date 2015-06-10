@@ -34,6 +34,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
 
+import org.controlsfx.dialog.ExceptionDialog;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 
@@ -458,13 +459,20 @@ public class Tab1Controller {
 		    algorithm.calculateInTotal();
 		} catch (MinimalProductionCycleError e) {
 		    showErrorMinimalProductionCycleAlert();
-		    e.printStackTrace();
+		    return;
+		    // e.printStackTrace();
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
-	    root.setResults(results);
-	    root.getTab2Controller().setData();
-	    root.getTab4Controller().setData();
+	    try {
+		root.setResults(results);
+		root.getTab2Controller().setData();
+		root.getTab4Controller().setData();
+	    } catch (Exception ex) {
+		showErrorCalculationFailed(ex);
+		return;
+		// ex.printStackTrace();
+	    }
 	    if (!RootLayoutController.DEBUG_MODE) {
 		showInfoDialogCalculationFinished();
 	    }
@@ -491,6 +499,18 @@ public class Tab1Controller {
 	alert.setContentText("Optimaler gemeinsamer Produktionszyklus ist kleiner als minimaler zulässiger Produktionszyklus! Bitte korrigieren Sie die Eingabedaten");
 	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	alert.showAndWait();
+    }
+
+    private void showErrorCalculationFailed(Exception e) {
+	ExceptionDialog exceptionDialog = new ExceptionDialog(
+		new Exception(
+			"Es ist keine Berechnung möglich. Bitte korrigieren Sie die Eingabedaten!",
+			e));
+	exceptionDialog.setTitle("Fehler");
+	exceptionDialog.setHeaderText("Die Berechnung ist fehlgeschlagen");
+	exceptionDialog.getDialogPane().setStyle(
+		root.getZoomer().getStyleFXFontSize());
+	exceptionDialog.showAndWait();
     }
 
     public void cloneProductValues(ObservableList<Product> listFrom,
