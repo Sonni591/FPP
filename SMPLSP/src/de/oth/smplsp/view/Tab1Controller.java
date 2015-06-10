@@ -3,6 +3,7 @@ package de.oth.smplsp.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,13 +28,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
-import javafx.util.converter.NumberStringConverter;
 
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
@@ -692,7 +691,6 @@ public class Tab1Controller {
 	private TextField textField;
 
 	public EditingCell() {
-	    setDecimals();
 	}
 
 	@Override
@@ -719,9 +717,9 @@ public class Tab1Controller {
 	@Override
 	public void cancelEdit() {
 	    super.cancelEdit();
-
-	    setGraphic(null);
 	    setText((String) getItem().toString());
+	    setGraphic(null);
+	    setContentDisplay(ContentDisplay.TEXT_ONLY);
 	}
 
 	@Override
@@ -757,8 +755,13 @@ public class Tab1Controller {
 				ObservableValue<? extends Boolean> arg0,
 				Boolean arg1, Boolean arg2) {
 			    if (!arg2) {
-				commitEdit(Float.valueOf(textField.getText())
-					.floatValue());
+				try {
+				    commitEdit(decimals.getDecimalFormat()
+					    .parse(textField.getText()));
+				} catch (ParseException e) {
+				    // TODO Auto-generated catch block
+				    e.printStackTrace();
+				}
 			    }
 			}
 		    });
@@ -767,13 +770,23 @@ public class Tab1Controller {
 		@Override
 		public void handle(KeyEvent t) {
 		    if (t.getCode() == KeyCode.ENTER) {
-			commitEdit(Float.valueOf(textField.getText())
-				.floatValue());
+			try {
+			    commitEdit(decimals.getDecimalFormat().parse(
+				    textField.getText()));
+			} catch (ParseException e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+			}
 		    } else if (t.getCode() == KeyCode.ESCAPE) {
 			cancelEdit();
 		    } else if (t.getCode() == KeyCode.TAB) {
-			commitEdit(Float.valueOf(textField.getText())
-				.floatValue());
+			try {
+			    commitEdit(decimals.getDecimalFormat().parse(
+				    textField.getText()));
+			} catch (ParseException e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+			}
 			TableColumn nextColumn = getNextColumn(!t.isShiftDown());
 			if (nextColumn != null) {
 			    getTableView().edit(getTableRow().getIndex(),
@@ -787,7 +800,8 @@ public class Tab1Controller {
 	}
 
 	private String getString() {
-	    return getItem() == null ? "" : getItem().toString();
+	    return getItem() == null ? "0" : decimals.getDecimalFormat()
+		    .format((Object) getItem()).toString();
 	}
 
 	private TableColumn<Product, ?> getNextColumn(boolean forward) {
@@ -830,17 +844,6 @@ public class Tab1Controller {
 		}
 		return columns;
 	    }
-	}
-
-	// WARNING: DOES NOT WORK LIKE THIS!
-	private void setDecimals() {
-	    TableColumn<Product, Number> column = getTableColumn();
-	    if (column != null) {
-		column.setCellFactory(TextFieldTableCell
-			.<Product, Number> forTableColumn(new NumberStringConverter(
-				decimals.getDecimalFormat())));
-	    }
-
 	}
 
     }

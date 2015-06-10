@@ -34,8 +34,6 @@ public class Tab3Controller {
     private Main main;
     private RootLayoutController root;
 
-    private int fontSize = 12;
-
     /**
      * The constructor. The constructor is called before the initialize()
      * method.
@@ -123,33 +121,17 @@ public class Tab3Controller {
 	return taskseriescollection;
     }
 
-    public void zoomIn() {
-	fontSize += 2;
-	JFreeChart chart = createChart(createDataset(processes));
-	CategoryPlot plot = chart.getCategoryPlot();
-	Font font = plot.getRangeAxis().getLabelFont();
-	Font customFont = new Font(font.getFontName(), font.getStyle(),
-		fontSize);
-	plot.getRangeAxis().setLabelFont(customFont);
-	plot.getRangeAxis().setTickLabelFont(customFont);
-	plot.getDomainAxis().setLabelFont(customFont);
-	plot.getDomainAxis().setTickLabelFont(customFont);
-	for (int i = 0; i < plot.getLegendItems().getItemCount(); i++) {
-	    plot.getLegendItems().get(i).setLabelFont(customFont);
+    public void handleZoom() {
+	JFreeChart chart = null;
+	if (processes == null) {
+	    chart = createChart(createInitDataset());
+	} else {
+	    chart = createChart(createDataset(processes));
 	}
-	ChartViewer viewer = new ChartViewer(chart);
-	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
-	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
-	myStackPane.getChildren().add(viewer);
-    }
-
-    public void zoomOut() {
-	fontSize -= 2;
-	JFreeChart chart = createChart(createDataset(processes));
 	CategoryPlot plot = chart.getCategoryPlot();
 	Font font = plot.getRangeAxis().getLabelFont();
-	Font customFont = new Font(font.getFontName(), font.getStyle(),
-		fontSize);
+	Font customFont = new Font(font.getFontName(), font.getStyle(), root
+		.getZoomer().getChartFontSize());
 	plot.getRangeAxis().setLabelFont(customFont);
 	plot.getRangeAxis().setTickLabelFont(customFont);
 	plot.getDomainAxis().setLabelFont(customFont);

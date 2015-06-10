@@ -22,10 +22,12 @@ public class Zoomer {
     // global fontsize
     private static int fontsize = 13;
     private static int latexFontSize = 22;
+    private static int chartFontSize = 12;
 
     // default font size
     private final int defaultFontsize = 13;
     private final int defaultLatexFontSize = 22;
+    private final int defaultChartFontSize = 12;
 
     // TODO: unused now, remove if unnecessary
     // // difference the different fontsizes
@@ -77,14 +79,21 @@ public class Zoomer {
     }
 
     /**
+     * @return the chartFontSize
+     */
+    public int getChartFontSize() {
+	return chartFontSize;
+    }
+
+    /**
      * increases all fontsizes and rescales the application
      */
     public void handleZoomIn() {
 	fontsize++;
 	latexFontSize += 2;
+	chartFontSize += 2;
 	rescaleMainApplication();
 	rescaleSettingsDialog();
-	rescaleCharts(true);
     }
 
     /**
@@ -97,9 +106,11 @@ public class Zoomer {
 	if (latexFontSize > 2) {
 	    latexFontSize -= 2;
 	}
+	if (chartFontSize > 2) {
+	    chartFontSize -= 2;
+	}
 	rescaleMainApplication();
 	rescaleSettingsDialog();
-	rescaleCharts(false);
     }
 
     /**
@@ -116,10 +127,9 @@ public class Zoomer {
 	    tab1Controller.handleZoomButtons(fontsize);
 
 	    // zoom operations on tab 2
-	    // TODO
 
 	    // zoom operations on tab 3
-	    // TODO
+	    tab3Controller.handleZoom();
 
 	    // zoom operations on tab 4
 	    if (!System.getProperty("os.name").equals("Mac OS X")) {
@@ -127,10 +137,8 @@ public class Zoomer {
 	    }
 
 	    // zoom operations on tab 5
-	    // TODO
+	    tab5Controller.handleZoom();
 
-	    // other zoom operations
-	    // TODO
 	}
     }
 
@@ -138,17 +146,6 @@ public class Zoomer {
 	if (settingsDialogController != null) {
 	    settingsDialogController.handleZoomCSSStyle();
 	}
-    }
-
-    public void rescaleCharts(Boolean foo) {
-	if (foo) {
-	    tab3Controller.zoomIn();
-	    tab5Controller.zoomIn();
-	} else {
-	    tab3Controller.zoomOut();
-	    tab5Controller.zoomOut();
-	}
-
     }
 
     public void init(RootLayoutController rootLayoutController) {
@@ -177,6 +174,7 @@ public class Zoomer {
     public void resetZoomLevel() {
 	fontsize = defaultFontsize;
 	latexFontSize = defaultLatexFontSize;
+	chartFontSize = defaultChartFontSize;
 	rescaleMainApplication();
 	rescaleSettingsDialog();
     }
