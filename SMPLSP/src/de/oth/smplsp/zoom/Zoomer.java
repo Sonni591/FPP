@@ -84,6 +84,7 @@ public class Zoomer {
 	latexFontSize += 2;
 	rescaleMainApplication();
 	rescaleSettingsDialog();
+	rescaleCharts(true);
     }
 
     /**
@@ -98,6 +99,7 @@ public class Zoomer {
 	}
 	rescaleMainApplication();
 	rescaleSettingsDialog();
+	rescaleCharts(false);
     }
 
     /**
@@ -136,6 +138,17 @@ public class Zoomer {
 	if (settingsDialogController != null) {
 	    settingsDialogController.handleZoomCSSStyle();
 	}
+    }
+
+    public void rescaleCharts(Boolean foo) {
+	if (foo) {
+	    tab3Controller.zoomIn();
+	    tab5Controller.zoomIn();
+	} else {
+	    tab3Controller.zoomOut();
+	    tab5Controller.zoomOut();
+	}
+
     }
 
     public void init(RootLayoutController rootLayoutController) {

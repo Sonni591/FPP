@@ -1,5 +1,6 @@
 package de.oth.smplsp.view;
 
+import java.awt.Font;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.layout.StackPane;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
+import org.jfree.chart.plot.CategoryPlot;
 
 import de.oth.smplsp.Main;
 import de.oth.smplsp.model.ProductionProcess;
@@ -26,9 +28,13 @@ public class Tab3Controller {
     @FXML
     private Canvas myCanvas;
 
+    private List<ProductionProcess> processes;
+
     // Reference to the main application.
     private Main main;
     private RootLayoutController root;
+
+    private int fontSize = 12;
 
     /**
      * The constructor. The constructor is called before the initialize()
@@ -65,16 +71,15 @@ public class Tab3Controller {
 	ChartViewer viewer = new ChartViewer(chart);
 	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
 	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
-	// viewer.addChartMouseListener(this);
 	myStackPane.getChildren().add(viewer);
     }
 
     public void showChart(List<ProductionProcess> processes) {
+	this.processes = processes;
 	JFreeChart chart = createChart(createDataset(processes));
 	ChartViewer viewer = new ChartViewer(chart);
 	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
 	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
-	// viewer.addChartMouseListener(this);
 	myStackPane.getChildren().add(viewer);
     }
 
@@ -84,35 +89,7 @@ public class Tab3Controller {
 	return taskseriescollection;
     }
 
-    // Create Dataset for Chart
-    // public TaskSeriesCollection createDataset(List<ProductionProcess>
-    // processes) {
-    // TaskSeries taskseries = new TaskSeries("Schedule");
-    // Task tmpTask = new Task("desc", 0, 0);
-    // for (ProductionProcess a : processes) {
-    // if (a.getK() != null) {
-    // tmpTask = new Task("desc", 0, 0);
-    // tmpTask.setDescription(a.getK().getValue().toString());
-    // tmpTask.setStart(a.getStart().doubleValue());
-    // tmpTask.setEnd(a.getEnde().doubleValue());
-    // } else {
-    // Task subTask1 = new Task("Rüstzeit", tmpTask.getStart(),
-    // tmpTask.getEnd());
-    // Task subTask2 = new Task("Produktion", a.getStart()
-    // .doubleValue(), a.getEnde().doubleValue());
-    //
-    // tmpTask.setEnd(tmpTask.getEnd() + a.getEnde().doubleValue());
-    // tmpTask.addSubtask(subTask1);
-    // tmpTask.addSubtask(subTask2);
-    // taskseries.add(tmpTask);
-    // }
-    //
-    // }
-    // TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
-    // taskseriescollection.add(taskseries);
-    // return taskseriescollection;
-    // }
-    // Für 2 Zyklen
+    // Create DataSet for the Data in the Tab2
     public TaskSeriesCollection createDataset(List<ProductionProcess> processes) {
 	TaskSeries taskseries = new TaskSeries("Schedule");
 	Task tmpTask = new Task("desc", 0, 0);
@@ -146,6 +123,46 @@ public class Tab3Controller {
 	return taskseriescollection;
     }
 
+    public void zoomIn() {
+	fontSize += 2;
+	JFreeChart chart = createChart(createDataset(processes));
+	CategoryPlot plot = chart.getCategoryPlot();
+	Font font = plot.getRangeAxis().getLabelFont();
+	Font customFont = new Font(font.getFontName(), font.getStyle(),
+		fontSize);
+	plot.getRangeAxis().setLabelFont(customFont);
+	plot.getRangeAxis().setTickLabelFont(customFont);
+	plot.getDomainAxis().setLabelFont(customFont);
+	plot.getDomainAxis().setTickLabelFont(customFont);
+	for (int i = 0; i < plot.getLegendItems().getItemCount(); i++) {
+	    plot.getLegendItems().get(i).setLabelFont(customFont);
+	}
+	ChartViewer viewer = new ChartViewer(chart);
+	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
+	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
+	myStackPane.getChildren().add(viewer);
+    }
+
+    public void zoomOut() {
+	fontSize -= 2;
+	JFreeChart chart = createChart(createDataset(processes));
+	CategoryPlot plot = chart.getCategoryPlot();
+	Font font = plot.getRangeAxis().getLabelFont();
+	Font customFont = new Font(font.getFontName(), font.getStyle(),
+		fontSize);
+	plot.getRangeAxis().setLabelFont(customFont);
+	plot.getRangeAxis().setTickLabelFont(customFont);
+	plot.getDomainAxis().setLabelFont(customFont);
+	plot.getDomainAxis().setTickLabelFont(customFont);
+	for (int i = 0; i < plot.getLegendItems().getItemCount(); i++) {
+	    plot.getLegendItems().get(i).setLabelFont(customFont);
+	}
+	ChartViewer viewer = new ChartViewer(chart);
+	viewer.prefWidthProperty().bind(myStackPane.widthProperty());
+	viewer.prefHeightProperty().bind(myStackPane.heightProperty());
+	myStackPane.getChildren().add(viewer);
+    }
+
     private JFreeChart createChart(final TaskSeriesCollection dataset) {
 	// final JFreeChart chart = MyGanttChartFactory.createGanttChart(
 	final JFreeChart chart = MyGanttChartFactory.createGanttChart("", // chart
@@ -154,7 +171,7 @@ public class Tab3Controller {
 		"Zeit", // range axis label
 		dataset, // data
 		true, // include legend
-		true, // tooltips
+		false, // tooltips
 		false // urls
 		);
 
