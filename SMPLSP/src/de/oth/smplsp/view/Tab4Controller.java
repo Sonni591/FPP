@@ -137,7 +137,11 @@ public class Tab4Controller implements Initializable {
 	    @Override
 	    public void handle(MouseEvent event) {
 		if (!prodablaufTableView.getItems().isEmpty()) {
-		    showExplanations(getProdAblaufFormula());
+		    ProductionProcess process = prodablaufTableView
+			    .getSelectionModel().getSelectedItem();
+		    if (process != null) {
+			showExplanations(getProdAblaufFormula(process));
+		    }
 		}
 	    }
 	});
@@ -149,7 +153,11 @@ public class Tab4Controller implements Initializable {
 		if (!prodablaufTableView.getItems().isEmpty()) {
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			showExplanations(getProdAblaufFormula());
+			ProductionProcess process = prodablaufTableView
+				.getSelectionModel().getSelectedItem();
+			if (process != null) {
+			    showExplanations(getProdAblaufFormula(process));
+			}
 		    }
 		}
 	    }
@@ -163,7 +171,11 @@ public class Tab4Controller implements Initializable {
 	    @Override
 	    public void handle(MouseEvent event) {
 		if (!losgroessenTableView.getItems().isEmpty()) {
-		    showExplanations(getLosgroessenFormula());
+		    Product product = losgroessenTableView.getSelectionModel()
+			    .getSelectedItem();
+		    if (product != null) {
+			showExplanations(getLosgroessenFormula(product));
+		    }
 		}
 	    }
 	});
@@ -175,7 +187,11 @@ public class Tab4Controller implements Initializable {
 		if (!losgroessenTableView.getItems().isEmpty()) {
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			showExplanations(getLosgroessenFormula());
+			Product product = losgroessenTableView
+				.getSelectionModel().getSelectedItem();
+			if (product != null) {
+			    showExplanations(getLosgroessenFormula(product));
+			}
 		    }
 		}
 	    }
@@ -212,10 +228,8 @@ public class Tab4Controller implements Initializable {
 	root.showExplanationComponent();
     }
 
-    public String getLosgroessenFormula() {
-	Product product = losgroessenTableView.getSelectionModel()
-		.getSelectedItem();
-	// String formula = root.getDefaultLatexStringTab4();
+    public String getLosgroessenFormula(Product product) {
+
 	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
 		product,
 		root.getResults()
@@ -240,9 +254,7 @@ public class Tab4Controller implements Initializable {
 			.getResult());
     }
 
-    public String getProdAblaufFormula() {
-	ProductionProcess process = prodablaufTableView.getSelectionModel()
-		.getSelectedItem();
+    public String getProdAblaufFormula(ProductionProcess process) {
 	String formula = "";
 	int k;
 	if (process.getK() != null) {

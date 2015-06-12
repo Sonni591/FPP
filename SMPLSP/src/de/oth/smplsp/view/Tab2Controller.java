@@ -194,7 +194,11 @@ public class Tab2Controller implements Initializable {
 	    @Override
 	    public void handle(MouseEvent event) {
 		if (!prodablaufTableView.getItems().isEmpty()) {
-		    showExplanations(getProdAblaufFormula());
+		    ProductionProcess process = prodablaufTableView
+			    .getSelectionModel().getSelectedItem();
+		    if (process != null) {
+			showExplanations(getProdAblaufFormula(process));
+		    }
 		}
 	    }
 	});
@@ -206,7 +210,11 @@ public class Tab2Controller implements Initializable {
 		if (!prodablaufTableView.getItems().isEmpty()) {
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			showExplanations(getProdAblaufFormula());
+			ProductionProcess process = prodablaufTableView
+				.getSelectionModel().getSelectedItem();
+			if (process != null) {
+			    showExplanations(getProdAblaufFormula(process));
+			}
 		    }
 		}
 	    }
@@ -221,8 +229,11 @@ public class Tab2Controller implements Initializable {
 	    public void handle(MouseEvent event) {
 
 		if (!losgroessenTableView.getItems().isEmpty()) {
-
-		    showExplanations(getLosgroessenFormula());
+		    Product product = losgroessenTableView.getSelectionModel()
+			    .getSelectedItem();
+		    if (product != null) {
+			showExplanations(getLosgroessenFormula(product));
+		    }
 		}
 	    }
 	});
@@ -234,7 +245,11 @@ public class Tab2Controller implements Initializable {
 
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			showExplanations(getLosgroessenFormula());
+			Product product = losgroessenTableView
+				.getSelectionModel().getSelectedItem();
+			if (product != null) {
+			    showExplanations(getLosgroessenFormula(product));
+			}
 
 		    }
 		}
@@ -243,9 +258,7 @@ public class Tab2Controller implements Initializable {
 	});
     }
 
-    public String getProdAblaufFormula() {
-	ProductionProcess process = prodablaufTableView.getSelectionModel()
-		.getSelectedItem();
+    public String getProdAblaufFormula(ProductionProcess process) {
 	String formula = "";
 	int k;
 	if (process.getK() != null) {
@@ -283,9 +296,7 @@ public class Tab2Controller implements Initializable {
 	setProcessesListAndShowInTableProcessing(processingList);
     }
 
-    public String getLosgroessenFormula() {
-	Product product = losgroessenTableView.getSelectionModel()
-		.getSelectedItem();
+    public String getLosgroessenFormula(Product product) {
 	String formula = ClassicLotSchedulingFormula
 		.getLosgroessenFormel(product);
 	formula += ProductFormula.getProduktionsdauerFormel(product);
