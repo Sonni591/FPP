@@ -1,5 +1,6 @@
 package de.oth.smplsp.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,13 +23,15 @@ public class Configuration {
     // set this flag to true, if the settings were changed
     private boolean hasChanged = false;
 
-    private static String CONFIGPATH = "config/config.txt"; //$NON-NLS-1$
+    private String CONFIGPATH = ""; //$NON-NLS-1$
     private static String DEFAULTDECIMALPLACES = "5"; //$NON-NLS-1$
     private static String DECIMALPLACES = "DecimalPlaces"; //$NON-NLS-1$
     private static String DEFAULTBLACKANDWHITEMODE = "false"; //$NON-NLS-1$
     private static String BLACKANDWHITEMODE = "BlackAndWhite"; //$NON-NLS-1$
 
     private Configuration() {
+	CONFIGPATH = System.getProperty("user.dir") + "/SMPLSP-Config.txt";
+
 	hasChanged = false;
 	props = new Properties();
 	loadSettings();
@@ -40,7 +43,14 @@ public class Configuration {
     public void loadSettings() {
 	try {
 	    hasChanged = false;
-	    props.load(new FileInputStream(CONFIGPATH));
+	    File configFile = new File(CONFIGPATH);
+
+	    if (configFile.createNewFile()) {
+		setBlackAndWhiteMode(getBlackAndWhiteMode());
+		setDecimalPlaces(getDecimalPlaces());
+		saveSettingsToConfigFile();
+	    }
+	    props.load(new FileInputStream(configFile));
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	} catch (IOException e) {
