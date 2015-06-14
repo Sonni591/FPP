@@ -11,17 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import javax.swing.JOptionPane;
-
 import de.oth.smplsp.messages.Messages;
 import de.oth.smplsp.view.RootLayoutController;
 import de.oth.smplsp.view.Tab1Controller;
 import de.oth.smplsp.view.Tab2Controller;
 
 public class Main extends Application {
-
-    public static double JAVA_VERSION = getJavaVersion();
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -87,38 +82,12 @@ public class Main extends Application {
 	return primaryStage;
     }
 
-    /**
-     * starts the application. when the Java version is less then 1.8 an dialog
-     * is shown, that Java8 is required, otherwise the application will be
-     * launched
-     * 
-     * @param args
-     */
     public static void main(String[] args) {
-	if (JAVA_VERSION < 1.8) {
-	    JOptionPane
-		    .showMessageDialog(
-			    null,
-			    "Diese Applikation setzt Java8 voraus! Sie verwenden Java "
-				    + JAVA_VERSION
-				    + ".\nBitte installieren Sie Java SE Runtime Environment 8 oder verwenden \nSie alternativ die ebenfalls mitgelieferte *.exe Datei.",
-			    "Java Version nicht ausreichend",
-			    JOptionPane.ERROR_MESSAGE);
-	} else {
-	    launch(args);
-	}
+	launch(args);
 
     }
 
     public void setButtonText() {
 	controller2.setData();
     }
-
-    static double getJavaVersion() {
-	String version = System.getProperty("java.version");
-	int pos = version.indexOf('.');
-	pos = version.indexOf('.', pos + 1);
-	return Double.parseDouble(version.substring(0, pos));
-    }
-
 }
