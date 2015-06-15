@@ -1,5 +1,6 @@
 package de.oth.smplsp.view;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -225,9 +226,10 @@ public class RootLayoutController {
 		JTextPane pane = new JTextPane();
 		pane.setEditable(false);
 		pane.insertIcon(icon);
+		pane.setBackground(new Color(0, 0, 0, 0));
 		pane.repaint();
-
 		this.swingNode.setContent(pane);
+
 	    } catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -465,11 +467,11 @@ public class RootLayoutController {
 		latexString = getDefaultLatexStringTab3();
 		break;
 	    case 3:
-		// latexString = getDefaultLatexStringTab4();
+		latexString = getDefaultLatexStringTab4();
 		break;
 	    case 4:
 		latexString = getDefaultLatexStringTab5();
-		latexString += getExplanationTextClickOnALine();
+		// latexString += getExplanationTextClickOnALine();
 		break;
 	    default:
 		latexString = getLatexNewLine();
@@ -506,6 +508,10 @@ public class RootLayoutController {
 
     public String getDefaultLatexStringTab3() {
 	return getLatexNewLine();
+    }
+
+    public String getDefaultLatexStringTab4() {
+	return getExplanationTextClickOnALine();
     }
 
     // public String getDefaultLatexStringTab4() {

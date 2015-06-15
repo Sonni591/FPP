@@ -1,5 +1,6 @@
 package de.oth.smplsp.view;
 
+import java.awt.Color;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -298,6 +299,7 @@ public class Tab4Controller implements Initializable {
 	pane.setEditable(false);
 	pane.insertIcon(icon);
 	pane.repaint();
+	pane.setBackground(new Color(0, 0, 0, 0));
 
 	tOptNode.setContent(pane);
     }
@@ -317,6 +319,7 @@ public class Tab4Controller implements Initializable {
 	pane.setEditable(false);
 	pane.insertIcon(icon);
 	pane.repaint();
+	pane.setBackground(new Color(0, 0, 0, 0));
 
 	tMinNode.setContent(pane);
 
