@@ -412,7 +412,7 @@ public class RootLayoutController {
     @FXML
     private void onActionHelpAbout() {
 	Alert alert = new Alert(AlertType.INFORMATION);
-	alert.setTitle(Messages.RootLayoutController_AboutDialog_Title);
+	alert.setTitle("");
 	alert.setHeaderText(Messages.RootLayoutController_AboutDialog_NameAndVersion);
 	alert.setContentText(Messages.RootLayoutController_AboutDialog_License);
 	alert.getDialogPane().setStyle(zoomer.getStyleFXFontSize());
