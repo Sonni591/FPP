@@ -32,6 +32,7 @@ import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
 import de.oth.smplsp.algorithms.MoreProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
 import de.oth.smplsp.formula.MehrproduktLosgroessenFormula;
+import de.oth.smplsp.formula.ProductFormula;
 import de.oth.smplsp.formula.ProductionProcessFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
@@ -240,6 +241,8 @@ public class Tab4Controller implements Initializable {
 		root.getResults()
 			.get(MoreProductLotScheduling.class.toString())
 			.getResult());
+	formula += ProductFormula.getProduktionsdauerFormel(product);
+	formula += ProductFormula.getAuslastungFormel(product);
 	return formula;
     }
 
@@ -344,6 +347,10 @@ public class Tab4Controller implements Initializable {
 		.getKProperty());
 	lgColumn2.setCellValueFactory(cellData -> cellData.getValue()
 		.getQProperty());
+	lgColumn3.setCellValueFactory(cellData -> cellData.getValue()
+		.getTProperty());
+	lgColumn4.setCellValueFactory(cellData -> cellData.getValue()
+		.getRohProperty());
 
 	paColumn1.setCellValueFactory(cellData -> cellData.getValue().getK());
 	paColumn2.setCellValueFactory(cellData -> cellData.getValue()
@@ -403,6 +410,12 @@ public class Tab4Controller implements Initializable {
 		.<Product, Number> forTableColumn(new NumberStringConverter(
 			decimals.getDecimalFormat())));
 	lgColumn2.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+	lgColumn3.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+	lgColumn4.setCellFactory(TextFieldTableCell
 		.<Product, Number> forTableColumn(new NumberStringConverter(
 			decimals.getDecimalFormat())));
 

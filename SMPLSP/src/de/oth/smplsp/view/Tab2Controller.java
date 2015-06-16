@@ -123,6 +123,8 @@ public class Tab2Controller implements Initializable {
 		.getQProperty());
 	lgColumn3.setCellValueFactory(cellData -> cellData.getValue()
 		.getTProperty());
+	lgColumn4.setCellValueFactory(cellData -> cellData.getValue()
+		.getRohProperty());
 
 	paColumn1.setCellValueFactory(cellData -> cellData.getValue().getK());
 	paColumn2.setCellValueFactory(cellData -> cellData.getValue()
@@ -169,6 +171,9 @@ public class Tab2Controller implements Initializable {
 		.<Product, Number> forTableColumn(new NumberStringConverter(
 			decimals.getDecimalFormat())));
 	lgColumn3.setCellFactory(TextFieldTableCell
+		.<Product, Number> forTableColumn(new NumberStringConverter(
+			decimals.getDecimalFormat())));
+	lgColumn4.setCellFactory(TextFieldTableCell
 		.<Product, Number> forTableColumn(new NumberStringConverter(
 			decimals.getDecimalFormat())));
 
@@ -302,6 +307,7 @@ public class Tab2Controller implements Initializable {
 	String formula = ClassicLotSchedulingFormula
 		.getLosgroessenFormel(product);
 	formula += ProductFormula.getProduktionsdauerFormel(product);
+	formula += ProductFormula.getAuslastungFormel(product);
 	return formula;
     }
 

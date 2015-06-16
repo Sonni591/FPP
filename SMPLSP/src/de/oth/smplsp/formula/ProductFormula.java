@@ -71,13 +71,15 @@ public class ProductFormula {
     }
 
     public static String getAuslastungFormel(Product product) {
-	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} \\rho :";
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } \\rho :";
+	formula += getNewLine();
 	formula += getAllgemeineAuslastungFormel();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
-	formula += getAuslastungFormel(product);
+	formula += getNewLine();
+	formula += getAuslastungMitParameterFormel(product);
 	formula += getNewLine();
 	return formula;
     }
@@ -95,4 +97,5 @@ public class ProductFormula {
 	formula += getNewLine();
 	return formula;
     }
+
 }

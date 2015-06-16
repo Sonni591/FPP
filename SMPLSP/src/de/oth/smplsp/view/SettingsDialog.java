@@ -46,6 +46,8 @@ public class SettingsDialog extends Stage implements Initializable {
 	// TODO Auto-generated method stub
 	super.showAndWait();
 	root.setDecimalsInAllTabs();
+	root.getTab4Controller().showTOpt();
+	root.getTab4Controller().showTMin();
 	int index = root.getTabPane().getSelectionModel().getSelectedIndex();
 
 	switch (index) {
