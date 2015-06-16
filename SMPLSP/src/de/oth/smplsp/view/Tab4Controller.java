@@ -53,6 +53,10 @@ public class Tab4Controller implements Initializable {
     private TableColumn<Product, Number> lgColumn1;
     @FXML
     private TableColumn<Product, Number> lgColumn2;
+    @FXML
+    private TableColumn<Product, Number> lgColumn3;
+    @FXML
+    private TableColumn<Product, Number> lgColumn4;
 
     @FXML
     private TableView<ProductionProcess> prodablaufTableView;
@@ -356,7 +360,8 @@ public class Tab4Controller implements Initializable {
 	// 2x tooltip for the whole table
 	losgroessenTableView.setTooltip(new Tooltip(
 		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
-			+ "q: optimale spezifische Losgröße\n"));
+			+ "q: optimale spezifische Losgröße\n"
+			+ "t: Produktionsdauer\n" + "ρ: Reichweite\n"));
 
 	prodablaufTableView.setTooltip(new Tooltip(
 		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
