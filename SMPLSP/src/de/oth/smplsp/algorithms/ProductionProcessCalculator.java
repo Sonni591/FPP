@@ -71,4 +71,24 @@ public class ProductionProcessCalculator {
 	}
 	return processes;
     }
+
+    public List<ProductionProcess> getProductionProcessPlanForTable() {
+	List<ProductionProcess> processList = new ArrayList<ProductionProcess>();
+	if (processes.size() != 0) {
+	    processList = addTotalDurationForTableView();
+	}
+	return processList;
+    }
+
+    public List<ProductionProcess> addTotalDurationForTableView() {
+	List<ProductionProcess> processesTable = new ArrayList<ProductionProcess>(
+		processes);
+	ProductionProcess totalDuration = new ProductionProcess();
+	totalDuration.setK(null);
+	totalDuration.setVorgang(new SimpleStringProperty("Gesamtdauer"));
+	ProductionProcess lastProcess = processes.get(processes.size() - 1);
+	totalDuration.setEnde(lastProcess.getEnde());
+	processesTable.add(totalDuration);
+	return processesTable;
+    }
 }

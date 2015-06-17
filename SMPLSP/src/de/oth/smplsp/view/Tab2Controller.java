@@ -88,8 +88,10 @@ public class Tab2Controller implements Initializable {
 		    algorithm.getResult());
 	    List<ProductionProcess> processes = productionCalculator
 		    .getProductionProcessPlan();
+	    List<ProductionProcess> processesForTable = productionCalculator
+		    .getProductionProcessPlanForTable();
 	    ObservableList<ProductionProcess> processesList = FXCollections
-		    .observableArrayList(processes);
+		    .observableArrayList(processesForTable);
 	    setProcessesListAndShowInTableProcessing(processesList);
 	    root.getTab3Controller().showChart(processes);
 	}
@@ -136,6 +138,8 @@ public class Tab2Controller implements Initializable {
 	initializeTables();
 	addListenerForProdAblaufTableView();
 	addListenerForLosgroessenTableView();
+	// int index=
+	// prodablaufTableView.getSelectionModel().getSelectedIndex();
 	setColumnDecimals();
 
 	// 2x tooltip for the whole table
@@ -270,6 +274,8 @@ public class Tab2Controller implements Initializable {
 	int k;
 	if (process.getK() != null) {
 	    k = process.getK().intValue();
+	} else if (process.getVorgang().get().equals("Gesamtdauer")) {
+	    return formula;
 	} else {
 	    int index = processesList.indexOf(process);
 	    ProductionProcess parent = processesList.get(index - 1);
