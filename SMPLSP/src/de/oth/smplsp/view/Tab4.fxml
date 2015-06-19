@@ -28,7 +28,7 @@
       								<TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />
       								<TableColumn fx:id="lgColumn2" editable="false" sortable="false" text="q" />
                         			<TableColumn fx:id="lgColumn3" editable="false" sortable="false" text="t" />
-                        			<TableColumn fx:id="lgColumn4" editable="false" sortable="false" text="ρ" />
+                        			<TableColumn fx:id="lgColumn4" editable="false" sortable="false" text="r" />
       							</columns>
       							<columnResizePolicy>
       								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
