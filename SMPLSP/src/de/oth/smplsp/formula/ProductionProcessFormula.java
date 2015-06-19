@@ -30,6 +30,8 @@ public class ProductionProcessFormula {
 	    formula += getProductionProcessFormelProduction(product, process
 		    .getStart().doubleValue());
 	}
+	formula += getNewLine();
+	formula += getGesamtdauer(product);
 
 	return formula;
     }
@@ -72,6 +74,20 @@ public class ProductionProcessFormula {
 		+ getNewLine()
 		+ "\\textrm{Ende Produktionszeit Vorgängerprodukt}"
 		+ " +  {\\tau}_k";
+    }
+
+    public static String getGesamtdauer(Product product) {
+	return "\\textrm{Die Gesamtdauer für das Produkt "
+		+ product.getK()
+		+ " beträgt:}"
+		+ getNewLine()
+		+ "{\\tau}_k + t_p = "
+		+ decimals.getDecimalFormat().format(product.getTau())
+		+ " + "
+		+ decimals.getDecimalFormat().format(product.getT())
+		+ " = "
+		+ decimals.getDecimalFormat().format(
+			product.getTau() + product.getT());
     }
 
     public static String getAllgemeineProductionProcessFormelProduction() {

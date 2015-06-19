@@ -27,6 +27,8 @@ public class Product {
     private DoubleProperty t;
     // Auslastung der Anlage
     private DoubleProperty roh;
+    // Reichweite
+    private DoubleProperty r;
 
     /**
      * standard constructor with all fields
@@ -37,6 +39,7 @@ public class Product {
      * @param tau
      * @param s
      * @param h
+     * @param r
      */
     public Product(int k, double d, double p, double tau, double s, double h) {
 	this.k = new SimpleIntegerProperty(k);
@@ -344,18 +347,48 @@ public class Product {
 	this.roh = new SimpleDoubleProperty(roh);
     }
 
-    public Product clone() {
-	return new Product(this.getK(), this.getD(), this.getP(),
-		this.getTau(), this.getS(), this.getH());
-
-    }
-
     /**
      * @param roh
      *            the roh property to set
      */
     public void setRohProperty(DoubleProperty roh) {
 	this.roh = roh;
+    }
+
+    /**
+     * @return r
+     */
+    public double getR() {
+	return r.getValue();
+    }
+
+    /**
+     * @return the r property
+     */
+    public DoubleProperty getRProperty() {
+	return r;
+    }
+
+    /**
+     * @param r
+     *            the r to set
+     */
+    public void setR(double r) {
+	this.r = new SimpleDoubleProperty(r);
+    }
+
+    /**
+     * @param r
+     *            the r property to set
+     */
+    public void setRProperty(DoubleProperty r) {
+	this.r = r;
+    }
+
+    public Product clone() {
+	return new Product(this.getK(), this.getD(), this.getP(),
+		this.getTau(), this.getS(), this.getH());
+
     }
 
     /**

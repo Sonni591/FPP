@@ -126,7 +126,7 @@ public class Tab2Controller implements Initializable {
 	lgColumn3.setCellValueFactory(cellData -> cellData.getValue()
 		.getTProperty());
 	lgColumn4.setCellValueFactory(cellData -> cellData.getValue()
-		.getRohProperty());
+		.getRProperty());
 
 	paColumn1.setCellValueFactory(cellData -> cellData.getValue().getK());
 	paColumn2.setCellValueFactory(cellData -> cellData.getValue()
@@ -146,7 +146,7 @@ public class Tab2Controller implements Initializable {
 	losgroessenTableView.setTooltip(new Tooltip(
 		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
 			+ "q: optimale spezifische Losgröße\n"
-			+ "t: Produktionsdauer\n" + "ρ: Reichweite\n"));
+			+ "t: Produktionsdauer\n" + "r: Reichweite\n"));
 
 	prodablaufTableView.setTooltip(new Tooltip(
 		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
@@ -313,7 +313,7 @@ public class Tab2Controller implements Initializable {
 	String formula = ClassicLotSchedulingFormula
 		.getLosgroessenFormel(product);
 	formula += ProductFormula.getProduktionsdauerFormel(product);
-	formula += ProductFormula.getAuslastungFormel(product);
+	formula += ProductFormula.getReichweiteFormel(product);
 	return formula;
     }
 

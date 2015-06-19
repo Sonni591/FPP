@@ -98,4 +98,34 @@ public class ProductFormula {
 	return formula;
     }
 
+    public static String getReichweiteFormel(Product product) {
+	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } r_{p}:";
+	formula += getNewLine();
+	formula += getAllgemeineReichweiteFormel();
+	formula += getNewLine();
+	formula += getNewLine();
+	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
+		+ product.getK() + ":";
+	formula += getNewLine();
+	formula += getReichweiteMitParameterFormel(product);
+	formula += getNewLine();
+	return formula;
+    }
+
+    public static String getAllgemeineReichweiteFormel() {
+	initialize();
+	String formel = "r_p = \\frac{\\textcolor{" + oliveGreen
+		+ "}{q_{k}}}{ \\textcolor{" + blue + "}{D_{k}}}";
+	return formel;
+    }
+
+    public static String getReichweiteMitParameterFormel(Product product) {
+	initialize();
+	String formel = "r_p = \\frac{\\textcolor{" + oliveGreen + "}{"
+		+ decimals.getDecimalFormat().format(product.getQ())
+		+ "}}{ \\textcolor{" + blue + "}{"
+		+ decimals.getDecimalFormat().format(product.getD()) + "}}";
+	return formel;
+    }
+
 }

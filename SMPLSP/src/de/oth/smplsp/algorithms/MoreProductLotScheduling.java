@@ -38,6 +38,8 @@ public class MoreProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 
 	calculateProductionTime();
 
+	calculateRange();
+
 	this.result = new LotSchedulingResult(products, tOpt, tMin);
 
 	return result;
@@ -46,6 +48,13 @@ public class MoreProductLotScheduling implements IBasicLotSchedulingAlgorithm {
     private void calculateBatchSize() {
 	for (Product product : products) {
 	    product.setQ(product.getD() * tOpt);
+	}
+    }
+
+    private void calculateRange() {
+
+	for (Product product : products) {
+	    product.setR(product.getQ() / product.getD());
 	}
     }
 

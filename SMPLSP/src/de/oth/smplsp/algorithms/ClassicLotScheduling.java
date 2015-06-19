@@ -26,6 +26,7 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	calculateProductionTime();
 	calculateEfficiencyOfMachine();
 	calculateOptProductionCycle();
+	calculateRange();
 	result = new LotSchedulingResult(products, tOptSingle);
 
 	return result;
@@ -59,6 +60,13 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	for (Product product : products) {
 	    product.setQ(Math.sqrt((2 * product.getD() * product.getS())
 		    / (product.getH() * (1 - (product.getD() / product.getP())))));
+	}
+    }
+
+    private void calculateRange() {
+
+	for (Product product : products) {
+	    product.setR(product.getQ() / product.getD());
 	}
     }
 
