@@ -50,30 +50,6 @@ public abstract class AbstractFile extends File {
 	this.file = file;
     }
 
-    // /**
-    // * Sets the file, which further method should work with.
-    // *
-    // * @param file
-    // * @throws FileNotFoundException
-    // */
-    // public void setFile(File file) throws FileNotFoundException {
-    // if (file.exists()) {
-    // this.file = file;
-    // } else {
-    // throw new FileNotFoundException();
-    // }
-    // }
-    //
-    // /**
-    // * Sets the file, by pathname, which further method should work with.
-    // *
-    // * @param pathname
-    // * @throws FileNotFoundException
-    // */
-    // public void setFile(String pathname) throws FileNotFoundException {
-    // setFile(new File(pathname));
-    // }
-
     /**
      * Parses the set file and returns the values.
      * 

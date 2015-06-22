@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * The configuration class represents all settings of the application. It is
- * realized as Singleton. The settings are saved in the config.txt file.
+ * realized as Singleton. The settings are saved in the SMPLSP-Config.txt file.
  * 
  * @author Tobias Eichinger
  *
