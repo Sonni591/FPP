@@ -4,84 +4,54 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{Inhaltsverzeichnis}{I}{Doc-Start}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Installation}{1}{section.I}
+\contentsline {section}{\numberline {1}Einf\IeC {\"u}hrung}{1}{section.I}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.1}TeX Live}{1}{subsection.I.1}
+\contentsline {subsection}{\numberline {1.1}Aufbau des Dokuments}{1}{subsection.I.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.2}TexStudio}{1}{subsection.I.2}
+\contentsline {subsection}{\numberline {1.2}Problemstellung}{1}{subsection.I.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.3}Gnuplot}{1}{subsection.I.3}
+\contentsline {subsection}{\numberline {1.3}Beschreibung der Software}{1}{subsection.I.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4}Citavi}{1}{subsection.I.4}
+\contentsline {section}{\numberline {2}Aufbau der Software}{2}{section.II}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Flie{\ss }text}{4}{section.II}
+\contentsline {subsection}{\numberline {2.1}Verwendete Techniken}{2}{subsection.II.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}Gliederung}{4}{subsection.II.1}
+\contentsline {paragraph}{JavaFX 8}{2}{paragraph*.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Schrift}{4}{subsection.II.2}
+\contentsline {paragraph}{JFreeChart}{2}{paragraph*.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}Abs\IeC {\"a}tze}{4}{subsection.II.3}
+\contentsline {paragraph}{JUnit}{2}{paragraph*.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Hervorhebung}{5}{subsection.II.4}
+\contentsline {subsection}{\numberline {2.2}Komponenten}{2}{subsection.II.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.5}Sonderzeichen}{5}{subsection.II.5}
+\contentsline {paragraph}{algorithms}{2}{paragraph*.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.6}Modularisierung}{5}{subsection.II.6}
+\contentsline {paragraph}{formula}{3}{paragraph*.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Objekte}{5}{section.III}
+\contentsline {paragraph}{messages}{3}{paragraph*.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Auflistung}{6}{subsection.III.1}
+\contentsline {paragraph}{persistence}{3}{paragraph*.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Referenzen}{6}{subsection.III.2}
+\contentsline {paragraph}{util}{3}{paragraph*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Fussnoten}{6}{subsection.III.3}
+\contentsline {paragraph}{zoom}{3}{paragraph*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.4}Bilder}{7}{subsection.III.4}
+\contentsline {paragraph}{error}{3}{paragraph*.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.5}Tabellen}{8}{subsection.III.5}
+\contentsline {paragraph}{model}{3}{paragraph*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.6}Pseudocode und Quelltext}{8}{subsection.III.6}
+\contentsline {paragraph}{test}{4}{paragraph*.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.7}Diagramme}{8}{subsection.III.7}
+\contentsline {paragraph}{view}{4}{paragraph*.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.8}Formeln}{9}{subsection.III.8}
+\contentsline {section}{\numberline {3}Implementierung}{4}{section.III}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.9}Quellen}{9}{subsection.III.9}
+\contentsline {subsection}{\numberline {3.1}Verwendete Bibliotheken}{4}{subsection.III.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.10}Abk\IeC {\"u}rzungen}{10}{subsection.III.10}
+\contentsline {subsection}{\numberline {3.2}Algorithmen}{5}{subsection.III.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.11}Verzeichnisse}{10}{subsection.III.11}
+\contentsline {subsubsection}{\numberline {3.2.1}Klassiche Losgr\IeC {\"o}\IeC {\ss }enberechnung}{5}{subsubsection.III.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Einleitung}{11}{section.IV}
+\contentsline {subsubsection}{\numberline {3.2.2}Mehrproduktlosgr\IeC {\"o}\IeC {\ss }en}{6}{subsubsection.III.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}Rahmen}{11}{subsection.IV.1}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Voraussetzungen}{11}{subsection.IV.2}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3}Aufbau der Arbeit}{11}{subsection.IV.3}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Theorieteil}{12}{section.V}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Praxisteil}{13}{section.VI}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.1}Beschreibung der Fallstudie}{13}{subsection.VI.1}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2}Inhaltliche Beschreibung}{13}{subsection.VI.2}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Ergebnisse}{14}{section.VII}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{Verzeichnisse}{15}{section*.7}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {I}Literaturverzeichnis}{15}{section.IX}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {II}Abbildungsverzeichnis}{16}{section.X}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {III}Tabellenverzeichnis}{17}{section.XI}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {IV}Abk\IeC {\"u}rzungsverzeichnis}{18}{section.XII}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{Anhang}{I}{section*.9}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {I}GUI}{I}{appendix.A}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {II}Screenshot}{I}{appendix.B}
+\contentsline {section}{\numberline {4}Abk\IeC {\"u}rzungsverzeichnis}{8}{section.IV}
