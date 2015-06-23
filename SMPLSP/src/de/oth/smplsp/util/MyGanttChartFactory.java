@@ -55,6 +55,7 @@ public class MyGanttChartFactory extends ChartFactory {
 
 	plot.setOrientation(PlotOrientation.HORIZONTAL);
 	plot.setFixedLegendItems(chartLegend);
+
 	JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT,
 		plot, legend);
 	return chart;

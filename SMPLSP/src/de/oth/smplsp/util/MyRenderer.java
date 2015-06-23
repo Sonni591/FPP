@@ -26,13 +26,17 @@ public class MyRenderer extends GanttRenderer {
 
     @Override
     public Paint getItemPaint(int row, int col) {
+	System.out.println(row + " " + col);
 	if (this.row != row || this.col != col) {
 	    this.row = row;
 	    this.col = col;
 	    index = 0;
 	}
-	int clutIndex = index++ / PASS;
-	return clut.get(clutIndex);
+	if (col != 7) {
+	    int clutIndex = index++ / PASS;
+	    return clut.get(clutIndex);
+	} else
+	    return new Color(150, 0, 0);
     }
 
 }

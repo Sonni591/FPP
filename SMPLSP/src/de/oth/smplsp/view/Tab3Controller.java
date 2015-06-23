@@ -116,9 +116,47 @@ public class Tab3Controller {
 	    }
 
 	}
+	taskseries.add(ErrorHighlighting(taskseries));
+	// TaskSeries errortaskseries = new TaskSeries("Error");
+	// errortaskseries.add(ErrorHighlighting(taskseries));
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	taskseriescollection.add(taskseries);
+	// taskseriescollection.add(errortaskseries);
 	return taskseriescollection;
+    }
+
+    public Task ErrorHighlighting(TaskSeries taskseries) {
+	Task ErrorTask = new Task("Error", 0, 0);
+	for (int i = 0; i < taskseries.getItemCount(); i++) {
+	    for (int j = 0; j < taskseries.getItemCount(); j++) {
+		Task task1 = taskseries.get(i);
+		Task task2 = taskseries.get(j);
+		if (i != j) {
+		    for (int k = 0; k < taskseries.get(i).getSubtaskCount(); k++) {
+			for (int l = 0; l < taskseries.get(j).getSubtaskCount(); l++) {
+			    Task subtask1 = task1.getSubtask(k);
+			    Task subtask2 = task2.getSubtask(l);
+			    if (subtask2.getStart() > subtask1.getStart()
+				    && subtask2.getStart() < subtask1.getEnd()) {
+				if (ErrorTask.getEnd() < subtask2.getEnd()) {
+				    ErrorTask.setEnd(subtask2.getEnd());
+				}
+				if (subtask1.getEnd() < subtask2.getEnd()) {
+				    ErrorTask.addSubtask(new Task("Error",
+					    subtask2.getStart(), subtask1
+						    .getEnd()));
+				} else {
+				    ErrorTask.addSubtask(new Task("Error",
+					    subtask2.getStart(), subtask2
+						    .getEnd()));
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return ErrorTask;
     }
 
     public void handleZoom() {
