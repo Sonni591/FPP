@@ -28,7 +28,7 @@
 								</VBox>
 							</content>
 						</ScrollPane>
-						<TableView fx:id="losgroessenTableView">
+						<TableView fx:id="lotSchedulingTableView">
 							<columns>
 								<TableColumn fx:id="lgColumn1" editable="false"
 									sortable="false" text="k" />
@@ -43,7 +43,7 @@
 								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
 							</columnResizePolicy>
 						</TableView>
-						<TableView fx:id="prodablaufTableView">
+						<TableView fx:id="productionProcessesTableView">
 							<columns>
 								<TableColumn fx:id="paColumn1" editable="false"
 									sortable="false" text="k" />
