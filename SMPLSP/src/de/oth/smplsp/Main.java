@@ -18,14 +18,20 @@ import de.oth.smplsp.view.Tab2Controller;
 
 public class Main extends Application {
 
-    private Stage primaryStage;
-    private BorderPane rootLayout;
     public static RootLayoutController controller;
 
-    // TODO: Kommunikation mit Tabs über RootLayoutController
+    private Stage primaryStage;
+    private BorderPane rootLayout;
+
     public Tab1Controller controller1;
     public Tab2Controller controller2;
 
+    /**
+     * Start the application, set the primary scene, set the title and
+     * application icon
+     * 
+     * @see javafx.application.Application#start(javafx.stage.Stage)
+     */
     @Override
     public void start(Stage primaryStage) {
 	this.primaryStage = primaryStage;
@@ -61,8 +67,7 @@ public class Main extends Application {
 	    Scene scene = new Scene(rootLayout);
 	    primaryStage.setScene(scene);
 
-	    // Give the controller access to the main app
-	    // RootLayoutController controller = loader.getController();
+	    // Give the controller access to the main application
 	    controller = loader.getController();
 	    controller.setMainApp(this);
 
@@ -76,18 +81,20 @@ public class Main extends Application {
     /**
      * Returns the main stage.
      * 
-     * @return
+     * @return Stage
      */
     public Stage getPrimaryStage() {
 	return primaryStage;
     }
 
+    /**
+     * Main method - start of the application
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
 	launch(args);
 
     }
 
-    public void setButtonText() {
-	controller2.setData();
-    }
 }

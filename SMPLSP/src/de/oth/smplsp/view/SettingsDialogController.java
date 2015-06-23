@@ -65,6 +65,10 @@ public class SettingsDialogController {
 	zoomer.rescaleSettingsDialog();
     }
 
+    /**
+     * Method called when the settings dialog is closed. When the configuration
+     * has changed show a popup to save the changes
+     */
     @FXML
     public void onActionClose() {
 	if (config.hasChanged()) {
@@ -91,19 +95,25 @@ public class SettingsDialogController {
     }
 
     /**
-     * 
+     * close the settings dialog
      */
     private void closeDialog() {
 	Stage stage = (Stage) btnClose.getScene().getWindow();
 	stage.close();
     }
 
+    /**
+     * save the settings
+     */
     @FXML
     public void onActionSave() {
 	config.saveSettingsToConfigFile();
 	closeDialog();
     }
 
+    /**
+     * save the decimals to the config file
+     */
     @FXML
     public void onActionTxtDecimalPlacesChanged() {
 	try {
@@ -126,12 +136,18 @@ public class SettingsDialogController {
 
     }
 
+    /**
+     * save the color mode to the config file
+     */
     @FXML
     public void onActionCBBlackAndWhiteChanged() {
 	config.setBlackAndWhiteMode(cbBlackAndWhite.selectedProperty()
 		.getValue());
     }
 
+    /**
+     * handle the zoom factor of the settings dialog
+     */
     public void handleZoomCSSStyle() {
 	borderPane.setStyle(zoomer.getStyleFXFontSize());
     }

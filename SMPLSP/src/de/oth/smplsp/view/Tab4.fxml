@@ -6,48 +6,61 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="429.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.oth.smplsp.view.Tab4Controller">
+<AnchorPane prefHeight="429.0" prefWidth="736.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.oth.smplsp.view.Tab4Controller">
 	<children>
-				<HBox fx:id="box" prefHeight="429.0" prefWidth="736.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<children>
-						<SplitPane dividerPositions="0.3, 0.6" HBox.hgrow="ALWAYS">
-               <items>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
-                     <content>
-            						<VBox>
-            							<children>
-            								<SwingNode fx:id="tOptNode" />
-            								<SplitPane orientation="VERTICAL" />
-            								<SwingNode fx:id="tMinNode" />
-            							</children>
-            						</VBox>
-                     </content>
-                  </ScrollPane>
-      						<TableView fx:id="losgroessenTableView">
-      							<columns>
-      								<TableColumn fx:id="lgColumn1" editable="false" sortable="false" text="k" />
-      								<TableColumn fx:id="lgColumn2" editable="false" sortable="false" text="q" />
-                        			<TableColumn fx:id="lgColumn3" editable="false" sortable="false" text="t" />
-                        			<TableColumn fx:id="lgColumn4" editable="false" sortable="false" text="r" />
-      							</columns>
-      							<columnResizePolicy>
-      								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-      							</columnResizePolicy>
-      						</TableView>
-      						<TableView fx:id="prodablaufTableView">
-      							<columns>
-      								<TableColumn fx:id="paColumn1" editable="false" sortable="false" text="k" />
-      								<TableColumn fx:id="paColumn2" editable="false" sortable="false" text="Vorgang" />
-      								<TableColumn fx:id="paColumn3" editable="false" sortable="false" text="Start" />
-      								<TableColumn fx:id="paColumn4" editable="false" sortable="false" text="Ende" />
-      							</columns>
-      							<columnResizePolicy>
-      								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-      							</columnResizePolicy>
-      						</TableView>
-               </items>
-            </SplitPane>
-					</children>
-				</HBox>
+		<HBox fx:id="box" prefHeight="429.0" prefWidth="736.0"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<SplitPane dividerPositions="0.3, 0.6" HBox.hgrow="ALWAYS">
+					<items>
+						<ScrollPane prefHeight="200.0" prefWidth="200.0"
+							SplitPane.resizableWithParent="false">
+							<content>
+								<VBox>
+									<children>
+										<SwingNode fx:id="tOptNode" />
+										<SplitPane orientation="VERTICAL" />
+										<SwingNode fx:id="tMinNode" />
+									</children>
+								</VBox>
+							</content>
+						</ScrollPane>
+						<TableView fx:id="losgroessenTableView">
+							<columns>
+								<TableColumn fx:id="lgColumn1" editable="false"
+									sortable="false" text="k" />
+								<TableColumn fx:id="lgColumn2" editable="false"
+									sortable="false" text="q" />
+								<TableColumn fx:id="lgColumn3" editable="false"
+									sortable="false" text="t" />
+								<TableColumn fx:id="lgColumn4" editable="false"
+									sortable="false" text="r" />
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+						<TableView fx:id="prodablaufTableView">
+							<columns>
+								<TableColumn fx:id="paColumn1" editable="false"
+									sortable="false" text="k" />
+								<TableColumn fx:id="paColumn2" editable="false"
+									sortable="false" text="Vorgang" />
+								<TableColumn fx:id="paColumn3" editable="false"
+									sortable="false" text="Start" />
+								<TableColumn fx:id="paColumn4" editable="false"
+									sortable="false" text="Ende" />
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+					</items>
+				</SplitPane>
+			</children>
+		</HBox>
 	</children>
 </AnchorPane>

@@ -40,8 +40,6 @@ import de.oth.smplsp.model.ProductionProcess;
 import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
 
-//import de.oth.smplsp.util.jfreechartfx.ChartViewer;
-
 public class Tab4Controller implements Initializable {
 
     @FXML
@@ -49,7 +47,7 @@ public class Tab4Controller implements Initializable {
     @FXML
     private VBox vbox;
     @FXML
-    private TableView<Product> losgroessenTableView;
+    private TableView<Product> lotSchedulingTableView;
     @FXML
     private TableColumn<Product, Number> lgColumn1;
     @FXML
@@ -60,7 +58,7 @@ public class Tab4Controller implements Initializable {
     private TableColumn<Product, Number> lgColumn4;
 
     @FXML
-    private TableView<ProductionProcess> prodablaufTableView;
+    private TableView<ProductionProcess> productionProcessesTableView;
 
     @FXML
     private TableColumn<ProductionProcess, Number> paColumn1;
@@ -75,9 +73,6 @@ public class Tab4Controller implements Initializable {
     private SwingNode tOptNode;
     @FXML
     private SwingNode tMinNode;
-
-    // private String latexString = "";
-    private int fontsize = 20;
 
     private RootLayoutController root;
 
@@ -97,9 +92,11 @@ public class Tab4Controller implements Initializable {
 
     }
 
+    /**
+     * Get the result of the algorithm calculation and show the data
+     */
     @FXML
     public void setData() {
-
 	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
 		MoreProductLotScheduling.class.toString());
 	if (algorithm != null && algorithm.getResult() != null) {
@@ -117,85 +114,98 @@ public class Tab4Controller implements Initializable {
 		    .observableArrayList(processesForTable);
 	    setProcessesListAndShowInTableProcessing(processesList);
 	    root.getTab5Controller().showChart(processes);
-
 	}
     }
 
+    /**
+     * Show the data of the Products in the UI
+     * 
+     * @param newProductsList
+     */
     public void setProductsListAndShowInTableProduct(
 	    ObservableList<Product> newProductsList) {
 	refreshDecimals();
 	productList.clear();
 	productList = newProductsList;
-	losgroessenTableView.setItems(productList);
+	lotSchedulingTableView.setItems(productList);
 
     }
 
+    /**
+     * Show the data of the Processing in the UI
+     * 
+     * @param newProcessesList
+     */
     public void setProcessesListAndShowInTableProcessing(
 	    ObservableList<ProductionProcess> newProcessesList) {
 	refreshDecimals();
 	processesList.clear();
 	processesList = newProcessesList;
-	prodablaufTableView.setItems(processesList);
+	productionProcessesTableView.setItems(processesList);
 
     }
 
+    // TODO: CONTINUE HERE
     public void addListenerForProdAblaufTableView() {
-	prodablaufTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	productionProcessesTableView
+		.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-	    @Override
-	    public void handle(MouseEvent event) {
-		if (!prodablaufTableView.getItems().isEmpty()) {
-		    ProductionProcess process = prodablaufTableView
-			    .getSelectionModel().getSelectedItem();
-		    if (process != null) {
-			showExplanations(getProdAblaufFormula(process));
-		    }
-		}
-	    }
-	});
-	prodablaufTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
-	    @Override
-	    public void handle(KeyEvent event) {
-
-		if (!prodablaufTableView.getItems().isEmpty()) {
-		    if (event.getCode() == KeyCode.UP
-			    || event.getCode() == KeyCode.DOWN) {
-			ProductionProcess process = prodablaufTableView
-				.getSelectionModel().getSelectedItem();
-			if (process != null) {
-			    showExplanations(getProdAblaufFormula(process));
+		    @Override
+		    public void handle(MouseEvent event) {
+			if (!productionProcessesTableView.getItems().isEmpty()) {
+			    ProductionProcess process = productionProcessesTableView
+				    .getSelectionModel().getSelectedItem();
+			    if (process != null) {
+				showExplanations(getProdAblaufFormula(process));
+			    }
 			}
 		    }
-		}
-	    }
+		});
+	productionProcessesTableView
+		.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
-	});
+		    @Override
+		    public void handle(KeyEvent event) {
+
+			if (!productionProcessesTableView.getItems().isEmpty()) {
+			    if (event.getCode() == KeyCode.UP
+				    || event.getCode() == KeyCode.DOWN) {
+				ProductionProcess process = productionProcessesTableView
+					.getSelectionModel().getSelectedItem();
+				if (process != null) {
+				    showExplanations(getProdAblaufFormula(process));
+				}
+			    }
+			}
+		    }
+
+		});
     }
 
     public void addListenerForLosgroessenTableView() {
-	losgroessenTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	lotSchedulingTableView
+		.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-	    @Override
-	    public void handle(MouseEvent event) {
-		if (!losgroessenTableView.getItems().isEmpty()) {
-		    Product product = losgroessenTableView.getSelectionModel()
-			    .getSelectedItem();
-		    if (product != null) {
-			showExplanations(getLosgroessenFormula(product));
+		    @Override
+		    public void handle(MouseEvent event) {
+			if (!lotSchedulingTableView.getItems().isEmpty()) {
+			    Product product = lotSchedulingTableView
+				    .getSelectionModel().getSelectedItem();
+			    if (product != null) {
+				showExplanations(getLosgroessenFormula(product));
+			    }
+			}
 		    }
-		}
-	    }
-	});
-	losgroessenTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		});
+	lotSchedulingTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
 	    @Override
 	    public void handle(KeyEvent event) {
 
-		if (!losgroessenTableView.getItems().isEmpty()) {
+		if (!lotSchedulingTableView.getItems().isEmpty()) {
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			Product product = losgroessenTableView
+			Product product = lotSchedulingTableView
 				.getSelectionModel().getSelectedItem();
 			if (product != null) {
 			    showExplanations(getLosgroessenFormula(product));
@@ -212,7 +222,7 @@ public class Tab4Controller implements Initializable {
 
 	    @Override
 	    public void handle(MouseEvent event) {
-		if (!prodablaufTableView.getItems().isEmpty()) {
+		if (!productionProcessesTableView.getItems().isEmpty()) {
 		    showExplanations(getTOptFormulaWithParameters());
 		}
 	    }
@@ -224,7 +234,7 @@ public class Tab4Controller implements Initializable {
 
 	    @Override
 	    public void handle(MouseEvent event) {
-		if (!prodablaufTableView.getItems().isEmpty()) {
+		if (!productionProcessesTableView.getItems().isEmpty()) {
 		    showExplanations(getTMinFormulaWithParameters());
 		}
 	    }
@@ -368,13 +378,13 @@ public class Tab4Controller implements Initializable {
 	addListeners();
 	setColumnDecimals();
 
-	// 2x tooltip for the whole table
-	losgroessenTableView.setTooltip(new Tooltip(
+	// tooltips for the both tables
+	lotSchedulingTableView.setTooltip(new Tooltip(
 		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
 			+ "q: optimale spezifische Losgröße\n"
 			+ "t: Produktionsdauer\n" + "r: Reichweite\n"));
 
-	prodablaufTableView.setTooltip(new Tooltip(
+	productionProcessesTableView.setTooltip(new Tooltip(
 		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
 			+ "Vorgang: Beschreibung des Vorgangs\n"
 			+ "Start: Start des Vorgangs\n"
@@ -405,8 +415,8 @@ public class Tab4Controller implements Initializable {
     }
 
     public boolean areTablesEmpty() {
-	return losgroessenTableView.getItems().isEmpty()
-		|| prodablaufTableView.getItems().isEmpty();
+	return lotSchedulingTableView.getItems().isEmpty()
+		|| productionProcessesTableView.getItems().isEmpty();
     }
 
     public void setColumnDecimals() {
@@ -432,14 +442,6 @@ public class Tab4Controller implements Initializable {
 			.<ProductionProcess, Number> forTableColumn(new NumberStringConverter(
 				decimals.getDecimalFormat())));
 
-    }
-
-    public void scale() {
-
-	double scalefactor = root.getScalefactor();
-
-	box.setScaleX(scalefactor);
-	box.setScaleY(scalefactor);
     }
 
     public void init(RootLayoutController rootLayoutController) {

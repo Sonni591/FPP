@@ -32,7 +32,7 @@ import de.oth.smplsp.util.Decimals;
 public class Tab2Controller implements Initializable {
 
     @FXML
-    private TableView<Product> losgroessenTableView;
+    private TableView<Product> lotSchedulingTableView;
     @FXML
     private TableColumn<Product, Number> lgColumn1;
     @FXML
@@ -43,7 +43,7 @@ public class Tab2Controller implements Initializable {
     private TableColumn<Product, Number> lgColumn4;
 
     @FXML
-    private TableView<ProductionProcess> prodablaufTableView;
+    private TableView<ProductionProcess> productionProcessesTableView;
 
     @FXML
     private TableColumn<ProductionProcess, Number> paColumn1;
@@ -74,13 +74,15 @@ public class Tab2Controller implements Initializable {
 
     }
 
+    /**
+     * Get the result of the algorithm calculation and show the data
+     */
     @FXML
     public void setData() {
 	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
 		ClassicLotScheduling.class.toString());
 	if (algorithm != null && algorithm.getResult() != null) {
-	    LotSchedulingResult result = algorithm.getResult();
-	    ObservableList productList = FXCollections
+	    ObservableList<Product> productList = FXCollections
 		    .observableArrayList(algorithm.getResult().getProducts());
 	    setProductsListAndShowInTableProduct(productList);
 
@@ -97,24 +99,39 @@ public class Tab2Controller implements Initializable {
 	}
     }
 
+    /**
+     * Show the data of the Products in the UI
+     * 
+     * @param newProductsList
+     */
     public void setProductsListAndShowInTableProduct(
 	    ObservableList<Product> newProductsList) {
 	refreshDecimals();
 	productList.clear();
 	productList = newProductsList;
-	losgroessenTableView.setItems(productList);
+	lotSchedulingTableView.setItems(productList);
 
     }
 
+    /**
+     * Show the data of the Processing in the UI
+     * 
+     * @param newProcessesList
+     */
     public void setProcessesListAndShowInTableProcessing(
 	    ObservableList<ProductionProcess> newProcessesList) {
 	refreshDecimals();
 	processesList.clear();
 	processesList = newProcessesList;
-	prodablaufTableView.setItems(processesList);
-
+	productionProcessesTableView.setItems(processesList);
     }
 
+    /**
+     * Initialize and customize the tables of the UI
+     * 
+     * @see javafx.fxml.Initializable#initialize(java.net.URL,
+     *      java.util.ResourceBundle)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
@@ -136,19 +153,17 @@ public class Tab2Controller implements Initializable {
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
 	initializeTables();
-	addListenerForProdAblaufTableView();
-	addListenerForLosgroessenTableView();
-	// int index=
-	// prodablaufTableView.getSelectionModel().getSelectedIndex();
+	addListenerForProductionProcessTableView();
+	addListenerForLotSchedulingTableView();
 	setColumnDecimals();
 
-	// 2x tooltip for the whole table
-	losgroessenTableView.setTooltip(new Tooltip(
+	// tooltips for the both tables
+	lotSchedulingTableView.setTooltip(new Tooltip(
 		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
 			+ "q: optimale spezifische Losgröße\n"
 			+ "t: Produktionsdauer\n" + "r: Reichweite\n"));
 
-	prodablaufTableView.setTooltip(new Tooltip(
+	productionProcessesTableView.setTooltip(new Tooltip(
 		"Tabelle des Produktionsablaufs\n" + "k: Zeilenindex\n"
 			+ "Vorgang: Beschreibung des Vorgangs\n"
 			+ "Start: Start des Vorgangs\n"
@@ -156,17 +171,29 @@ public class Tab2Controller implements Initializable {
 
     }
 
+    /**
+     * Refresh the decimals of the tables
+     */
     public void refreshDecimals() {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals.setDecimals(decimal);
 	setColumnDecimals();
     }
 
+    /**
+     * check if the tables are empty
+     * 
+     * @return boolean
+     */
     public boolean areTablesEmpty() {
-	return losgroessenTableView.getItems().isEmpty()
-		|| prodablaufTableView.getItems().isEmpty();
+	return lotSchedulingTableView.getItems().isEmpty()
+		|| productionProcessesTableView.getItems().isEmpty();
     }
 
+    /**
+     * set the decimals of the tables using a NumberStringConverter and the @class
+     * Decimals
+     */
     public void setColumnDecimals() {
 	lgColumn1.setCellFactory(TextFieldTableCell
 		.<Product, Number> forTableColumn(new NumberStringConverter(
@@ -191,75 +218,89 @@ public class Tab2Controller implements Initializable {
 				decimals.getDecimalFormat())));
     }
 
+    /**
+     * @param rootLayoutController
+     */
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
     }
 
+    /**
+     * get the result of the Scheduling
+     * 
+     * @return
+     */
     public ObservableList<Product> getScheduling() {
 	return schedulingResult;
     }
 
-    public void addListenerForProdAblaufTableView() {
-	prodablaufTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    /**
+     * Add an onMouseClicked Listener to both tables
+     */
+    public void addListenerForProductionProcessTableView() {
+	productionProcessesTableView
+		.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-	    @Override
-	    public void handle(MouseEvent event) {
-		if (!prodablaufTableView.getItems().isEmpty()) {
-		    ProductionProcess process = prodablaufTableView
-			    .getSelectionModel().getSelectedItem();
-		    if (process != null) {
-			showExplanations(getProdAblaufFormula(process));
-		    }
-		}
-	    }
-	});
-	prodablaufTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
-	    @Override
-	    public void handle(KeyEvent event) {
-
-		if (!prodablaufTableView.getItems().isEmpty()) {
-		    if (event.getCode() == KeyCode.UP
-			    || event.getCode() == KeyCode.DOWN) {
-			ProductionProcess process = prodablaufTableView
-				.getSelectionModel().getSelectedItem();
-			if (process != null) {
-			    showExplanations(getProdAblaufFormula(process));
+		    @Override
+		    public void handle(MouseEvent event) {
+			if (!productionProcessesTableView.getItems().isEmpty()) {
+			    ProductionProcess process = productionProcessesTableView
+				    .getSelectionModel().getSelectedItem();
+			    if (process != null) {
+				showExplanations(getProductionProcessFormula(process));
+			    }
 			}
 		    }
-		}
-	    }
+		});
+	productionProcessesTableView
+		.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
-	});
+		    @Override
+		    public void handle(KeyEvent event) {
+
+			if (!productionProcessesTableView.getItems().isEmpty()) {
+			    if (event.getCode() == KeyCode.UP
+				    || event.getCode() == KeyCode.DOWN) {
+				ProductionProcess process = productionProcessesTableView
+					.getSelectionModel().getSelectedItem();
+				if (process != null) {
+				    showExplanations(getProductionProcessFormula(process));
+				}
+			    }
+			}
+		    }
+
+		});
     }
 
-    public void addListenerForLosgroessenTableView() {
-	losgroessenTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    public void addListenerForLotSchedulingTableView() {
+	lotSchedulingTableView
+		.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-	    @Override
-	    public void handle(MouseEvent event) {
+		    @Override
+		    public void handle(MouseEvent event) {
 
-		if (!losgroessenTableView.getItems().isEmpty()) {
-		    Product product = losgroessenTableView.getSelectionModel()
-			    .getSelectedItem();
-		    if (product != null) {
-			showExplanations(getLosgroessenFormula(product));
+			if (!lotSchedulingTableView.getItems().isEmpty()) {
+			    Product product = lotSchedulingTableView
+				    .getSelectionModel().getSelectedItem();
+			    if (product != null) {
+				showExplanations(getLotSchedulingFormula(product));
+			    }
+			}
 		    }
-		}
-	    }
-	});
-	losgroessenTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		});
+	lotSchedulingTableView.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
 	    @Override
 	    public void handle(KeyEvent event) {
-		if (!losgroessenTableView.getItems().isEmpty()) {
+		if (!lotSchedulingTableView.getItems().isEmpty()) {
 
 		    if (event.getCode() == KeyCode.UP
 			    || event.getCode() == KeyCode.DOWN) {
-			Product product = losgroessenTableView
+			Product product = lotSchedulingTableView
 				.getSelectionModel().getSelectedItem();
 			if (product != null) {
-			    showExplanations(getLosgroessenFormula(product));
+			    showExplanations(getLotSchedulingFormula(product));
 			}
 
 		    }
@@ -269,7 +310,13 @@ public class Tab2Controller implements Initializable {
 	});
     }
 
-    public String getProdAblaufFormula(ProductionProcess process) {
+    /**
+     * Returns a formula String for the production process
+     * 
+     * @param process
+     * @return
+     */
+    public String getProductionProcessFormula(ProductionProcess process) {
 	String formula = "";
 	int k;
 	if (process.getK() != null) {
@@ -287,6 +334,12 @@ public class Tab2Controller implements Initializable {
 	return formula;
     }
 
+    /**
+     * Return the Product of the index k
+     * 
+     * @param k
+     * @return
+     */
     public Product getProductByK(int k) {
 	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
 		ClassicLotScheduling.class.toString());
@@ -300,6 +353,9 @@ public class Tab2Controller implements Initializable {
 	return null;
     }
 
+    /**
+     * initialize the tables and show the products and the production processes
+     */
     public void initializeTables() {
 	ObservableList<Product> productList = FXCollections
 		.observableArrayList();
@@ -309,7 +365,13 @@ public class Tab2Controller implements Initializable {
 	setProcessesListAndShowInTableProcessing(processingList);
     }
 
-    public String getLosgroessenFormula(Product product) {
+    /**
+     * Returns a formula for the lot scheduling
+     * 
+     * @param product
+     * @return
+     */
+    public String getLotSchedulingFormula(Product product) {
 	String formula = ClassicLotSchedulingFormula
 		.getLosgroessenFormel(product);
 	formula += ProductFormula.getProduktionsdauerFormel(product);

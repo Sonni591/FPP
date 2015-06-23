@@ -18,6 +18,12 @@ public class SettingsDialog extends Stage implements Initializable {
 
     RootLayoutController root;
 
+    /**
+     * Create a new Settings Dialog based on the reference of the
+     * rootLayoutController
+     * 
+     * @param rootLayoutController
+     */
     public SettingsDialog(RootLayoutController rootLayoutController) {
 	setTitle(Messages.SettingsDialog_Title);
 	root = rootLayoutController;
@@ -36,9 +42,7 @@ public class SettingsDialog extends Stage implements Initializable {
 	}
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /**
      * @see javafx.stage.Stage#showAndWait()
      */
     @Override
@@ -59,7 +63,7 @@ public class SettingsDialog extends Stage implements Initializable {
 	}
     }
 
-    /*
+    /**
      * Called when FXML file is load()ed (via FXMLLoader.load()). It will
      * execute before the form is shown.
      */

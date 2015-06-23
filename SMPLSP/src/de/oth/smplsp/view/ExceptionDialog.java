@@ -1,6 +1,3 @@
-/**
- *
- */
 package de.oth.smplsp.view;
 
 import java.io.PrintWriter;
@@ -22,7 +19,9 @@ public class ExceptionDialog extends Alert {
     private RootLayoutController root;
 
     /**
-     * @param alertType
+     * Creates a custom exception dialog
+     * 
+     * @param Exception
      */
     public ExceptionDialog(Exception ex) {
 	super(AlertType.ERROR);

@@ -3,33 +3,24 @@ package de.oth.smplsp.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
@@ -47,6 +38,7 @@ import de.oth.smplsp.model.Product;
 import de.oth.smplsp.persistence.CSVFile;
 import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
+import de.oth.smplsp.util.EditingCell;
 
 public class Tab1Controller {
 
@@ -105,16 +97,24 @@ public class Tab1Controller {
 
     /**
      * @param productsList
-     *            the productsList to set
+     *            set the product list
      */
     public void setProductsList(ObservableList<Product> productsList) {
 	this.productsList = productsList;
     }
 
+    /**
+     * Returns an boolean value if the input table is empty
+     * 
+     * @return boolean
+     */
     public boolean areProductsInTable() {
 	return !productsTableView.getItems().isEmpty();
     }
 
+    /**
+     * refresh the decimals of the table
+     */
     public void refreshDecimals() {
 	int decimal = config.getDecimalPlaces();
 	decimals.setDecimals(decimal);
@@ -123,7 +123,7 @@ public class Tab1Controller {
 
     /**
      * Set the productList and show it in the table
-     *
+     * 
      * @param set
      *            theproductsList
      */
@@ -147,20 +147,9 @@ public class Tab1Controller {
     private void initialize() {
 	// customize the look of the panel
 	customizeButtonBar();
+
 	int decimal = config.getDecimalPlaces();
 	decimals = new Decimals(decimal);
-	column1.setCellValueFactory(cellData -> cellData.getValue()
-		.getKProperty());
-	column2.setCellValueFactory(cellData -> cellData.getValue()
-		.getDProperty());
-	column3.setCellValueFactory(cellData -> cellData.getValue()
-		.getPProperty());
-	column4.setCellValueFactory(cellData -> cellData.getValue()
-		.getTauProperty());
-	column5.setCellValueFactory(cellData -> cellData.getValue()
-		.getSProperty());
-	column6.setCellValueFactory(cellData -> cellData.getValue()
-		.getHProperty());
 
 	customizeTable();
 
@@ -168,12 +157,15 @@ public class Tab1Controller {
 	productsTableView.setItems(productsList);
     }
 
+    /**
+     * @param rootLayoutController
+     */
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
     }
 
     /**
-     * //TODO documentation!!
+     * Set the icons of the button bar using an icon-font and set the tooltips
      */
     private void customizeButtonBar() {
 	// remove default text of the buttons
@@ -203,7 +195,6 @@ public class Tab1Controller {
 	btnLoad.setTooltip(new Tooltip("Projekt laden"));
 	btnSave.setTooltip(new Tooltip("Projekt speichern"));
 	btnCalculate.setTooltip(new Tooltip("Berechnung starten"));
-
     }
 
     /**
@@ -234,7 +225,6 @@ public class Tab1Controller {
 	} else {
 	    // Nothing selected.
 	    showErrorDialogNoRowSelected();
-
 	}
     }
 
@@ -243,7 +233,6 @@ public class Tab1Controller {
      */
     private void showErrorDialogNoRowSelected() {
 	Alert alert = new Alert(AlertType.INFORMATION);
-	// alert.initOwner(main.getPrimaryStage());
 	alert.setTitle("Keine Auswahl");
 	alert.setHeaderText("Es wurde keine Zeile markiert");
 	alert.setContentText("Bitte markieren Sie zum Löschen eine Zeile.");
@@ -295,42 +284,48 @@ public class Tab1Controller {
 	File selectedFile = fileChooser.showOpenDialog(null);
 
 	if (selectedFile != null) {
-	    // temperary save old values of the view table
-	    ObservableList<Product> productsListTmp = FXCollections
-		    .observableArrayList();
-	    productsListTmp.addAll(productsList);
-
-	    CSVFile csvFile = new CSVFile(selectedFile);
-	    try {
-		// clear table and load new values from the file
-		productsList.clear();
-		productsList = (ObservableList<Product>) csvFile
-			.loadValuesAsProduct();
-
-		// show loaded values in the view
-		productsTableView.setItems(productsList);
-		// setProductsListAndShowInTable(productsList);
-
-		// set the text in the correct fontsize
-		root.getZoomer().rescaleMainApplication();
-
-	    } catch (IOException e1) {
-		// show error dialog
-		showErrorDialogFileNotImported(csvFile.getName(), "");
-		// undo changes and show old values
-
-	    } catch (CSVFileWrongNumberOfValuesInFileError e2) {
-		// show error dialog with the correct errorLine
-		showErrorDialogFileNotImported(csvFile.getName(),
-			e2.getMessage());
-		// undo changes and show old values
-		// setProductsListAndShowInTable(productsListTmp);
-		productsList.clear();
-		productsList.addAll(productsListTmp);
-		// show loaded values in the view
-		productsTableView.setItems(productsList);
-	    }
+	    loadFileAndDisplayContentInTable(selectedFile);
 	}
+    }
+
+    public void loadFileAndDisplayContentInTable(File selectedFile)
+	    throws IOException {
+
+	// temperary save old values of the view table
+	ObservableList<Product> productsListTmp = FXCollections
+		.observableArrayList();
+	productsListTmp.addAll(productsList);
+
+	CSVFile csvFile = new CSVFile(selectedFile);
+	try {
+	    // clear table and load new values from the file
+	    productsList.clear();
+	    productsList = (ObservableList<Product>) csvFile
+		    .loadValuesAsProduct();
+
+	    // show loaded values in the view
+	    productsTableView.setItems(productsList);
+	    // setProductsListAndShowInTable(productsList);
+
+	    // set the text in the correct fontsize
+	    root.getZoomer().rescaleMainApplication();
+
+	} catch (IOException e1) {
+	    // show error dialog
+	    showErrorDialogFileNotImported(csvFile.getName(), "");
+	    // undo changes and show old values
+
+	} catch (CSVFileWrongNumberOfValuesInFileError e2) {
+	    // show error dialog with the correct errorLine
+	    showErrorDialogFileNotImported(csvFile.getName(), e2.getMessage());
+	    // undo changes and show old values
+	    // setProductsListAndShowInTable(productsListTmp);
+	    productsList.clear();
+	    productsList.addAll(productsListTmp);
+	    // show loaded values in the view
+	    productsTableView.setItems(productsList);
+	}
+
     }
 
     /**
@@ -460,7 +455,6 @@ public class Tab1Controller {
 		} catch (MinimalProductionCycleError e) {
 		    showErrorMinimalProductionCycleAlert();
 		    return;
-		    // e.printStackTrace();
 		}
 		results.put(algorithm.getClass().toString(), algorithm);
 	    }
@@ -471,13 +465,9 @@ public class Tab1Controller {
 	    } catch (Exception ex) {
 		showErrorCalculationFailed(ex);
 		return;
-		// ex.printStackTrace();
 	    }
-	    if (!RootLayoutController.DEBUG_MODE) {
-		showInfoDialogCalculationFinished();
-	    }
+	    showInfoDialogCalculationFinished();
 	    root.getZoomer().rescaleMainApplication();
-
 	}
     }
 
@@ -492,6 +482,10 @@ public class Tab1Controller {
 	alert.showAndWait();
     }
 
+    /**
+     * Show an error dialog, production cycle is less than the minimal
+     * production cycle
+     */
     private void showErrorMinimalProductionCycleAlert() {
 	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Fehler");
@@ -501,6 +495,11 @@ public class Tab1Controller {
 	alert.showAndWait();
     }
 
+    /**
+     * Show an exception dialog that the calculation has failed
+     * 
+     * @param e
+     */
     private void showErrorCalculationFailed(Exception e) {
 	ExceptionDialog exceptionDialog = new ExceptionDialog(
 		new Exception(
@@ -513,6 +512,12 @@ public class Tab1Controller {
 	exceptionDialog.showAndWait();
     }
 
+    /**
+     * Clone the ObservableList of the product values
+     * 
+     * @param listFrom
+     * @param listTo
+     */
     public void cloneProductValues(ObservableList<Product> listFrom,
 	    ObservableList<Product> listTo) {
 	for (Product product : listFrom) {
@@ -521,6 +526,9 @@ public class Tab1Controller {
 	}
     }
 
+    /**
+     * Show an error dialog, that the input data has parameters with '0' values
+     */
     private void showProductHasEmptyValuesAlert() {
 	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Ungültige Eingabe");
@@ -530,6 +538,9 @@ public class Tab1Controller {
 	alert.showAndWait();
     }
 
+    /**
+     * Show an error dialog, that the input data is empty
+     */
     private void showProductListIsEmptyAlert() {
 	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Ungültige Eingabe");
@@ -539,6 +550,9 @@ public class Tab1Controller {
 	alert.showAndWait();
     }
 
+    /**
+     * Show an error dialog that the input data has to less values
+     */
     private void showProductListIsToShortAlert() {
 	Alert alert = new Alert(AlertType.ERROR);
 	alert.setTitle("Ungültige Eingabe");
@@ -548,6 +562,12 @@ public class Tab1Controller {
 	alert.showAndWait();
     }
 
+    /**
+     * check if the product has '0' values
+     * 
+     * @param product
+     * @return
+     */
     private boolean hasEmptyFields(Product product) {
 	if (product.getD() == 0 || product.getH() == 0 || product.getP() == 0
 		|| product.getS() == 0 || product.getTau() == 0) {
@@ -556,17 +576,22 @@ public class Tab1Controller {
 	return false;
     }
 
+    /**
+     * refactor the indexes of in column 1 of the input table
+     * 
+     * @param products
+     */
     private void refactorIndexes(ObservableList<Product> products) {
 	for (Product product : products) {
 	    product.setK(products.indexOf(product) + 1);
 	}
     }
 
+    /**
+     * Customize the table: set the table tooltip, make columns 2-6 editable and
+     * set the values of the columns
+     */
     private void customizeTable() {
-
-	// TODO: set tooltip for each column header field (but not just the
-	// text); by now I just found a solution to set a tooltip of the column
-	// fields, not of the column header row
 
 	// tooltip for the whole table
 	productsTableView.setTooltip(new Tooltip("k: Zeilenindex\n"
@@ -576,67 +601,57 @@ public class Tab1Controller {
 
 	// making columns 2-6 editable
 	setColumnDecimals();
+
+	// set the values of the columns
+	setCellValueFactoryAllColumns();
     }
 
-    private void setColumnDecimals() {
-	// column2.setCellFactory(TextFieldTableCell
-	// .<Product, Number> forTableColumn(new NumberStringConverter(
-	// decimals.getDecimalFormat())));
-	// column3.setCellFactory(TextFieldTableCell
-	// .<Product, Number> forTableColumn(new NumberStringConverter(
-	// decimals.getDecimalFormat())));
-	// column4.setCellFactory(TextFieldTableCell
-	// .<Product, Number> forTableColumn(new NumberStringConverter(
-	// decimals.getDecimalFormat())));
-	// column5.setCellFactory(TextFieldTableCell
-	// .<Product, Number> forTableColumn(new NumberStringConverter(
-	// decimals.getDecimalFormat())));
-	// column6.setCellFactory(TextFieldTableCell
-	// .<Product, Number> forTableColumn(new NumberStringConverter(
-	// decimals.getDecimalFormat())));
+    /**
+     * set the data of the columns
+     */
+    public void setCellValueFactoryAllColumns() {
+	column1.setCellValueFactory(cellData -> cellData.getValue()
+		.getKProperty());
+	column2.setCellValueFactory(cellData -> cellData.getValue()
+		.getDProperty());
+	column3.setCellValueFactory(cellData -> cellData.getValue()
+		.getPProperty());
+	column4.setCellValueFactory(cellData -> cellData.getValue()
+		.getTauProperty());
+	column5.setCellValueFactory(cellData -> cellData.getValue()
+		.getSProperty());
+	column6.setCellValueFactory(cellData -> cellData.getValue()
+		.getHProperty());
+    }
 
+    /**
+     * Create a Callback on the TableCell using a custom @class EditingCell and
+     * set all columns with the cell factory
+     */
+    private void setColumnDecimals() {
 	Callback<TableColumn<Product, Number>, TableCell<Product, Number>> cellFactory = new Callback<TableColumn<Product, Number>, TableCell<Product, Number>>() {
 	    public TableCell call(TableColumn p) {
-		return new EditingCell();
+		return new EditingCell(decimals);
 	    }
 	};
+	setCellFactoryAllColumns(cellFactory);
+    }
 
+    /**
+     * Set the cell factory of all table columns to the custom callback cell
+     * factory using the @class EditingCell
+     * 
+     * @param cellFactory
+     */
+    private void setCellFactoryAllColumns(
+	    Callback<TableColumn<Product, Number>, TableCell<Product, Number>> cellFactory) {
 	column1.setCellFactory(cellFactory);
 	column2.setCellFactory(cellFactory);
 	column3.setCellFactory(cellFactory);
 	column4.setCellFactory(cellFactory);
 	column5.setCellFactory(cellFactory);
 	column6.setCellFactory(cellFactory);
-
     }
-
-    /**
-     * Zoom the table of to the actual fontsize. TableColumns will be zoomed and
-     * also the table content is zoomed using an custom cell factory
-     * 
-     * @param fontsize
-     */
-    // TODO: WARNING: DO NOT DELETE, maybe we need this, if the zoom is not as
-    // wished
-    // public void handleZoomTable() {
-    //
-    // // fontsize for table header
-    // column1.setStyle(root.getZoomer().getStyleFXFontSize());
-    // column2.setStyle(root.getZoomer().getStyleFXFontSize());
-    // column3.setStyle(root.getZoomer().getStyleFXFontSize());
-    // column4.setStyle(root.getZoomer().getStyleFXFontSize());
-    // column5.setStyle(root.getZoomer().getStyleFXFontSize());
-    // column6.setStyle(root.getZoomer().getStyleFXFontSize());
-    //
-    // // fontsize for table content
-    // column1.setCellFactory(getCustomCellFactory());
-    // column2.setCellFactory(getCustomCellFactory());
-    // column3.setCellFactory(getCustomCellFactory());
-    // column4.setCellFactory(getCustomCellFactory());
-    // column5.setCellFactory(getCustomCellFactory());
-    // column6.setCellFactory(getCustomCellFactory());
-    //
-    // }
 
     /**
      * Resize the Iconfont of the toolbar buttons using the @fontsize
@@ -657,215 +672,6 @@ public class Tab1Controller {
 		.size((double) fontsize));
 	btnCalculate.setGraphic(new Glyph("FontAwesome",
 		FontAwesome.Glyph.PLAY_CIRCLE_ALT).size((double) fontsize));
-    }
-
-    /**
-     * Defines a custom callback to set the content of each table value and
-     * update its fontsize using the param @fontsize
-     * 
-     * @param fontsize
-     * @return
-     */
-    // TODO: WARNING: DO NOT DELETE, maybe we need this, if the zoom is not as
-    // wished
-    // private Callback<TableColumn<Product, Number>, TableCell<Product,
-    // Number>> getCustomCellFactory() {
-    // return new Callback<TableColumn<Product, Number>, TableCell<Product,
-    // Number>>() {
-    //
-    // @Override
-    // public TableCell<Product, Number> call(
-    // TableColumn<Product, Number> tableColumn) {
-    // TableCell<Product, Number> cell = new TableCell<Product, Number>() {
-    //
-    // @Override
-    // protected void updateItem(Number item, boolean empty) {
-    // if (item != null) {
-    //
-    // if (item instanceof Integer) {
-    // setText(Integer.toString((Integer) item));
-    // } else if (item instanceof Double) {
-    // setText(Double.toString((Double) item));
-    // } else {
-    // setText("N/A");
-    // }
-    //
-    // setStyle(root.getZoomer().getStyleFXFontSize());
-    //
-    // }
-    // }
-    // };
-    // return cell;
-    // }
-    //
-    // };
-    // }
-
-    // // TODO: Nachkommastellen berechnung muss irgendwie in den
-    // // Callback integriert werden!!
-    // // TextFieldTableCell
-    // // .<Product, Number> forTableColumn(new NumberStringConverter(
-    // // decimals.getDecimalFormat()))
-    class EditingCell extends TableCell<Product, Number> {
-
-	private TextField textField;
-
-	public EditingCell() {
-	}
-
-	@Override
-	public void startEdit() {
-	    if (!isEmpty()) {
-		super.startEdit();
-		if (textField == null) {
-		    createTextField();
-		}
-
-		setGraphic(textField);
-		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-		// textField.selectAll();
-		Platform.runLater(new Runnable() {
-		    @Override
-		    public void run() {
-			textField.requestFocus();
-			textField.selectAll();
-		    }
-		});
-	    }
-	}
-
-	@Override
-	public void cancelEdit() {
-	    super.cancelEdit();
-	    setText((String) getItem().toString());
-	    setGraphic(null);
-	    setContentDisplay(ContentDisplay.TEXT_ONLY);
-	}
-
-	@Override
-	public void updateItem(Number item, boolean empty) {
-	    super.updateItem(item, empty);
-
-	    if (empty) {
-		setText(null);
-		setGraphic(null);
-	    } else {
-		if (isEditing()) {
-		    if (textField != null) {
-			textField.setText(getString());
-		    }
-		    setGraphic(textField);
-		    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-		} else {
-		    setText(getString());
-		    setContentDisplay(ContentDisplay.TEXT_ONLY);
-		}
-	    }
-	}
-
-	private void createTextField() {
-	    textField = new TextField(getString());
-	    textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()
-		    * 2);
-
-	    textField.focusedProperty().addListener(
-		    new ChangeListener<Boolean>() {
-			@Override
-			public void changed(
-				ObservableValue<? extends Boolean> arg0,
-				Boolean arg1, Boolean arg2) {
-			    if (!arg2) {
-				try {
-				    commitEdit(decimals.getDecimalFormat()
-					    .parse(textField.getText()));
-				} catch (ParseException e) {
-				    // TODO Auto-generated catch block
-				    e.printStackTrace();
-				}
-			    }
-			}
-		    });
-
-	    textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-		@Override
-		public void handle(KeyEvent t) {
-		    if (t.getCode() == KeyCode.ENTER) {
-			try {
-			    commitEdit(decimals.getDecimalFormat().parse(
-				    textField.getText()));
-			} catch (ParseException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
-		    } else if (t.getCode() == KeyCode.ESCAPE) {
-			cancelEdit();
-		    } else if (t.getCode() == KeyCode.TAB) {
-			try {
-			    commitEdit(decimals.getDecimalFormat().parse(
-				    textField.getText()));
-			} catch (ParseException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			}
-			TableColumn nextColumn = getNextColumn(!t.isShiftDown());
-			if (nextColumn != null) {
-			    getTableView().edit(getTableRow().getIndex(),
-				    nextColumn);
-			}
-
-		    }
-		}
-
-	    });
-	}
-
-	private String getString() {
-	    return getItem() == null ? "0" : decimals.getDecimalFormat()
-		    .format((Object) getItem()).toString();
-	}
-
-	private TableColumn<Product, ?> getNextColumn(boolean forward) {
-	    List<TableColumn<Product, ?>> columns = new ArrayList<>();
-	    for (TableColumn<Product, ?> column : getTableView().getColumns()) {
-		columns.addAll(getLeaves(column));
-	    }
-	    // There is no other column that supports editing.
-	    if (columns.size() < 2) {
-		return null;
-	    }
-	    int currentIndex = columns.indexOf(getTableColumn());
-	    int nextIndex = currentIndex;
-	    if (forward) {
-		nextIndex++;
-		if (nextIndex > columns.size() - 1) {
-		    nextIndex = 0;
-		}
-	    } else {
-		nextIndex--;
-		if (nextIndex < 0) {
-		    nextIndex = columns.size() - 1;
-		}
-	    }
-	    return columns.get(nextIndex);
-	}
-
-	private List<TableColumn<Product, ?>> getLeaves(
-		TableColumn<Product, ?> root) {
-	    List<TableColumn<Product, ?>> columns = new ArrayList<>();
-	    if (root.getColumns().isEmpty()) {
-		// We only want the leaves that are editable.
-		if (root.isEditable()) {
-		    columns.add(root);
-		}
-		return columns;
-	    } else {
-		for (TableColumn<Product, ?> column : root.getColumns()) {
-		    columns.addAll(getLeaves(column));
-		}
-		return columns;
-	    }
-	}
-
     }
 
 }
