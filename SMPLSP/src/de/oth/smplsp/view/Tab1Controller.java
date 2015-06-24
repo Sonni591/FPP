@@ -419,8 +419,6 @@ public class Tab1Controller {
     @FXML
     public void handleCalculate() {
 
-	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
-
 	if (productsList.isEmpty()) {
 	    showProductListIsEmptyAlert();
 	    // exit the calculation
@@ -437,26 +435,16 @@ public class Tab1Controller {
 		.observableArrayList();
 	cloneProductValues(productsClassic, productsMehrprodukt);
 
-	boolean hasEmptyFields = false;
-	for (Product product : productsClassic) {
-	    if (hasEmptyFields(product)) {
-		hasEmptyFields = true;
-	    }
-	}
-	if (hasEmptyFields) {
+	if (checkTableHasEmptyFields(productsClassic)) {
 	    showProductHasEmptyValuesAlert();
 	} else {
-	    Map<String, IBasicLotSchedulingAlgorithm> results = new HashMap();
-	    algorithms.add(new ClassicLotScheduling(productsClassic));
-	    algorithms.add(new MoreProductLotScheduling(productsMehrprodukt));
-	    for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
-		try {
-		    algorithm.calculateInTotal();
-		} catch (MinimalProductionCycleError e) {
-		    showErrorMinimalProductionCycleAlert();
-		    return;
-		}
-		results.put(algorithm.getClass().toString(), algorithm);
+	    Map<String, IBasicLotSchedulingAlgorithm> results = executeAlgorithms(
+		    productsClassic, productsMehrprodukt);
+	    if (results == null) {
+		// execution of the algorithms failed with
+		// MinimalProductionCycleError
+		// no not continue! - Error-Dialog is already shown
+		return;
 	    }
 	    try {
 		root.setResults(results);
@@ -469,6 +457,43 @@ public class Tab1Controller {
 	    showInfoDialogCalculationFinished();
 	    root.getZoomer().rescaleMainApplication();
 	}
+    }
+
+    /**
+     * Check if the @param productsClassic has empty fields
+     * 
+     * @param productsClassic
+     * @return boolean
+     */
+    private boolean checkTableHasEmptyFields(
+	    ObservableList<Product> productsClassic) {
+	boolean hasEmptyFields = false;
+	for (Product product : productsClassic) {
+	    if (hasEmptyFields(product)) {
+		hasEmptyFields = true;
+	    }
+	}
+	return hasEmptyFields;
+    }
+
+    private Map<String, IBasicLotSchedulingAlgorithm> executeAlgorithms(
+	    ObservableList<Product> productsClassic,
+	    ObservableList<Product> productsMehrprodukt) {
+	List<IBasicLotSchedulingAlgorithm> algorithms = new ArrayList<IBasicLotSchedulingAlgorithm>();
+
+	Map<String, IBasicLotSchedulingAlgorithm> results = new HashMap<String, IBasicLotSchedulingAlgorithm>();
+	algorithms.add(new ClassicLotScheduling(productsClassic));
+	algorithms.add(new MoreProductLotScheduling(productsMehrprodukt));
+	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
+	    try {
+		algorithm.calculateInTotal();
+	    } catch (MinimalProductionCycleError e) {
+		showErrorMinimalProductionCycleAlert();
+		return null;
+	    }
+	    results.put(algorithm.getClass().toString(), algorithm);
+	}
+	return results;
     }
 
     /**
@@ -594,16 +619,23 @@ public class Tab1Controller {
     private void customizeTable() {
 
 	// tooltip for the whole table
-	productsTableView.setTooltip(new Tooltip("k: Zeilenindex\n"
-		+ "D: Nachfragerate\n" + "p: Produktionsrate\n"
-		+ "τ: Rüstzeit\n" + "s: Rüstkostensatz\n"
-		+ "h: Lagerkostensatz"));
+	setTooltip();
 
 	// making columns 2-6 editable
 	setColumnDecimals();
 
 	// set the values of the columns
 	setCellValueFactoryAllColumns();
+    }
+
+    /**
+     * Set the tooltip of the table
+     */
+    private void setTooltip() {
+	productsTableView.setTooltip(new Tooltip("k: Zeilenindex\n"
+		+ "D: Nachfragerate\n" + "p: Produktionsrate\n"
+		+ "τ: Rüstzeit\n" + "s: Rüstkostensatz\n"
+		+ "h: Lagerkostensatz"));
     }
 
     /**
@@ -630,7 +662,8 @@ public class Tab1Controller {
      */
     private void setColumnDecimals() {
 	Callback<TableColumn<Product, Number>, TableCell<Product, Number>> cellFactory = new Callback<TableColumn<Product, Number>, TableCell<Product, Number>>() {
-	    public TableCell call(TableColumn p) {
+	    public TableCell<Product, Number> call(
+		    TableColumn<Product, Number> p) {
 		return new EditingCell(decimals);
 	    }
 	};

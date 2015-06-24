@@ -123,6 +123,11 @@ public class Tab5Controller {
 	return taskseriescollection;
     }
 
+    /**
+     * Handles the zoom of the JFreeChart Gant Chart. The labels of the x- and
+     * y-axis, the description of both axis as well as the legend will be scaled
+     * to the zoomfactor defined in the @class Zoomer using the chartFontSize
+     */
     public void handleZoom() {
 	JFreeChart chart = null;
 	if (processes == null) {

@@ -50,6 +50,9 @@ public class CSVFile extends AbstractFile {
 	super(csvFile);
     }
 
+    /**
+     * @see de.oth.smplsp.persistence.AbstractFile#loadValues()
+     */
     @Override
     public String[][] loadValues() throws IOException {
 	ExcelCSVParser parser = new ExcelCSVParser(new FileInputStream(
@@ -59,6 +62,9 @@ public class CSVFile extends AbstractFile {
 	return values;
     }
 
+    /**
+     * @see de.oth.smplsp.persistence.AbstractFile#saveValues(java.lang.String[][])
+     */
     @Override
     public void saveValues(String[][] values) throws IOException {
 	CSVPrint printer = new ExcelCSVPrinter(new FileOutputStream(this.file));
@@ -67,6 +73,9 @@ public class CSVFile extends AbstractFile {
 	printer.close();
     }
 
+    /**
+     * @see de.oth.smplsp.persistence.AbstractFile#loadValuesAsProduct()
+     */
     @Override
     public ObservableList<Product> loadValuesAsProduct() throws IOException,
 	    CSVFileWrongNumberOfValuesInFileError {
@@ -86,6 +95,9 @@ public class CSVFile extends AbstractFile {
 	return products;
     }
 
+    /**
+     * @see de.oth.smplsp.persistence.AbstractFile#saveValuesFromProduct(javafx.collections.ObservableList)
+     */
     @Override
     public void saveValuesFromProduct(ObservableList<Product> products)
 	    throws IOException {

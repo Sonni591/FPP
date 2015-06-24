@@ -56,13 +56,9 @@ public class ProductionProcessFormula {
 	String formula = "\\textrm{Berechnung des Produktionsvorgangs für Produkt "
 		+ product.getK() + " berechnet sich wie folgt:}";
 	formula += getNewLine();
-	formula +=
-	// formatter.format(
-	decimals.getDecimalFormat().format(endeRuestzeit)
+	formula += decimals.getDecimalFormat().format(endeRuestzeit)
 		+ " + "
-		+
-		// formatter.format(
-		decimals.getDecimalFormat().format(product.getT())
+		+ decimals.getDecimalFormat().format(product.getT())
 		+ " = "
 		+ decimals.getDecimalFormat().format(
 			endeRuestzeit + product.getT());

@@ -29,23 +29,6 @@ public class Zoomer {
     private final int defaultLatexFontSize = 22;
     private final int defaultChartFontSize = 12;
 
-    // TODO: unused now, remove if unnecessary
-    // // difference the different fontsizes
-    // private int tableFontsize = 20;
-    // private int buttonFontsize = 20;
-    // private int explanationComponentFontsize = 20;
-    // private int southBarLabelFontsize = 20;
-    // private int menuFontsize = 20;
-    // private int tabLabelFontsize = 20;
-    // private int chartLegendFontsize = 20;
-    // private int chartAxisFontsize = 20;
-    // private int chartAxisLabelFontsize = 20;
-    // private int applicationHeaderFontsize = 20;
-
-    public void initializeFontsizes() {
-	// TODO
-    }
-
     /**
      * @return the fontsize
      */
@@ -55,7 +38,7 @@ public class Zoomer {
 
     /**
      * @param fontsize
-     *            the fontsize to set
+     *            Set the fontsize
      */
     public void setFontsize(int fontsize) {
 	if (fontsize > 1) {
@@ -72,7 +55,7 @@ public class Zoomer {
 
     /**
      * @param latexFontSize
-     *            the latexFontSize to set
+     *            Set the latexFontSize
      */
     public void setLatexFontSize(int latexFontSize) {
 	if (fontsize > 1) {
@@ -89,7 +72,7 @@ public class Zoomer {
 
     /**
      * @param chartFontSize
-     *            the chartFontSize to set
+     *            Set the chartFontSize
      */
     public void setChartFontSize(int chartFontSize) {
 	if (chartFontSize > 1) {
@@ -150,16 +133,23 @@ public class Zoomer {
 
 	    // zoom operations on tab 5
 	    tab5Controller.handleZoom();
-
 	}
     }
 
+    /**
+     * Rescale the settings dialog by modifying the used css style
+     */
     public void rescaleSettingsDialog() {
 	if (settingsDialogController != null) {
 	    settingsDialogController.handleZoomCSSStyle();
 	}
     }
 
+    /**
+     * Get instances of the used tab controllers
+     * 
+     * @param rootLayoutController
+     */
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
 	tab1Controller = root.getTab1Controller();
@@ -169,6 +159,11 @@ public class Zoomer {
 	tab5Controller = root.getTab5Controller();
     }
 
+    /**
+     * Get the instance of the settingsDialogController
+     * 
+     * @param settingsDialogController
+     */
     public void init(SettingsDialogController settingsDialogController) {
 	this.settingsDialogController = settingsDialogController;
     }
@@ -176,13 +171,16 @@ public class Zoomer {
     /**
      * modify the font size of the used stylesheet
      * 
-     * @return
+     * @return String with the new font size CSS Style
      */
     public String getStyleFXFontSize() {
 	String style = "-fx-font-size: " + fontsize + ";";
 	return style;
     }
 
+    /**
+     * Reset the zoom level to the default values
+     */
     public void resetZoomLevel() {
 	fontsize = defaultFontsize;
 	latexFontSize = defaultLatexFontSize;

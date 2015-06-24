@@ -7,8 +7,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Product {
 
-    // TODO: translate getters
-
     // Produktnummer
     private IntegerProperty k;
     // Nachfragerate
@@ -78,7 +76,7 @@ public class Product {
      */
     public Product(int k) {
 	super();
-	this.k = new SimpleIntegerProperty(k); // TODO
+	this.k = new SimpleIntegerProperty(k);
 	this.d = new SimpleDoubleProperty(0.0);
 	this.p = new SimpleDoubleProperty(0.0);
 	this.tau = new SimpleDoubleProperty(0.0);

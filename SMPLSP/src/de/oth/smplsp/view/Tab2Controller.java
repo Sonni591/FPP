@@ -136,6 +136,23 @@ public class Tab2Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
+
+	setCellValueFactoryLotSchedulingTableView();
+	setCellValueFactoryProductionProcessesTableView();
+
+	initializeTables();
+	addListenerForProductionProcessTableView();
+	addListenerForLotSchedulingTableView();
+	setColumnDecimals();
+
+	setTableTooltips();
+
+    }
+
+    /**
+     * Set the CellValueFactory for the columns of the lotSchedulingTableView
+     */
+    private void setCellValueFactoryLotSchedulingTableView() {
 	lgColumn1.setCellValueFactory(cellData -> cellData.getValue()
 		.getKProperty());
 	lgColumn2.setCellValueFactory(cellData -> cellData.getValue()
@@ -144,7 +161,12 @@ public class Tab2Controller implements Initializable {
 		.getTProperty());
 	lgColumn4.setCellValueFactory(cellData -> cellData.getValue()
 		.getRProperty());
+    }
 
+    /**
+     * Set the CellValueFactory for the columns of the lotSchedulingTableView
+     */
+    private void setCellValueFactoryProductionProcessesTableView() {
 	paColumn1.setCellValueFactory(cellData -> cellData.getValue().getK());
 	paColumn2.setCellValueFactory(cellData -> cellData.getValue()
 		.getVorgang());
@@ -152,12 +174,13 @@ public class Tab2Controller implements Initializable {
 		.getStart());
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
-	initializeTables();
-	addListenerForProductionProcessTableView();
-	addListenerForLotSchedulingTableView();
-	setColumnDecimals();
+    }
 
-	// tooltips for the both tables
+    /**
+     * Set the tooltips for the tables lotSchedulingTableView and
+     * productionProcessesTableView
+     */
+    private void setTableTooltips() {
 	lotSchedulingTableView.setTooltip(new Tooltip(
 		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
 			+ "q: optimale spezifische Losgröße\n"
@@ -168,7 +191,6 @@ public class Tab2Controller implements Initializable {
 			+ "Vorgang: Beschreibung des Vorgangs\n"
 			+ "Start: Start des Vorgangs\n"
 			+ "Ende: Ende des Vorgangs\n"));
-
     }
 
     /**
@@ -235,7 +257,7 @@ public class Tab2Controller implements Initializable {
     }
 
     /**
-     * Add an onMouseClicked Listener to both tables
+     * Add an onMouseClicked- and Key-Listener to production process table
      */
     public void addListenerForProductionProcessTableView() {
 	productionProcessesTableView
@@ -273,6 +295,9 @@ public class Tab2Controller implements Initializable {
 		});
     }
 
+    /**
+     * Add an onMouseClicked- and Key-Listener to lot scheduling table
+     */
     public void addListenerForLotSchedulingTableView() {
 	lotSchedulingTableView
 		.setOnMouseClicked(new EventHandler<MouseEvent>() {

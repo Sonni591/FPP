@@ -11,6 +11,8 @@ import de.oth.smplsp.model.ProductionProcess;
 
 public class ProductionProcessCalculator {
 
+    // TODO: translate
+
     private LotSchedulingResult result;
     private List<ProductionProcess> processes = new ArrayList<ProductionProcess>();
 
@@ -39,7 +41,7 @@ public class ProductionProcessCalculator {
 		    + product.getTau();
 	    processRuesten.setEnde(new SimpleDoubleProperty(ende));
 
-	    // für zweiten Zyklus
+	    // for second cycle
 	    double zyklusdauer = product.getQ() / product.getD();
 	    processRuesten.setStart_zyklus2(new SimpleDoubleProperty(
 		    processRuesten.getStart().doubleValue() + zyklusdauer));
@@ -56,7 +58,7 @@ public class ProductionProcessCalculator {
 		    + product.getT();
 	    processProduction.setEnde(new SimpleDoubleProperty(endeProduktion));
 
-	    // Für zweiten Zyklus
+	    // for second cycle
 	    processProduction.setStart_zyklus2(new SimpleDoubleProperty(
 		    processProduction.getStart().doubleValue() + zyklusdauer));
 	    processProduction.setEnde_zyklus2(new SimpleDoubleProperty(

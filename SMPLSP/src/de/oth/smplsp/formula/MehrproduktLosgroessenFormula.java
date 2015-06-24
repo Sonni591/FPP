@@ -23,20 +23,34 @@ public class MehrproduktLosgroessenFormula {
 
 	// Check weather the text should be with color, or just black and white
 	if (Configuration.getInstance().getBlackAndWhiteMode()) {
-	    red = "Black";
-	    green = "Black";
-	    blue = "Black";
-	    rubineRed = "Black";
-	    oliveGreen = "Black";
-	    dandelion = "Black";
+	    initColorsBlackedOut();
 	} else {
-	    green = "Green";
-	    red = "Red";
-	    blue = "Blue";
-	    rubineRed = "RubineRed";
-	    oliveGreen = "OliveGreen";
-	    dandelion = "Dandelion";
+	    initColors();
 	}
+    }
+
+    /**
+     * initialize the used colors
+     */
+    private static void initColors() {
+	green = "Green";
+	red = "Red";
+	blue = "Blue";
+	rubineRed = "RubineRed";
+	oliveGreen = "OliveGreen";
+	dandelion = "Dandelion";
+    }
+
+    /**
+     * initialize alle colors to black
+     */
+    private static void initColorsBlackedOut() {
+	red = "Black";
+	green = "Black";
+	blue = "Black";
+	rubineRed = "Black";
+	oliveGreen = "Black";
+	dandelion = "Black";
     }
 
     public static String getAllgemeineGemeinsameProduktionszyklusFormel() {

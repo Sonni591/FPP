@@ -40,6 +40,10 @@ import de.oth.smplsp.model.ProductionProcess;
 import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
 
+/**
+ * @author danielsonnleitner
+ *
+ */
 public class Tab4Controller implements Initializable {
 
     @FXML
@@ -145,8 +149,10 @@ public class Tab4Controller implements Initializable {
 
     }
 
-    // TODO: CONTINUE HERE
-    public void addListenerForProdAblaufTableView() {
+    /**
+     * Add an onMouseClicked- and Key-Listener to production process table
+     */
+    public void addListenerForProductionProcessTableView() {
 	productionProcessesTableView
 		.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -156,7 +162,7 @@ public class Tab4Controller implements Initializable {
 			    ProductionProcess process = productionProcessesTableView
 				    .getSelectionModel().getSelectedItem();
 			    if (process != null) {
-				showExplanations(getProdAblaufFormula(process));
+				showExplanations(getProductionProcessFormula(process));
 			    }
 			}
 		    }
@@ -173,7 +179,7 @@ public class Tab4Controller implements Initializable {
 				ProductionProcess process = productionProcessesTableView
 					.getSelectionModel().getSelectedItem();
 				if (process != null) {
-				    showExplanations(getProdAblaufFormula(process));
+				    showExplanations(getProductionProcessFormula(process));
 				}
 			    }
 			}
@@ -182,7 +188,10 @@ public class Tab4Controller implements Initializable {
 		});
     }
 
-    public void addListenerForLosgroessenTableView() {
+    /**
+     * Add an onMouseClicked- and Key-Listener to lot scheduling table
+     */
+    public void addListenerForLotSchedulingTableView() {
 	lotSchedulingTableView
 		.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -192,7 +201,7 @@ public class Tab4Controller implements Initializable {
 			    Product product = lotSchedulingTableView
 				    .getSelectionModel().getSelectedItem();
 			    if (product != null) {
-				showExplanations(getLosgroessenFormula(product));
+				showExplanations(getLotSchedulingFormula(product));
 			    }
 			}
 		    }
@@ -208,7 +217,7 @@ public class Tab4Controller implements Initializable {
 			Product product = lotSchedulingTableView
 				.getSelectionModel().getSelectedItem();
 			if (product != null) {
-			    showExplanations(getLosgroessenFormula(product));
+			    showExplanations(getLotSchedulingFormula(product));
 			}
 		    }
 		}
@@ -217,6 +226,9 @@ public class Tab4Controller implements Initializable {
 	});
     }
 
+    /**
+     * Add an onMouseClicked Listener for TOpt formula
+     */
     public void addListenerForTOpt() {
 	tOptNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -229,6 +241,9 @@ public class Tab4Controller implements Initializable {
 	});
     }
 
+    /**
+     * Add an onMouseClicked Listener for TMin formula
+     */
     public void addListenerForTMin() {
 	tMinNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -241,12 +256,24 @@ public class Tab4Controller implements Initializable {
 	});
     }
 
+    /**
+     * Show the given @param formula in the explanation component
+     * 
+     * @param formula
+     *            String
+     */
     public void showExplanations(String formula) {
 	root.setLatexString(formula);
 	root.showExplanationComponent();
     }
 
-    public String getLosgroessenFormula(Product product) {
+    /**
+     * Return the lot scheduling formula for a given product
+     * 
+     * @param product
+     * @return lot scheduling formula String
+     */
+    public String getLotSchedulingFormula(Product product) {
 
 	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
 		product,
@@ -258,6 +285,11 @@ public class Tab4Controller implements Initializable {
 	return formula;
     }
 
+    /**
+     * Return the formula of the optimal product cycle
+     * 
+     * @return tOpt formula String
+     */
     public String getTOptFormulaWithParameters() {
 	return MehrproduktLosgroessenFormula
 		.getGemeinsameProduktionszyklusMitParameternFormel(root
@@ -266,6 +298,11 @@ public class Tab4Controller implements Initializable {
 			.getResult());
     }
 
+    /**
+     * Return the formula of the minimal product cycle
+     * 
+     * @return tMin formula String
+     */
     public String getTMinFormulaWithParameters() {
 	return MehrproduktLosgroessenFormula
 		.getMinimalenProduktionszyklusMitParameternFormel(root
@@ -274,7 +311,14 @@ public class Tab4Controller implements Initializable {
 			.getResult());
     }
 
-    public String getProdAblaufFormula(ProductionProcess process) {
+    /**
+     * Return the formula of the production process for a given process
+     * 
+     * @param ProductionProcess
+     *            process
+     * @return tMin formula String
+     */
+    public String getProductionProcessFormula(ProductionProcess process) {
 	String formula = "";
 	int k;
 	if (process.getK() != null) {
@@ -292,6 +336,12 @@ public class Tab4Controller implements Initializable {
 	return formula;
     }
 
+    /**
+     * Get the Product on index @param k
+     * 
+     * @param k
+     * @return Product
+     */
     public Product getProductByK(int k) {
 	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
 		MoreProductLotScheduling.class.toString());
@@ -305,6 +355,9 @@ public class Tab4Controller implements Initializable {
 	return null;
     }
 
+    /**
+     * Show the the formula for the optimal product cycle in the UI
+     */
     public void showTOpt() {
 
 	String latexString = MehrproduktLosgroessenFormula
@@ -314,8 +367,8 @@ public class Tab4Controller implements Initializable {
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, root
 		.getZoomer().getLatexFontSize());
 
-	// generate a JTextPane that will be displayed in a SwingNode
-	// in JavaFX
+	// generate a JTextPane that will be displayed
+	// in a SwingNode in JavaFX
 	JTextPane pane = new JTextPane();
 	pane.setEditable(false);
 	pane.insertIcon(icon);
@@ -325,6 +378,9 @@ public class Tab4Controller implements Initializable {
 	tOptNode.setContent(pane);
     }
 
+    /**
+     * Show the the formula for the minimal product cycle in the UI
+     */
     public void showTMin() {
 
 	String latexString = MehrproduktLosgroessenFormula
@@ -334,8 +390,8 @@ public class Tab4Controller implements Initializable {
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, root
 		.getZoomer().getLatexFontSize());
 
-	// generate a JTextPane that will be displayed in a SwingNode
-	// in JavaFX
+	// generate a JTextPane that will be displayed
+	// in a SwingNode in JavaFX
 	JTextPane pane = new JTextPane();
 	pane.setEditable(false);
 	pane.insertIcon(icon);
@@ -343,9 +399,12 @@ public class Tab4Controller implements Initializable {
 	pane.setBackground(new Color(0, 0, 0, 0));
 
 	tMinNode.setContent(pane);
-
     }
 
+    /**
+     * Show both formulas for the optimal (tOpt) and the minimal (tMin) product
+     * cycle in the UI
+     */
     public void showTOptAndTMinFormulas() {
 	showTMin();
 	showTOpt();
@@ -357,6 +416,21 @@ public class Tab4Controller implements Initializable {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
 
+	setCellValueFactoryLotSchedulingTableView();
+	setCellValueFactoryProductionProcessesTableView();
+
+	initializeTables();
+	addListeners();
+	setColumnDecimals();
+
+	setTableTooltips();
+
+    }
+
+    /**
+     * Set the CellValueFactory for the columns of the lotSchedulingTableView
+     */
+    private void setCellValueFactoryLotSchedulingTableView() {
 	lgColumn1.setCellValueFactory(cellData -> cellData.getValue()
 		.getKProperty());
 	lgColumn2.setCellValueFactory(cellData -> cellData.getValue()
@@ -365,7 +439,12 @@ public class Tab4Controller implements Initializable {
 		.getTProperty());
 	lgColumn4.setCellValueFactory(cellData -> cellData.getValue()
 		.getRProperty());
+    }
 
+    /**
+     * Set the CellValueFactory for the columns of the lotSchedulingTableView
+     */
+    private void setCellValueFactoryProductionProcessesTableView() {
 	paColumn1.setCellValueFactory(cellData -> cellData.getValue().getK());
 	paColumn2.setCellValueFactory(cellData -> cellData.getValue()
 		.getVorgang());
@@ -373,12 +452,13 @@ public class Tab4Controller implements Initializable {
 		.getStart());
 	paColumn4
 		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
+    }
 
-	initializeTables();
-	addListeners();
-	setColumnDecimals();
-
-	// tooltips for the both tables
+    /**
+     * Set the tooltips for the tables lotSchedulingTableView and
+     * productionProcessesTableView
+     */
+    private void setTableTooltips() {
 	lotSchedulingTableView.setTooltip(new Tooltip(
 		"Tabelle der optimalen Losgrößen\n" + "k: Zeilenindex\n"
 			+ "q: optimale spezifische Losgröße\n"
@@ -392,13 +472,19 @@ public class Tab4Controller implements Initializable {
 
     }
 
+    /**
+     * Add all Listeners
+     */
     public void addListeners() {
 	addListenerForTOpt();
 	addListenerForTMin();
-	addListenerForLosgroessenTableView();
-	addListenerForProdAblaufTableView();
+	addListenerForLotSchedulingTableView();
+	addListenerForProductionProcessTableView();
     }
 
+    /**
+     * Initialize the tables using the corresponding ObservableLists
+     */
     public void initializeTables() {
 	ObservableList<Product> productList = FXCollections
 		.observableArrayList();
@@ -408,17 +494,29 @@ public class Tab4Controller implements Initializable {
 	setProcessesListAndShowInTableProcessing(processingList);
     }
 
+    /**
+     * Refresh the decimals of the tables
+     */
     public void refreshDecimals() {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals.setDecimals(decimal);
 	setColumnDecimals();
     }
 
+    /**
+     * check if the tables are empty
+     * 
+     * @return boolean
+     */
     public boolean areTablesEmpty() {
 	return lotSchedulingTableView.getItems().isEmpty()
 		|| productionProcessesTableView.getItems().isEmpty();
     }
 
+    /**
+     * set the decimals of the tables using a NumberStringConverter and the @class
+     * Decimals
+     */
     public void setColumnDecimals() {
 	lgColumn1.setCellFactory(TextFieldTableCell
 		.<Product, Number> forTableColumn(new NumberStringConverter(
@@ -444,6 +542,9 @@ public class Tab4Controller implements Initializable {
 
     }
 
+    /**
+     * @param rootLayoutController
+     */
     public void init(RootLayoutController rootLayoutController) {
 	root = rootLayoutController;
     }

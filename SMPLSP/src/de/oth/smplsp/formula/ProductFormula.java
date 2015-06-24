@@ -20,16 +20,30 @@ public class ProductFormula {
 
 	// Check weather the text should be with color, or just black and white
 	if (Configuration.getInstance().getBlackAndWhiteMode()) {
-	    blue = "Black";
-	    rubineRed = "Black";
-	    oliveGreen = "Black";
-	    plum = "Black";
+	    initColorsBlackedOut();
 	} else {
-	    blue = "Blue";
-	    rubineRed = "RubineRed";
-	    oliveGreen = "OliveGreen";
-	    plum = "Plum";
+	    initColors();
 	}
+    }
+
+    /**
+     * initialize the used colors
+     */
+    private static void initColors() {
+	blue = "Blue";
+	rubineRed = "RubineRed";
+	oliveGreen = "OliveGreen";
+	plum = "Plum";
+    }
+
+    /**
+     * initialize alle colors to black
+     */
+    private static void initColorsBlackedOut() {
+	blue = "Black";
+	rubineRed = "Black";
+	oliveGreen = "Black";
+	plum = "Black";
     }
 
     public static String getAllgemeineAuslastungFormel() {
