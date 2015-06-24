@@ -1,3 +1,0 @@
-#Wed Jun 10 18:30:51 CEST 2015
-DecimalPlaces=3
-BlackAndWhite=false
