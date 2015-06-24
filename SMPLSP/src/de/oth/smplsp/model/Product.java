@@ -5,6 +5,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * An representation of a product of the lotscheduling problem.
+ * 
+ * @author Tobias Eichinger
+ *
+ */
 public class Product {
 
     // Produktnummer

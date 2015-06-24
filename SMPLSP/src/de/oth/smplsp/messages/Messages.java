@@ -1,17 +1,16 @@
-/**
- * 
- */
 package de.oth.smplsp.messages;
 
 import org.eclipse.osgi.util.NLS;
 
 /**
+ * This class is generated from the externalize strings function of eclipse.
+ * 
  * @author Tobias Eichinger
  *
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "de.oth.smplsp.messages.messages"; //$NON-NLS-1$
-    public static final String BUNDLE_NAME_FXML = "messages/messagesFXML.properties";
+    public static final String BUNDLE_NAME_FXML = "messages/messagesFXML.properties"; //$NON-NLS-1$
     public static String ExceptionDialog_Header;
     public static String ExceptionDialog_LabelOfTextArea;
     public static String ExceptionDialog_Title;
