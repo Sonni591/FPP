@@ -99,8 +99,8 @@ public class Tab5Controller {
 		tmpTask.setDescription(a.getK().getValue().toString());
 		tmpTask.setStart(a.getStartCycle1().doubleValue());
 		tmpTask.setEnd(a.getEndCycle2().doubleValue());
-		Task subTask1 = new Task("Rüstzeit",
-			a.getStartCycle1().doubleValue(), a.getEndCycle1().doubleValue());
+		Task subTask1 = new Task("Rüstzeit", a.getStartCycle1()
+			.doubleValue(), a.getEndCycle1().doubleValue());
 		Task subTask3 = new Task("Rüstzeit", a.getStartCycle2()
 			.doubleValue(), a.getEndCycle2().doubleValue());
 		tmpTask.addSubtask(subTask1);
@@ -115,9 +115,11 @@ public class Tab5Controller {
 		tmpTask.addSubtask(subTask2);
 		tmpTask.addSubtask(subTask4);
 		taskseries.add(tmpTask);
+
 	    }
 
 	}
+	taskseries.add(new Task("Überschneidung", 0, 0));
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	taskseriescollection.add(taskseries);
 	return taskseriescollection;

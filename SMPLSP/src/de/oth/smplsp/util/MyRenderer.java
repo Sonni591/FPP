@@ -26,12 +26,13 @@ public class MyRenderer extends GanttRenderer {
 
     @Override
     public Paint getItemPaint(int row, int col) {
+
 	if (this.row != row || this.col != col) {
 	    this.row = row;
 	    this.col = col;
 	    index = 0;
 	}
-	if (col != 7) {
+	if (col != model.getColumnCount() - 1) {
 	    int clutIndex = index++ / PASS;
 	    return clut.get(clutIndex);
 	} else

@@ -117,11 +117,8 @@ public class Tab3Controller {
 
 	}
 	taskseries.add(ErrorHighlighting(taskseries));
-	// TaskSeries errortaskseries = new TaskSeries("Error");
-	// errortaskseries.add(ErrorHighlighting(taskseries));
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	taskseriescollection.add(taskseries);
-	// taskseriescollection.add(errortaskseries);
 	return taskseriescollection;
     }
 
