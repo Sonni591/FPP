@@ -9,15 +9,15 @@ public class ProductionProcess {
     // Produktnummer
     private IntegerProperty k;
     // Vorgang
-    private StringProperty vorgang;
-    // Start
-    private DoubleProperty start_zyklus1;
-    // Ende
-    private DoubleProperty ende_zyklus1;
-
-    private DoubleProperty start_zyklus2;
-
-    private DoubleProperty ende_zyklus2;
+    private StringProperty process;
+    // Start of cycle 1
+    private DoubleProperty startCycle1;
+    // End of cycle 1
+    private DoubleProperty endCycle1;
+    // Start of cycle 1
+    private DoubleProperty startCycle2;
+    // End of cycle 1
+    private DoubleProperty endCycle2;
 
     /**
      * @return the k
@@ -35,64 +35,78 @@ public class ProductionProcess {
     }
 
     /**
-     * @return the vorgang
+     * @return the process
      */
-    public StringProperty getVorgang() {
-	return vorgang;
+    public StringProperty getProcess() {
+	return process;
     }
 
     /**
-     * @param vorgang
-     *            the vorgang to set
+     * @param process
+     *            the process to set
      */
-    public void setVorgang(StringProperty vorgang) {
-	this.vorgang = vorgang;
+    public void setProcess(StringProperty process) {
+	this.process = process;
     }
 
     /**
-     * @return the start
+     * @return the startCycle1
      */
-    public DoubleProperty getStart() {
-	return start_zyklus1;
+    public DoubleProperty getStartCycle1() {
+	return startCycle1;
     }
 
     /**
-     * @param start
-     *            the start to set
+     * @param startCycle1
+     *            the startCycle1 to set
      */
-    public void setStart(DoubleProperty start) {
-	this.start_zyklus1 = start;
+    public void setStartCycle1(DoubleProperty start) {
+	this.startCycle1 = start;
     }
 
     /**
-     * @return the ende
+     * @return the endCycle1
      */
-    public DoubleProperty getEnde() {
-	return ende_zyklus1;
+    public DoubleProperty getEndCycle1() {
+	return endCycle1;
     }
 
     /**
-     * @param ende
-     *            the ende to set
+     * @param endCycle1
+     *            the endCycle1 to set
      */
-    public void setEnde(DoubleProperty ende) {
-	this.ende_zyklus1 = ende;
+    public void setEndCycle1(DoubleProperty end) {
+	this.endCycle1 = end;
     }
 
-    public DoubleProperty getStart_zyklus2() {
-	return start_zyklus2;
+    /**
+     * @return the startCycle2
+     */
+    public DoubleProperty getStartCycle2() {
+	return startCycle2;
     }
 
-    public void setStart_zyklus2(DoubleProperty start_zyklus2) {
-	this.start_zyklus2 = start_zyklus2;
+    /**
+     * @param startCycle2
+     *            the startCycle2 to set
+     */
+    public void setStartCycle2(DoubleProperty startCycle2) {
+	this.startCycle2 = startCycle2;
     }
 
-    public DoubleProperty getEnde_zyklus2() {
-	return ende_zyklus2;
+    /**
+     * @return the endCycle2
+     */
+    public DoubleProperty getEndCycle2() {
+	return endCycle2;
     }
 
-    public void setEnde_zyklus2(DoubleProperty ende_zyklus2) {
-	this.ende_zyklus2 = ende_zyklus2;
+    /**
+     * @param endCycle2
+     *            * the endCycle2 to set
+     */
+    public void setEndCycle2(DoubleProperty endCycle2) {
+	this.endCycle2 = endCycle2;
     }
 
 }

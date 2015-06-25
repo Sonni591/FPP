@@ -28,41 +28,41 @@ public class ProductionProcessCalculator {
 	for (Product product : result.getProducts()) {
 	    ProductionProcess processRuesten = new ProductionProcess();
 	    processRuesten.setK(product.getKProperty());
-	    processRuesten.setVorgang(new SimpleStringProperty("Rüsten"));
+	    processRuesten.setProcess(new SimpleStringProperty("Rüsten"));
 	    if (processes.size() == 0) {
-		processRuesten.setStart(new SimpleDoubleProperty(0.0));
+		processRuesten.setStartCycle1(new SimpleDoubleProperty(0.0));
 	    } else {
 		ProductionProcess vorgaenger = processes
 			.get(processes.size() - 1);
-		double startzeit = vorgaenger.getEnde().doubleValue();
-		processRuesten.setStart(new SimpleDoubleProperty(startzeit));
+		double startzeit = vorgaenger.getEndCycle1().doubleValue();
+		processRuesten.setStartCycle1(new SimpleDoubleProperty(startzeit));
 	    }
-	    double ende = processRuesten.getStart().doubleValue()
+	    double ende = processRuesten.getStartCycle1().doubleValue()
 		    + product.getTau();
-	    processRuesten.setEnde(new SimpleDoubleProperty(ende));
+	    processRuesten.setEndCycle1(new SimpleDoubleProperty(ende));
 
 	    // for second cycle
 	    double zyklusdauer = product.getQ() / product.getD();
-	    processRuesten.setStart_zyklus2(new SimpleDoubleProperty(
-		    processRuesten.getStart().doubleValue() + zyklusdauer));
-	    processRuesten.setEnde_zyklus2(new SimpleDoubleProperty(
-		    processRuesten.getEnde().doubleValue() + zyklusdauer));
+	    processRuesten.setStartCycle2(new SimpleDoubleProperty(
+		    processRuesten.getStartCycle1().doubleValue() + zyklusdauer));
+	    processRuesten.setEndCycle2(new SimpleDoubleProperty(
+		    processRuesten.getEndCycle1().doubleValue() + zyklusdauer));
 	    processes.add(processRuesten);
 
 	    ProductionProcess processProduction = new ProductionProcess();
 	    processProduction.setK(null);
 	    processProduction
-		    .setVorgang(new SimpleStringProperty("Produktion"));
-	    processProduction.setStart(processRuesten.getEnde());
-	    double endeProduktion = processProduction.getStart().doubleValue()
+		    .setProcess(new SimpleStringProperty("Produktion"));
+	    processProduction.setStartCycle1(processRuesten.getEndCycle1());
+	    double endeProduktion = processProduction.getStartCycle1().doubleValue()
 		    + product.getT();
-	    processProduction.setEnde(new SimpleDoubleProperty(endeProduktion));
+	    processProduction.setEndCycle1(new SimpleDoubleProperty(endeProduktion));
 
 	    // for second cycle
-	    processProduction.setStart_zyklus2(new SimpleDoubleProperty(
-		    processProduction.getStart().doubleValue() + zyklusdauer));
-	    processProduction.setEnde_zyklus2(new SimpleDoubleProperty(
-		    processProduction.getEnde().doubleValue() + zyklusdauer));
+	    processProduction.setStartCycle2(new SimpleDoubleProperty(
+		    processProduction.getStartCycle1().doubleValue() + zyklusdauer));
+	    processProduction.setEndCycle2(new SimpleDoubleProperty(
+		    processProduction.getEndCycle1().doubleValue() + zyklusdauer));
 	    processes.add(processProduction);
 	}
     }
@@ -87,9 +87,9 @@ public class ProductionProcessCalculator {
 		processes);
 	ProductionProcess totalDuration = new ProductionProcess();
 	totalDuration.setK(null);
-	totalDuration.setVorgang(new SimpleStringProperty("Gesamtdauer"));
+	totalDuration.setProcess(new SimpleStringProperty("Gesamtdauer"));
 	ProductionProcess lastProcess = processes.get(processes.size() - 1);
-	totalDuration.setEnde(lastProcess.getEnde());
+	totalDuration.setEndCycle1(lastProcess.getEndCycle1());
 	processesTable.add(totalDuration);
 	return processesTable;
     }

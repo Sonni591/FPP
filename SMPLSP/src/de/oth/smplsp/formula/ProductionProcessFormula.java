@@ -19,16 +19,16 @@ public class ProductionProcessFormula {
 	    Product product) {
 	initialize();
 	String formula = "";
-	if (process.getVorgang().get().equals("Rüsten")) {
+	if (process.getProcess().get().equals("Rüsten")) {
 	    formula += getAllgemeineProductionProcessFormelRuesten();
 	    formula += getNewLine();
 	    formula += getProductionProcessFormelRuesten(product, process
-		    .getStart().doubleValue());
+		    .getStartCycle1().doubleValue());
 	} else {
 	    formula += getAllgemeineProductionProcessFormelProduction();
 	    formula += getNewLine();
 	    formula += getProductionProcessFormelProduction(product, process
-		    .getStart().doubleValue());
+		    .getStartCycle1().doubleValue());
 	}
 	formula += getNewLine();
 	formula += getGesamtdauer(product);

@@ -16,15 +16,24 @@ import de.oth.smplsp.model.Product;
 
 public class LotSchedulingAlgorithmTester {
 
+    /**
+     * List of @class Product for the test
+     */
     private List<Product> products;
 
+    /**
+     * Initialize the JUnit test
+     */
     @Before
     public void initialize() {
 	products = getTestProducts();
     }
 
+    /**
+     * JUnit Test for the classical lot scheduling algorithm
+     */
     @Test
-    public void testKlassischeLosgroessen() {
+    public void testClassicalLotScheduling() {
 	ClassicLotScheduling tester = new ClassicLotScheduling(products);
 
 	LotSchedulingResult result = tester.calculateInTotal();
@@ -60,8 +69,11 @@ public class LotSchedulingAlgorithmTester {
 	}
     }
 
+    /**
+     * JUnit Test for the classical lot scheduling algorithm
+     */
     @Test
-    public void testMehrproduktLosgroessen() {
+    public void testMultiProductLotScheduling() {
 
 	MoreProductLotScheduling tester = new MoreProductLotScheduling(products);
 
@@ -107,6 +119,11 @@ public class LotSchedulingAlgorithmTester {
 
     }
 
+    /**
+     * Returns a list with test products
+     * 
+     * @return List<Product> with testProducts
+     */
     public static List<Product> getTestProducts() {
 	List<Product> products = new ArrayList<Product>();
 	Product product1 = new Product(1, 10.4, 128.5714, 2.0, 190.0, 0.000689);

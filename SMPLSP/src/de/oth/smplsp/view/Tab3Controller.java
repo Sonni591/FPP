@@ -95,21 +95,21 @@ public class Tab3Controller {
 	    if (a.getK() != null) {
 		tmpTask = new Task("desc", 0, 0);
 		tmpTask.setDescription(a.getK().getValue().toString());
-		tmpTask.setStart(a.getStart().doubleValue());
-		tmpTask.setEnd(a.getEnde_zyklus2().doubleValue());
+		tmpTask.setStart(a.getStartCycle1().doubleValue());
+		tmpTask.setEnd(a.getEndCycle2().doubleValue());
 		Task subTask1 = new Task("Rüstzeit",
-			a.getStart().doubleValue(), a.getEnde().doubleValue());
-		Task subTask3 = new Task("Rüstzeit", a.getStart_zyklus2()
-			.doubleValue(), a.getEnde_zyklus2().doubleValue());
+			a.getStartCycle1().doubleValue(), a.getEndCycle1().doubleValue());
+		Task subTask3 = new Task("Rüstzeit", a.getStartCycle2()
+			.doubleValue(), a.getEndCycle2().doubleValue());
 		tmpTask.addSubtask(subTask1);
 		tmpTask.addSubtask(subTask3);
 	    } else {
-		Task subTask2 = new Task("Produktion", a.getStart()
-			.doubleValue(), a.getEnde().doubleValue());
-		Task subTask4 = new Task("Produktion", a.getStart_zyklus2()
-			.doubleValue(), a.getEnde_zyklus2().doubleValue());
+		Task subTask2 = new Task("Produktion", a.getStartCycle1()
+			.doubleValue(), a.getEndCycle1().doubleValue());
+		Task subTask4 = new Task("Produktion", a.getStartCycle2()
+			.doubleValue(), a.getEndCycle2().doubleValue());
 
-		tmpTask.setEnd(a.getEnde_zyklus2().doubleValue());
+		tmpTask.setEnd(a.getEndCycle2().doubleValue());
 		tmpTask.addSubtask(subTask2);
 		tmpTask.addSubtask(subTask4);
 		taskseries.add(tmpTask);

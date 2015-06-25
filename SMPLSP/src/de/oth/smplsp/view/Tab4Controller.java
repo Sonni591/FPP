@@ -323,7 +323,7 @@ public class Tab4Controller implements Initializable {
 	int k;
 	if (process.getK() != null) {
 	    k = process.getK().intValue();
-	} else if (process.getVorgang().get().equals("Gesamtdauer")) {
+	} else if (process.getProcess().get().equals("Gesamtdauer")) {
 	    return formula;
 	} else {
 	    int index = processesList.indexOf(process);
@@ -447,11 +447,11 @@ public class Tab4Controller implements Initializable {
     private void setCellValueFactoryProductionProcessesTableView() {
 	paColumn1.setCellValueFactory(cellData -> cellData.getValue().getK());
 	paColumn2.setCellValueFactory(cellData -> cellData.getValue()
-		.getVorgang());
+		.getProcess());
 	paColumn3.setCellValueFactory(cellData -> cellData.getValue()
-		.getStart());
+		.getStartCycle1());
 	paColumn4
-		.setCellValueFactory(cellData -> cellData.getValue().getEnde());
+		.setCellValueFactory(cellData -> cellData.getValue().getEndCycle1());
     }
 
     /**
