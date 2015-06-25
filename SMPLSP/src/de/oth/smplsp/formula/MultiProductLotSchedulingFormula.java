@@ -56,9 +56,13 @@ public class MultiProductLotSchedulingFormula {
 	dandelion = "Black";
     }
 
-    public static String getAllgemeineGemeinsameProduktionszyklusFormel() {
+    /**
+     * @return the general formula for the common production cycle of all
+     *         products
+     */
+    public static String getGeneralCommonProductionCycleFormula() {
 	initialize();
-	String formel = "T_{opt} = \\sqrt{\\frac{2 \\cdot \\sum_{k=1}^{K} \\textcolor{"
+	String formula = "T_{opt} = \\sqrt{\\frac{2 \\cdot \\sum_{k=1}^{K} \\textcolor{"
 		+ red
 		+ "}{s_k}}{\\sum_{k=1}^{K}{\\textcolor{"
 		+ green
@@ -67,33 +71,70 @@ public class MultiProductLotSchedulingFormula {
 		+ "}{D_k} \\cdot (1- \\textcolor{"
 		+ rubineRed
 		+ "}{{\\rho}_k})}}}";
-	return formel;
+	return formula;
     }
 
-    public static String getGemeinsameProduktionszyklusMitParameternFormel(
+    /**
+     * @param result
+     * @return the common production cycle formula with values for the result of
+     *         the algorithm
+     */
+    public static String getCommonProductionCycleWithParameterFormula(
 	    LotSchedulingResult result) {
 	initialize();
-	String formel = "\\textrm{Eingesetzte Formel für den optimalen gemeinsamen Produktionszyklus:";
-	formel += "\\\\";
-	formel += "\\mathrm{{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
+	String formula = "\\textrm{Eingesetzte Formel für den optimalen gemeinsamen Produktionszyklus:";
+	formula += "\\\\";
+	formula = getNumeratorForCommonProductionCycleWithParameter(formula,
+		result);
+	formula = concatenateDenominatorForCommonProductionCycleWithParameter(
+		formula, result);
+	formula = concatenateResultForCommonProductionCycleWithParameter(
+		formula, result);
+	return formula;
+    }
+
+    /**
+     * concatenates the numerator for the common production cycle formula with
+     * concrete values for the parameters with a given String
+     * 
+     * @param formula
+     * @param result
+     * @return the concatenated formula
+     */
+    public static String getNumeratorForCommonProductionCycleWithParameter(
+	    String formula, LotSchedulingResult result) {
+
+	formula += "\\mathrm{{T_{opt}} = \\sqrt{\\frac{2 \\cdot ( ";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += " \\textcolor{" + red + "}{"
+		formula += " \\textcolor{" + red + "}{"
 			+ decimals.getDecimalFormat().format(product.getS())
 			+ "})}";
 	    } else {
-		formel += " \\textcolor{" + red + "}{"
+		formula += " \\textcolor{" + red + "}{"
 			+ decimals.getDecimalFormat().format(product.getS())
 			+ "} + ";
 	    }
 	}
-	formel += "{";
+	return formula;
+    }
 
+    /**
+     * concatenates the denominator for the common production cycle formula with
+     * concrete values for the parameters with a given String
+     * 
+     * @param formula
+     * @param result
+     * @return the concatenated formula
+     */
+    public static String concatenateDenominatorForCommonProductionCycleWithParameter(
+	    String formula, LotSchedulingResult result) {
+	formula += "{";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += "\\textcolor{" + green + "}{"
+		formula += "\\textcolor{" + green + "}{"
 			+ decimals.getDecimalFormat().format(product.getH())
 			+ "} \\cdot \\textcolor{" + blue + "}{"
 			+ decimals.getDecimalFormat().format(product.getD())
@@ -101,7 +142,7 @@ public class MultiProductLotSchedulingFormula {
 			+ decimals.getDecimalFormat().format(product.getRoh())
 			+ "})";
 	    } else {
-		formel += "\\textcolor{" + green + "}{"
+		formula += "\\textcolor{" + green + "}{"
 			+ decimals.getDecimalFormat().format(product.getH())
 			+ "} \\cdot \\textcolor{" + blue + "}{"
 			+ decimals.getDecimalFormat().format(product.getD())
@@ -111,114 +152,205 @@ public class MultiProductLotSchedulingFormula {
 	    }
 	}
 
-	formel += "}} = "
-		+ decimals.getDecimalFormat().format(result.gettOpt());
-	formel += "}"; // close mathrm
-	return formel;
+	formula += "}}";
+	return formula;
     }
 
-    public static String getAllgemeineMinimalenProduktionszyklusFormel() {
+    /**
+     * concatenates the result of the common production cycle formula with a
+     * given String
+     * 
+     * @param formula
+     * @param result
+     * @return the concatenated formula
+     */
+    public static String concatenateResultForCommonProductionCycleWithParameter(
+	    String formula, LotSchedulingResult result) {
+	formula += " = " + decimals.getDecimalFormat().format(result.gettOpt());
+	formula += "}"; // close mathrm
+	return formula;
+    }
+
+    /**
+     * @return the general formula for the minimal production cycle of all
+     *         products
+     */
+    public static String getGeneralMinimalProductionCycleFormula() {
 	initialize();
-
-	// String formel =
-	// "\\frac{\\sum_{k=1}^{K} {\\tau}_k}{1 - \\sum_{k=1}^{K} {\\textcolor{"
-	// + rubineRed + "}{{\\rho}_k}}} \\leq T";
-	String formel = "T_{min} \\geq\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}\\textcolor{"
+	String formula = "T_{min} \\geq\\frac{\\sum_{k=1}^{K}T_k}{1-\\sum_{k=1}^{K}\\textcolor{"
 		+ rubineRed + "}{\\rho_k}}";
-	return formel;
+	return formula;
     }
 
-    public static String getMinimalenProduktionszyklusMitParameternFormel(
+    /**
+     * @param result
+     * @return the minimal production cycle formula with values for the result
+     *         of the algorithm
+     */
+    public static String getMinimalProductionCycleWithParameterFormula(
 	    LotSchedulingResult result) {
 	initialize();
-	String formel = "\\textrm{Eingesetzte Formel für den minimalen gemeinsamen Produktionszyklus:";
-	formel += "\\\\";
-	formel += "\\mathrm{T_{min} = \\frac{";
+	String formula = "\\textrm{Eingesetzte Formel für den minimalen gemeinsamen Produktionszyklus:";
+	formula += "\\\\";
+	formula = concatenateNumeratorForMinimalProductionCycleWithParameter(
+		formula, result);
+	formula = concatenateDenominatorForMinimalProductionCycleWithParameter(
+		formula, result);
+	formula = concatenateResultForMinimalProductionCycleWithParameter(
+		formula, result);
+
+	return formula;
+    }
+
+    /**
+     * concatenates the numerator for the minimal production cycle formula with
+     * concrete values for the parameters with a given String
+     * 
+     * @param formula
+     * @param result
+     * @return the concatenated formula
+     */
+    public static String concatenateNumeratorForMinimalProductionCycleWithParameter(
+	    String formula, LotSchedulingResult result) {
+	formula += "\\mathrm{T_{min} = \\frac{";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += decimals.getDecimalFormat().format(product.getTau())
+		formula += decimals.getDecimalFormat().format(product.getTau())
 			+ "}";
 	    } else {
-		formel += decimals.getDecimalFormat().format(product.getTau())
+		formula += decimals.getDecimalFormat().format(product.getTau())
 			+ " + ";
 	    }
 	}
-	formel += "{1 - (";
+	return formula;
+    }
+
+    /**
+     * concatenates the denominator for the minimal production cycle formula
+     * with concrete values for the parameters with a given String
+     * 
+     * @param formula
+     * @param result
+     * @return the concatenated formula
+     */
+    public static String concatenateDenominatorForMinimalProductionCycleWithParameter(
+	    String formula, LotSchedulingResult result) {
+	formula += "{1 - (";
 	for (int i = 0; i < result.getProducts().size(); i++) {
 	    Product product = result.getProducts().get(i);
 	    if (i == result.getProducts().size() - 1) {
-		formel += "\\textcolor{" + rubineRed + "}{"
+		formula += "\\textcolor{" + rubineRed + "}{"
 			+ decimals.getDecimalFormat().format(product.getRoh())
 			+ "})}";
 	    } else {
-		formel += " \\textcolor{" + rubineRed + "}{"
+		formula += " \\textcolor{" + rubineRed + "}{"
 			+ decimals.getDecimalFormat().format(product.getRoh())
 			+ "} + ";
 	    }
 	}
-	formel += " = " + decimals.getDecimalFormat().format(result.gettMin());
-	formel += "}"; // close mathrm
-	return formel;
+	return formula;
     }
 
-    public static String getAllgemeineLosgroessenFormel() {
+    /**
+     * concatenates the result of the minimal production cycle formula with a
+     * given String
+     * 
+     * @param formula
+     * @param result
+     * @return the concatenated formula
+     */
+    public static String concatenateResultForMinimalProductionCycleWithParameter(
+	    String formula, LotSchedulingResult result) {
+	formula += " = " + decimals.getDecimalFormat().format(result.gettMin());
+	formula += "}"; // close mathrm
+	return formula;
+    }
+
+    /**
+     * @return the general formula for the batch size of a product
+     */
+    public static String getGeneralBatchSizeFormula() {
 	initialize();
-	String formel = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
+	String formula = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
 		+ blue + "}{D_k} \\cdot \\textcolor{" + dandelion
 		+ "}{T_{opt}}";
-	return formel;
+	return formula;
     }
 
-    public static String getLosgroessenMitParameterFormel(Product product,
+    /**
+     * @param product
+     * @param result
+     * @return the formula for the batch size of a product with concrete values
+     *         for the parameters
+     */
+    public static String getBatchSizeWithParameterFormula(Product product,
 	    LotSchedulingResult result) {
-	String formel = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
+	String formula = "\\textcolor{" + oliveGreen + "}{q_k} = \\textcolor{"
 		+ blue + "}{"
 		+ decimals.getDecimalFormat().format(product.getD())
 		+ "} \\cdot \\textcolor{" + dandelion + "}{"
 		+ decimals.getDecimalFormat().format(result.gettOpt()) + "}";
-	return formel;
+	return formula;
     }
 
+    /**
+     * @return the sequence for a new line in latex
+     */
     public static String getNewLine() {
 	return "\\\\";
     }
 
-    public static String getGemeinsameProduktionszyklus(
-	    LotSchedulingResult result) {
+    /**
+     * @param result
+     * @return the combined String of the general common production cycle
+     *         formula and the formula with the concrete values
+     */
+    public static String getCommonProductionCycle(LotSchedulingResult result) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} T_{opt}:";
-	formula += getAllgemeineGemeinsameProduktionszyklusFormel();
+	formula += getGeneralCommonProductionCycleFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten:}";
-	formula += getGemeinsameProduktionszyklusMitParameternFormel(result);
+	formula += getCommonProductionCycleWithParameterFormula(result);
 	formula += getNewLine();
 	return formula;
     }
 
-    public static String getMinimalenProduktionszyklusFormel(
+    /**
+     * @param result
+     * @return the combined String of the general minimal production cycle
+     *         formula and the formula with the concrete values
+     */
+    public static String getMinimalProductionCycleFormula(
 	    LotSchedulingResult result) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} \\mathrm{T_{min}}:";
-	formula += getAllgemeineMinimalenProduktionszyklusFormel();
+	formula += getGeneralMinimalProductionCycleFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten:}";
-	formula += getMinimalenProduktionszyklusMitParameternFormel(result);
+	formula += getMinimalProductionCycleWithParameterFormula(result);
 	formula += getNewLine();
 	return formula;
     }
 
-    public static String getLosgroessenFormel(Product product,
+    /**
+     * @param product
+     * @param result
+     * @return the combined String of the batch size formula and the formula
+     *         with the concrete values for a product
+     */
+    public static String getBatchSizeFormula(Product product,
 	    LotSchedulingResult result) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } \\mathrm{q_{opt}}:";
 	formula += getNewLine();
-	formula += getAllgemeineLosgroessenFormel();
+	formula += getGeneralBatchSizeFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getLosgroessenMitParameterFormel(product, result);
+	formula += getBatchSizeWithParameterFormula(product, result);
 	formula += getNewLine();
 	return formula;
     }

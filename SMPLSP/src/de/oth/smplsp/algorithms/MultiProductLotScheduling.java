@@ -13,6 +13,12 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
     private Double tOpt;
     private Double tMin;
 
+    /**
+     * Initializes a newly created MultiProductLotScheduling object with the
+     * products
+     * 
+     * @param products
+     */
     public MultiProductLotScheduling(List<Product> products) {
 	super();
 	this.products = products;
@@ -45,12 +51,18 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 	return result;
     }
 
+    /**
+     * calculates the batch size for all products
+     */
     private void calculateBatchSize() {
 	for (Product product : products) {
 	    product.setQ(product.getD() * tOpt);
 	}
     }
 
+    /**
+     * calculates the range for all products
+     */
     private void calculateRange() {
 
 	for (Product product : products) {
@@ -58,6 +70,9 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 	}
     }
 
+    /**
+     * calculates the minimal accepted common production cycle
+     */
     private void calculateMinProductionCycle() {
 	double numerator = 0.0;
 	double denominator = 0.0;
@@ -75,6 +90,9 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 	tMin = (numerator / denominator);
     }
 
+    /**
+     * calculates the optimal common production cycle
+     */
     private void calculateOptProductionCycle() {
 	double numerator = 0.0;
 	double denominator = 0.0;
@@ -93,12 +111,18 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 	tOpt = Math.sqrt(numerator / denominator);
     }
 
+    /**
+     * calculates the efficiency of machine for all products
+     */
     private void calculateEfficiencyOfMachine() {
 	for (Product product : products) {
 	    product.setRoh(product.getD() / product.getP());
 	}
     }
 
+    /**
+     * calculates the production time for all products
+     */
     private void calculateProductionTime() {
 	for (Product product : products) {
 	    product.setT(product.getQ() / product.getP());

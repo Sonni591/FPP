@@ -275,7 +275,7 @@ public class Tab4Controller implements Initializable {
      */
     public String getLotSchedulingFormula(Product product) {
 
-	String formula = MultiProductLotSchedulingFormula.getLosgroessenFormel(
+	String formula = MultiProductLotSchedulingFormula.getBatchSizeFormula(
 		product,
 		root.getResults()
 			.get(MultiProductLotScheduling.class.toString())
@@ -292,7 +292,7 @@ public class Tab4Controller implements Initializable {
      */
     public String getTOptFormulaWithParameters() {
 	return MultiProductLotSchedulingFormula
-		.getGemeinsameProduktionszyklusMitParameternFormel(root
+		.getCommonProductionCycleWithParameterFormula(root
 			.getResults()
 			.get(MultiProductLotScheduling.class.toString())
 			.getResult());
@@ -305,7 +305,7 @@ public class Tab4Controller implements Initializable {
      */
     public String getTMinFormulaWithParameters() {
 	return MultiProductLotSchedulingFormula
-		.getMinimalenProduktionszyklusMitParameternFormel(root
+		.getMinimalProductionCycleWithParameterFormula(root
 			.getResults()
 			.get(MultiProductLotScheduling.class.toString())
 			.getResult());
@@ -361,7 +361,7 @@ public class Tab4Controller implements Initializable {
     public void showTOpt() {
 
 	String latexString = MultiProductLotSchedulingFormula
-		.getAllgemeineGemeinsameProduktionszyklusFormel();
+		.getGeneralCommonProductionCycleFormula();
 	TeXFormula tex = new TeXFormula(latexString);
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, root
@@ -384,7 +384,7 @@ public class Tab4Controller implements Initializable {
     public void showTMin() {
 
 	String latexString = MultiProductLotSchedulingFormula
-		.getAllgemeineMinimalenProduktionszyklusFormel();
+		.getGeneralMinimalProductionCycleFormula();
 	TeXFormula tex = new TeXFormula(latexString);
 
 	Icon icon = tex.createTeXIcon(TeXConstants.ALIGN_CENTER, root

@@ -11,12 +11,13 @@ import de.oth.smplsp.model.ProductionProcess;
 
 public class ProductionProcessCalculator {
 
-    // TODO: translate
-
     private LotSchedulingResult result;
     private List<ProductionProcess> processes = new ArrayList<ProductionProcess>();
 
     /**
+     * Initializes a newly created ProductionProcessCalculator object with the
+     * result of the algorithm
+     * 
      * @param result
      */
     public ProductionProcessCalculator(LotSchedulingResult result) {
@@ -24,49 +25,95 @@ public class ProductionProcessCalculator {
 	this.result = result;
     }
 
+    /**
+     * calculates the process plan for the result of the algorithm
+     */
     private void calculateProcess() {
 	for (Product product : result.getProducts()) {
-	    ProductionProcess processRuesten = new ProductionProcess();
-	    processRuesten.setK(product.getKProperty());
-	    processRuesten.setProcess(new SimpleStringProperty("Rüsten"));
-	    if (processes.size() == 0) {
-		processRuesten.setStartCycle1(new SimpleDoubleProperty(0.0));
-	    } else {
-		ProductionProcess vorgaenger = processes
-			.get(processes.size() - 1);
-		double startzeit = vorgaenger.getEndCycle1().doubleValue();
-		processRuesten.setStartCycle1(new SimpleDoubleProperty(startzeit));
-	    }
-	    double ende = processRuesten.getStartCycle1().doubleValue()
-		    + product.getTau();
-	    processRuesten.setEndCycle1(new SimpleDoubleProperty(ende));
-
-	    // for second cycle
-	    double zyklusdauer = product.getQ() / product.getD();
-	    processRuesten.setStartCycle2(new SimpleDoubleProperty(
-		    processRuesten.getStartCycle1().doubleValue() + zyklusdauer));
-	    processRuesten.setEndCycle2(new SimpleDoubleProperty(
-		    processRuesten.getEndCycle1().doubleValue() + zyklusdauer));
-	    processes.add(processRuesten);
-
-	    ProductionProcess processProduction = new ProductionProcess();
-	    processProduction.setK(null);
-	    processProduction
-		    .setProcess(new SimpleStringProperty("Produktion"));
-	    processProduction.setStartCycle1(processRuesten.getEndCycle1());
-	    double endeProduktion = processProduction.getStartCycle1().doubleValue()
-		    + product.getT();
-	    processProduction.setEndCycle1(new SimpleDoubleProperty(endeProduktion));
-
-	    // for second cycle
-	    processProduction.setStartCycle2(new SimpleDoubleProperty(
-		    processProduction.getStartCycle1().doubleValue() + zyklusdauer));
-	    processProduction.setEndCycle2(new SimpleDoubleProperty(
-		    processProduction.getEndCycle1().doubleValue() + zyklusdauer));
-	    processes.add(processProduction);
+	    setProcessSetUp(product);
+	    setProductionProcess(product);
 	}
     }
 
+    /**
+     * sets the setup process for the specific product in the process plan
+     * 
+     * @param product
+     */
+    private void setProcessSetUp(Product product) {
+	ProductionProcess processSetUp = new ProductionProcess();
+	processSetUp.setK(product.getKProperty());
+	processSetUp.setProcess(new SimpleStringProperty("Rüsten"));
+	if (processes.size() == 0) {
+	    processSetUp.setStartCycle1(new SimpleDoubleProperty(0.0));
+	} else {
+	    ProductionProcess predecessor = processes.get(processes.size() - 1);
+	    double startTime = predecessor.getEndCycle1().doubleValue();
+	    processSetUp.setStartCycle1(new SimpleDoubleProperty(startTime));
+	}
+	double endTime = processSetUp.getStartCycle1().doubleValue()
+		+ product.getTau();
+	processSetUp.setEndCycle1(new SimpleDoubleProperty(endTime));
+	prepareSetUpProcessForSecondCycle(product, processSetUp);
+    }
+
+    /**
+     * prepares the setup process for the second cycle
+     * 
+     * @param product
+     * @param processSetUp
+     */
+    private void prepareSetUpProcessForSecondCycle(Product product,
+	    ProductionProcess processSetUp) {
+	// for second cycle
+	double cycleTime = product.getQ() / product.getD();
+	processSetUp.setStartCycle2(new SimpleDoubleProperty(processSetUp
+		.getStartCycle1().doubleValue() + cycleTime));
+	processSetUp.setEndCycle2(new SimpleDoubleProperty(processSetUp
+		.getEndCycle1().doubleValue() + cycleTime));
+	processes.add(processSetUp);
+    }
+
+    /**
+     * sets the production process for the specific product in the process plan
+     * 
+     * @param product
+     */
+    private void setProductionProcess(Product product) {
+	ProductionProcess processProduction = new ProductionProcess();
+	processProduction.setK(null);
+	processProduction.setProcess(new SimpleStringProperty("Produktion"));
+	ProductionProcess processSetUp = processes.get(processes.size() - 1);
+	processProduction.setStartCycle1(processSetUp.getEndCycle1());
+	double endProduction = processProduction.getStartCycle1().doubleValue()
+		+ product.getT();
+	processProduction.setEndCycle1(new SimpleDoubleProperty(endProduction));
+
+	prepareProductionProcessForSecondCycle(product, processProduction);
+    }
+
+    /**
+     * prepares the production process for the second cycle
+     * 
+     * @param product
+     * @param processProduction
+     */
+    private void prepareProductionProcessForSecondCycle(Product product,
+	    ProductionProcess processProduction) {
+	// for second cycle
+	double cycleTime = product.getQ() / product.getD();
+	processProduction.setStartCycle2(new SimpleDoubleProperty(
+		processProduction.getStartCycle1().doubleValue() + cycleTime));
+	processProduction.setEndCycle2(new SimpleDoubleProperty(
+		processProduction.getEndCycle1().doubleValue() + cycleTime));
+	processes.add(processProduction);
+    }
+
+    /**
+     * generates the process plan for the given result of the algorithm
+     * 
+     * @return the generated process plan
+     */
     public List<ProductionProcess> getProductionProcessPlan() {
 	if (processes.size() == 0) {
 	    calculateProcess();
@@ -74,6 +121,9 @@ public class ProductionProcessCalculator {
 	return processes;
     }
 
+    /**
+     * @return the generated process plan modified for presentation in chart
+     */
     public List<ProductionProcess> getProductionProcessPlanForTable() {
 	List<ProductionProcess> processList = new ArrayList<ProductionProcess>();
 	if (processes.size() != 0) {
@@ -82,6 +132,11 @@ public class ProductionProcessCalculator {
 	return processList;
     }
 
+    /**
+     * adds the total duration (cycle time) to the process plan
+     * 
+     * @return the generated process plan with cycle time
+     */
     public List<ProductionProcess> addTotalDurationForTableView() {
 	List<ProductionProcess> processesTable = new ArrayList<ProductionProcess>(
 		processes);

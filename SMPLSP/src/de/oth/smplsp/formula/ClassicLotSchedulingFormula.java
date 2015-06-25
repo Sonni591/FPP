@@ -56,7 +56,7 @@ public class ClassicLotSchedulingFormula {
     }
 
     /**
-     * Returns the the formula for the general product specific formula
+     * Returns the formula for the general product specific formula
      * 
      * @return String for the formula for the general product specific formula
      */

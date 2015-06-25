@@ -4,6 +4,10 @@ import de.oth.smplsp.model.Product;
 import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
 
+/**
+ * @author Christiane
+ *
+ */
 public class ProductFormula {
 
     // Formatter to disable the scientific notation
@@ -56,10 +60,10 @@ public class ProductFormula {
      */
     public static String getGeneralUtilizedCapacityFormula() {
 	initialize();
-	String formel = "\\textcolor{" + rubineRed
+	String formula = "\\textcolor{" + rubineRed
 		+ "}{\\rho} = \\frac{ \\textcolor{" + blue
 		+ "} D}{ \\textcolor{" + plum + "}p}";
-	return formel;
+	return formula;
     }
 
     /**
@@ -74,38 +78,51 @@ public class ProductFormula {
     public static String getUtilizedCapacityWithParametersFormula(
 	    Product product) {
 	initialize();
-	String formel = "\\textcolor{" + rubineRed
+	String formula = "\\textcolor{" + rubineRed
 		+ "}{\\rho} = \\frac{ \\textcolor{" + blue + "}{"
 		+ decimals.getDecimalFormat().format(product.getD())
 		+ "}}{ \\textcolor{" + plum + "}{"
 		+ decimals.getDecimalFormat().format(product.getP()) + "}}";
-	return formel;
+	return formula;
     }
 
     /**
-     * @return
+     * @return the general formula for the production duration of a product
      */
     public static String getGeneralProductionDurationFormula() {
 	initialize();
-	String formel = "t_p = \\frac{\\textcolor{" + oliveGreen
+	String formula = "t_p = \\frac{\\textcolor{" + oliveGreen
 		+ "}q}{ \\textcolor{" + plum + "}p}";
-	return formel;
+	return formula;
     }
 
-    public static String getGeneralProductionDurationWithParametersFormula(
+    /**
+     * @param product
+     * @return the formula for the production duration of a product with
+     *         parameters
+     */
+    public static String getProductionDurationWithParametersFormula(
 	    Product product) {
 	initialize();
-	String formel = "t_p = \\frac{\\textcolor{" + oliveGreen + "}{"
+	String formula = "t_p = \\frac{\\textcolor{" + oliveGreen + "}{"
 		+ decimals.getDecimalFormat().format(product.getQ())
 		+ "}}{ \\textcolor{" + plum + "}{"
 		+ decimals.getDecimalFormat().format(product.getP()) + "}}";
-	return formel;
+	return formula;
     }
 
+    /**
+     * @return the sequence for a new line in latex
+     */
     public static String getNewLine() {
 	return "\\\\";
     }
 
+    /**
+     * @param product
+     * @return the combined String of the general utilized capacity formula and
+     *         the formula with the concrete values for a product
+     */
     public static String getUtilizedCapacityFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } \\rho :";
 	formula += getNewLine();
@@ -120,6 +137,11 @@ public class ProductFormula {
 	return formula;
     }
 
+    /**
+     * @param product
+     * @return the combined String of the general production duration formula
+     *         and the formula with the concrete values for a product
+     */
     public static String getProductionDurationFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } t_{p}:";
 	formula += getNewLine();
@@ -129,11 +151,16 @@ public class ProductFormula {
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getGeneralProductionDurationWithParametersFormula(product);
+	formula += getProductionDurationWithParametersFormula(product);
 	formula += getNewLine();
 	return formula;
     }
 
+    /**
+     * @param product
+     * @return the combined String of the general reach formula and the formula
+     *         with the concrete values for a product
+     */
     public static String getReachFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } r_{p}:";
 	formula += getNewLine();
@@ -148,20 +175,28 @@ public class ProductFormula {
 	return formula;
     }
 
+    /**
+     * @return the general formula for the reach of a product
+     */
     public static String getGeneralReachFormula() {
 	initialize();
-	String formel = "r_p = \\frac{\\textcolor{" + oliveGreen
+	String formula = "r_p = \\frac{\\textcolor{" + oliveGreen
 		+ "}{q_{k}}}{ \\textcolor{" + blue + "}{D_{k}}}";
-	return formel;
+	return formula;
     }
 
+    /**
+     * @param product
+     * @return the formula for the reach of a product with concrete values for
+     *         the parameters
+     */
     public static String getReachWithParametersFormula(Product product) {
 	initialize();
-	String formel = "r_p = \\frac{\\textcolor{" + oliveGreen + "}{"
+	String formula = "r_p = \\frac{\\textcolor{" + oliveGreen + "}{"
 		+ decimals.getDecimalFormat().format(product.getQ())
 		+ "}}{ \\textcolor{" + blue + "}{"
 		+ decimals.getDecimalFormat().format(product.getD()) + "}}";
-	return formel;
+	return formula;
     }
 
 }

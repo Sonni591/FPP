@@ -13,6 +13,12 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
     private Map<Integer, Double> tOptSingle;
     private LotSchedulingResult result;
 
+    /**
+     * Initializes a newly created ClassicLotScheduling object with the products
+     * on which the algorithm works
+     * 
+     * @param products
+     */
     public ClassicLotScheduling(List<Product> products) {
 	super();
 	this.products = products;
@@ -32,12 +38,18 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	return result;
     }
 
+    /**
+     * calculates the efficiency of machine for all products
+     */
     private void calculateEfficiencyOfMachine() {
 	for (Product product : products) {
 	    product.setRoh(product.getD() / product.getP());
 	}
     }
 
+    /**
+     * calculates the optimal production cycle for all products
+     */
     private void calculateOptProductionCycle() {
 
 	for (Product product : products) {
@@ -48,6 +60,9 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	}
     }
 
+    /**
+     * calculates the production time for all products
+     */
     private void calculateProductionTime() {
 
 	for (Product product : products) {
@@ -55,6 +70,9 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	}
     }
 
+    /**
+     * calculates the batch size for all products
+     */
     private void calculateBatchSize() {
 
 	for (Product product : products) {
@@ -63,6 +81,9 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	}
     }
 
+    /**
+     * calculates the range for all products
+     */
     private void calculateRange() {
 
 	for (Product product : products) {
