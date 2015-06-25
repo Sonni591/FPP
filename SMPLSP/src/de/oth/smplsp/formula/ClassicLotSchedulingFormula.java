@@ -16,6 +16,9 @@ public class ClassicLotSchedulingFormula {
     private static String oliveGreen;
     private static String plum;
 
+    /**
+     * initialize the classical lot scheduling formula
+     */
     private static void initialize() {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
@@ -52,7 +55,12 @@ public class ClassicLotSchedulingFormula {
 	plum = "Black";
     }
 
-    public static String getAllgemeineProduktspezifischeProdukzionszyklusFormel() {
+    /**
+     * Returns the the formula for the general product specific formula
+     * 
+     * @return String for the formula for the general product specific formula
+     */
+    public static String getGeneralProductSpecificProductionCycleFormula() {
 	initialize();
 	String formel = "t_{opt} = \\sqrt{\\frac{2 \\cdot \\textcolor{" + red
 		+ "}s}{\\textcolor{" + green + "}h \\cdot \\textcolor{" + blue
@@ -61,7 +69,15 @@ public class ClassicLotSchedulingFormula {
 	return formel;
     }
 
-    public static String getProduktspezifischeProdukzionszyklusMitParameterFormel(
+    /**
+     * Returns the formula for the product specific production cycle with filled
+     * parameters
+     * 
+     * @param product
+     * @return String for the formula of the product specific production cycle
+     *         with filled parameters
+     */
+    public static String getProductSpecificProductionCycleWithParametersFormula(
 	    Product product) {
 	initialize();
 	String formel = "t_{opt} = \\sqrt{\\frac{2 \\cdot \\textcolor{" + red
@@ -75,26 +91,42 @@ public class ClassicLotSchedulingFormula {
 	return formel;
     }
 
+    /**
+     * Returns a String with the newLine contend for the explanation component
+     * 
+     * @return String with newLine-Content
+     */
     public static String getNewLine() {
 	return "\\\\";
     }
 
-    public static String getProduktspezifischeProdukzionszyklusFormel(
+    /**
+     * Returns the formula for the product specific production cycle
+     * 
+     * @param product
+     * @return String for the formula of the product specific production cycle
+     */
+    public static String getProductSpecificProductionCycleFormula(
 	    Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von} T_{opt}:";
 	formula += getNewLine();
-	formula += getAllgemeineProduktspezifischeProdukzionszyklusFormel();
+	formula += getGeneralProductSpecificProductionCycleFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getProduktspezifischeProdukzionszyklusMitParameterFormel(product);
+	formula += getProductSpecificProductionCycleWithParametersFormula(product);
 	formula += getNewLine();
 	return formula;
     }
 
-    public static String getAllgemeineLosgroessenFormel() {
+    /**
+     * Returns the formula for the lot scheduling
+     * 
+     * @return String for the general lot scheduling formula
+     */
+    public static String getGeneralLotSchedulingFormula() {
 	initialize();
 	String formel = "\\textcolor{" + oliveGreen
 		+ "}{q_{k}^{opt}} = \\sqrt{\\frac{2 \\cdot \\textcolor{" + blue
@@ -104,7 +136,14 @@ public class ClassicLotSchedulingFormula {
 	return formel;
     }
 
-    public static String getLosgroessenmitParameternFormel(Product product) {
+    /**
+     * Returns the formula for the lot scheduling with filled parameters
+     * 
+     * @param product
+     * @return String for the formula of the lot scheduling with filled
+     *         parameters
+     */
+    public static String getLotSchedulingWithParametersFormula(Product product) {
 	initialize();
 	String formel = "\\textcolor{" + oliveGreen + "}{q_{" + product.getK()
 		+ "}^{opt}} = \\sqrt{\\frac{2 \\cdot \\textcolor{" + blue
@@ -120,16 +159,22 @@ public class ClassicLotSchedulingFormula {
 	return formel;
     }
 
-    public static String getLosgroessenFormel(Product product) {
+    /**
+     * Returns the formula for the lot scheduling
+     * 
+     * @param product
+     * @return String for the formula of the lot scheduling
+     */
+    public static String getLotSchedulingFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } q_{opt}:";
 	formula += getNewLine();
-	formula += getAllgemeineLosgroessenFormel();
+	formula += getGeneralLotSchedulingFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getLosgroessenmitParameternFormel(product);
+	formula += getLotSchedulingWithParametersFormula(product);
 	formula += getNewLine();
 	return formula;
     }

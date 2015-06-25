@@ -354,7 +354,7 @@ public class Tab2Controller implements Initializable {
 	    k = parent.getK().intValue();
 	}
 	Product product = getProductByK(k);
-	formula += ProductionProcessFormula.getProductionProcessFormel(process,
+	formula += ProductionProcessFormula.getProductionProcessFormula(process,
 		product);
 	return formula;
     }
@@ -398,9 +398,9 @@ public class Tab2Controller implements Initializable {
      */
     public String getLotSchedulingFormula(Product product) {
 	String formula = ClassicLotSchedulingFormula
-		.getLosgroessenFormel(product);
-	formula += ProductFormula.getProduktionsdauerFormel(product);
-	formula += ProductFormula.getReichweiteFormel(product);
+		.getLotSchedulingFormula(product);
+	formula += ProductFormula.getProductionDurationFormula(product);
+	formula += ProductFormula.getReachFormula(product);
 	return formula;
     }
 

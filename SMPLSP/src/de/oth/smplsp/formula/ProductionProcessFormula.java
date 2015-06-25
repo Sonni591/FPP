@@ -10,61 +10,96 @@ public class ProductionProcessFormula {
     // Formatter to disable the scientific notation
     private static Decimals decimals;
 
+    /**
+     * initialize the production process formula
+     */
     private static void initialize() {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
     }
 
-    public static String getProductionProcessFormel(ProductionProcess process,
+    /**
+     * Returns a String for the formula of the production process
+     * 
+     * @param process
+     * @param product
+     * @return String for the formula of the production process
+     */
+    public static String getProductionProcessFormula(ProductionProcess process,
 	    Product product) {
 	initialize();
 	String formula = "";
 	if (process.getProcess().get().equals("Rüsten")) {
 	    formula += getAllgemeineProductionProcessFormelRuesten();
 	    formula += getNewLine();
-	    formula += getProductionProcessFormelRuesten(product, process
+	    formula += getProductionProcessSetUpFormula(product, process
 		    .getStartCycle1().doubleValue());
 	} else {
-	    formula += getAllgemeineProductionProcessFormelProduction();
+	    formula += getGeneralProductionProcessProductionFormula();
 	    formula += getNewLine();
-	    formula += getProductionProcessFormelProduction(product, process
+	    formula += getProductionProcessProductionFormula(product, process
 		    .getStartCycle1().doubleValue());
 	}
 	formula += getNewLine();
-	formula += getGesamtdauer(product);
+	formula += getTotalDuration(product);
 
 	return formula;
     }
 
-    public static String getProductionProcessFormelRuesten(Product product,
-	    double endeProduktionszeitVorgaenger) {
+    /**
+     * Returns a String for the formula of the production process for the set up
+     * of a given product
+     * 
+     * @param product
+     * @param endProductionTimePredecessor
+     * @return String for the formula of the production process for the set up
+     *         of a given product
+     */
+    public static String getProductionProcessSetUpFormula(Product product,
+	    double endProductionTimePredecessor) {
 	String formula = "\\textrm{Berechnung des Rüstvorgangs für Produkt "
 		+ product.getK() + " berechnet sich wie folgt:}";
 	formula += getNewLine();
 	formula += decimals.getDecimalFormat().format(
-		endeProduktionszeitVorgaenger)
+		endProductionTimePredecessor)
 		+ " + "
 		+ decimals.getDecimalFormat().format(product.getTau())
 		+ " = "
 		+ decimals.getDecimalFormat().format(
-			endeProduktionszeitVorgaenger + product.getTau());
+			endProductionTimePredecessor + product.getTau());
 	return formula;
     }
 
-    public static String getProductionProcessFormelProduction(Product product,
-	    double endeRuestzeit) {
+    /**
+     * Returns a String for the formula of the production process for the
+     * production of a given product
+     * 
+     * @param product
+     * @param endSetUpTime
+     * @return String for the formula of the production process for the
+     *         production of a given product
+     */
+    public static String getProductionProcessProductionFormula(Product product,
+	    double endSetUpTime) {
 	String formula = "\\textrm{Berechnung des Produktionsvorgangs für Produkt "
 		+ product.getK() + " berechnet sich wie folgt:}";
 	formula += getNewLine();
-	formula += decimals.getDecimalFormat().format(endeRuestzeit)
+	formula += decimals.getDecimalFormat().format(endSetUpTime)
 		+ " + "
 		+ decimals.getDecimalFormat().format(product.getT())
 		+ " = "
 		+ decimals.getDecimalFormat().format(
-			endeRuestzeit + product.getT());
+			endSetUpTime + product.getT());
 	return formula;
     }
 
+    /**
+     * Returns a String for the formula of the general production process of the
+     * set up
+     * 
+     * @return String for the formula of the general production process of the
+     *         set up
+     */
     public static String getAllgemeineProductionProcessFormelRuesten() {
 	return "\\textrm{Allgemeine Berechnungsmöglichkeit des Rüstvorgangs für ein Produkt: }"
 		+ getNewLine()
@@ -72,7 +107,13 @@ public class ProductionProcessFormula {
 		+ " +  {\\tau}_k";
     }
 
-    public static String getGesamtdauer(Product product) {
+    /**
+     * Returns a String for the formula of the total duration of a given product
+     * 
+     * @param product
+     * @return String for the formula of the total duration of a given product
+     */
+    public static String getTotalDuration(Product product) {
 	return "\\textrm{Die Gesamtdauer für das Produkt "
 		+ product.getK()
 		+ " beträgt:}"
@@ -86,13 +127,25 @@ public class ProductionProcessFormula {
 			product.getTau() + product.getT());
     }
 
-    public static String getAllgemeineProductionProcessFormelProduction() {
+    /**
+     * Returns a String for the formula of the general production process for
+     * the production
+     * 
+     * @return String for the formula of the general production process for the
+     *         production
+     */
+    public static String getGeneralProductionProcessProductionFormula() {
 	return "\\textrm{Allgemeine Berechnungsmöglichkeit des Produktionsvorgangs für ein Produkt: }"
 		+ getNewLine()
 		+ "\\textrm{Ende Rüstzeit des Produkts}"
 		+ " +  t_p";
     }
 
+    /**
+     * Returns a String with the newLine contend for the explanation component
+     * 
+     * @return String with newLine-Content
+     */
     public static String getNewLine() {
 	return "\\\\";
     }

@@ -5,7 +5,7 @@ import de.oth.smplsp.model.Product;
 import de.oth.smplsp.util.Configuration;
 import de.oth.smplsp.util.Decimals;
 
-public class MehrproduktLosgroessenFormula {
+public class MultiProductLotSchedulingFormula {
 
     // Formatter to disable the scientific notation
     private static Decimals decimals;
@@ -17,6 +17,9 @@ public class MehrproduktLosgroessenFormula {
     private static String oliveGreen;
     private static String dandelion;
 
+    /**
+     * initialize the multi-product lot scheduling formula
+     */
     public static void initialize() {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);

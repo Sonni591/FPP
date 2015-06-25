@@ -14,6 +14,9 @@ public class ProductFormula {
     private static String oliveGreen;
     private static String plum;
 
+    /**
+     * initialize the classical product formula formula
+     */
     public static void initialize() {
 	int decimal = Configuration.getInstance().getDecimalPlaces();
 	decimals = new Decimals(decimal);
@@ -46,7 +49,12 @@ public class ProductFormula {
 	plum = "Black";
     }
 
-    public static String getAllgemeineAuslastungFormel() {
+    /**
+     * Returns a String for the formula of the general utilized capacity
+     * 
+     * @return String for the formula of the general utilized capacity
+     */
+    public static String getGeneralUtilizedCapacityFormula() {
 	initialize();
 	String formel = "\\textcolor{" + rubineRed
 		+ "}{\\rho} = \\frac{ \\textcolor{" + blue
@@ -54,7 +62,17 @@ public class ProductFormula {
 	return formel;
     }
 
-    public static String getAuslastungMitParameterFormel(Product product) {
+    /**
+     *
+     * Returns a String for the formula of the general utilized capacity filled
+     * with parameters
+     * 
+     * @param product
+     * @return String for the formula of the general utilized capacity filled
+     *         with parameters
+     */
+    public static String getUtilizedCapacityWithParametersFormula(
+	    Product product) {
 	initialize();
 	String formel = "\\textcolor{" + rubineRed
 		+ "}{\\rho} = \\frac{ \\textcolor{" + blue + "}{"
@@ -64,14 +82,18 @@ public class ProductFormula {
 	return formel;
     }
 
-    public static String getAllgemeineProduktionsdauerFormel() {
+    /**
+     * @return
+     */
+    public static String getGeneralProductionDurationFormula() {
 	initialize();
 	String formel = "t_p = \\frac{\\textcolor{" + oliveGreen
 		+ "}q}{ \\textcolor{" + plum + "}p}";
 	return formel;
     }
 
-    public static String getProduktionsdauerMitParameterFormel(Product product) {
+    public static String getGeneralProductionDurationWithParametersFormula(
+	    Product product) {
 	initialize();
 	String formel = "t_p = \\frac{\\textcolor{" + oliveGreen + "}{"
 		+ decimals.getDecimalFormat().format(product.getQ())
@@ -84,56 +106,56 @@ public class ProductFormula {
 	return "\\\\";
     }
 
-    public static String getAuslastungFormel(Product product) {
+    public static String getUtilizedCapacityFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } \\rho :";
 	formula += getNewLine();
-	formula += getAllgemeineAuslastungFormel();
+	formula += getGeneralUtilizedCapacityFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getAuslastungMitParameterFormel(product);
+	formula += getUtilizedCapacityWithParametersFormula(product);
 	formula += getNewLine();
 	return formula;
     }
 
-    public static String getProduktionsdauerFormel(Product product) {
+    public static String getProductionDurationFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } t_{p}:";
 	formula += getNewLine();
-	formula += getAllgemeineProduktionsdauerFormel();
+	formula += getGeneralProductionDurationFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getProduktionsdauerMitParameterFormel(product);
+	formula += getGeneralProductionDurationWithParametersFormula(product);
 	formula += getNewLine();
 	return formula;
     }
 
-    public static String getReichweiteFormel(Product product) {
+    public static String getReachFormula(Product product) {
 	String formula = "\\textrm{Allgemeine Formel zur Berechnung von } r_{p}:";
 	formula += getNewLine();
-	formula += getAllgemeineReichweiteFormel();
+	formula += getGeneralReachFormula();
 	formula += getNewLine();
 	formula += getNewLine();
 	formula += "\\textrm{Formel mit eingesetzten Werten für Produkt }"
 		+ product.getK() + ":";
 	formula += getNewLine();
-	formula += getReichweiteMitParameterFormel(product);
+	formula += getReachWithParametersFormula(product);
 	formula += getNewLine();
 	return formula;
     }
 
-    public static String getAllgemeineReichweiteFormel() {
+    public static String getGeneralReachFormula() {
 	initialize();
 	String formel = "r_p = \\frac{\\textcolor{" + oliveGreen
 		+ "}{q_{k}}}{ \\textcolor{" + blue + "}{D_{k}}}";
 	return formel;
     }
 
-    public static String getReichweiteMitParameterFormel(Product product) {
+    public static String getReachWithParametersFormula(Product product) {
 	initialize();
 	String formel = "r_p = \\frac{\\textcolor{" + oliveGreen + "}{"
 		+ decimals.getDecimalFormat().format(product.getQ())

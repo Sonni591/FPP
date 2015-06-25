@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
-import de.oth.smplsp.algorithms.MoreProductLotScheduling;
+import de.oth.smplsp.algorithms.MultiProductLotScheduling;
 import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.LotSchedulingResult;
 import de.oth.smplsp.model.Product;
@@ -75,7 +75,7 @@ public class LotSchedulingAlgorithmTester {
     @Test
     public void testMultiProductLotScheduling() {
 
-	MoreProductLotScheduling tester = new MoreProductLotScheduling(products);
+	MultiProductLotScheduling tester = new MultiProductLotScheduling(products);
 
 	LotSchedulingResult result;
 	try {

@@ -29,9 +29,9 @@ import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
-import de.oth.smplsp.algorithms.MoreProductLotScheduling;
+import de.oth.smplsp.algorithms.MultiProductLotScheduling;
 import de.oth.smplsp.algorithms.ProductionProcessCalculator;
-import de.oth.smplsp.formula.MehrproduktLosgroessenFormula;
+import de.oth.smplsp.formula.MultiProductLotSchedulingFormula;
 import de.oth.smplsp.formula.ProductFormula;
 import de.oth.smplsp.formula.ProductionProcessFormula;
 import de.oth.smplsp.model.LotSchedulingResult;
@@ -102,7 +102,7 @@ public class Tab4Controller implements Initializable {
     @FXML
     public void setData() {
 	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
-		MoreProductLotScheduling.class.toString());
+		MultiProductLotScheduling.class.toString());
 	if (algorithm != null && algorithm.getResult() != null) {
 	    ObservableList<Product> productList = FXCollections
 		    .observableArrayList(algorithm.getResult().getProducts());
@@ -275,13 +275,13 @@ public class Tab4Controller implements Initializable {
      */
     public String getLotSchedulingFormula(Product product) {
 
-	String formula = MehrproduktLosgroessenFormula.getLosgroessenFormel(
+	String formula = MultiProductLotSchedulingFormula.getLosgroessenFormel(
 		product,
 		root.getResults()
-			.get(MoreProductLotScheduling.class.toString())
+			.get(MultiProductLotScheduling.class.toString())
 			.getResult());
-	formula += ProductFormula.getProduktionsdauerFormel(product);
-	formula += ProductFormula.getReichweiteFormel(product);
+	formula += ProductFormula.getProductionDurationFormula(product);
+	formula += ProductFormula.getReachFormula(product);
 	return formula;
     }
 
@@ -291,10 +291,10 @@ public class Tab4Controller implements Initializable {
      * @return tOpt formula String
      */
     public String getTOptFormulaWithParameters() {
-	return MehrproduktLosgroessenFormula
+	return MultiProductLotSchedulingFormula
 		.getGemeinsameProduktionszyklusMitParameternFormel(root
 			.getResults()
-			.get(MoreProductLotScheduling.class.toString())
+			.get(MultiProductLotScheduling.class.toString())
 			.getResult());
     }
 
@@ -304,10 +304,10 @@ public class Tab4Controller implements Initializable {
      * @return tMin formula String
      */
     public String getTMinFormulaWithParameters() {
-	return MehrproduktLosgroessenFormula
+	return MultiProductLotSchedulingFormula
 		.getMinimalenProduktionszyklusMitParameternFormel(root
 			.getResults()
-			.get(MoreProductLotScheduling.class.toString())
+			.get(MultiProductLotScheduling.class.toString())
 			.getResult());
     }
 
@@ -331,7 +331,7 @@ public class Tab4Controller implements Initializable {
 	    k = parent.getK().intValue();
 	}
 	Product product = getProductByK(k);
-	formula += ProductionProcessFormula.getProductionProcessFormel(process,
+	formula += ProductionProcessFormula.getProductionProcessFormula(process,
 		product);
 	return formula;
     }
@@ -344,7 +344,7 @@ public class Tab4Controller implements Initializable {
      */
     public Product getProductByK(int k) {
 	IBasicLotSchedulingAlgorithm algorithm = root.getResults().get(
-		MoreProductLotScheduling.class.toString());
+		MultiProductLotScheduling.class.toString());
 	LotSchedulingResult result = algorithm.getResult();
 	List<Product> products = result.getProducts();
 	for (Product product : products) {
@@ -360,7 +360,7 @@ public class Tab4Controller implements Initializable {
      */
     public void showTOpt() {
 
-	String latexString = MehrproduktLosgroessenFormula
+	String latexString = MultiProductLotSchedulingFormula
 		.getAllgemeineGemeinsameProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 
@@ -383,7 +383,7 @@ public class Tab4Controller implements Initializable {
      */
     public void showTMin() {
 
-	String latexString = MehrproduktLosgroessenFormula
+	String latexString = MultiProductLotSchedulingFormula
 		.getAllgemeineMinimalenProduktionszyklusFormel();
 	TeXFormula tex = new TeXFormula(latexString);
 

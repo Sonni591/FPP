@@ -31,7 +31,7 @@ import org.controlsfx.glyphfont.Glyph;
 
 import de.oth.smplsp.algorithms.ClassicLotScheduling;
 import de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm;
-import de.oth.smplsp.algorithms.MoreProductLotScheduling;
+import de.oth.smplsp.algorithms.MultiProductLotScheduling;
 import de.oth.smplsp.error.CSVFileWrongNumberOfValuesInFileError;
 import de.oth.smplsp.error.MinimalProductionCycleError;
 import de.oth.smplsp.model.Product;
@@ -483,7 +483,7 @@ public class Tab1Controller {
 
 	Map<String, IBasicLotSchedulingAlgorithm> results = new HashMap<String, IBasicLotSchedulingAlgorithm>();
 	algorithms.add(new ClassicLotScheduling(productsClassic));
-	algorithms.add(new MoreProductLotScheduling(productsMehrprodukt));
+	algorithms.add(new MultiProductLotScheduling(productsMehrprodukt));
 	for (IBasicLotSchedulingAlgorithm algorithm : algorithms) {
 	    try {
 		algorithm.calculateInTotal();
