@@ -49,7 +49,8 @@ public class MyGanttChartFactory extends ChartFactory {
 		new Color(50, 50, 50)));
 	chartLegend.add(new LegendItem("Produktion", null, null, null, shape,
 		new Color(150, 150, 150)));
-
+	chartLegend.add(new LegendItem("Überschneidung", null, null, null,
+		shape, new Color(150, 0, 0)));
 	CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
 		renderer);
 

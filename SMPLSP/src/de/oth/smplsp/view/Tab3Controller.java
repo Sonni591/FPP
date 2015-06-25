@@ -97,8 +97,8 @@ public class Tab3Controller {
 		tmpTask.setDescription(a.getK().getValue().toString());
 		tmpTask.setStart(a.getStartCycle1().doubleValue());
 		tmpTask.setEnd(a.getEndCycle2().doubleValue());
-		Task subTask1 = new Task("Rüstzeit",
-			a.getStartCycle1().doubleValue(), a.getEndCycle1().doubleValue());
+		Task subTask1 = new Task("Rüstzeit", a.getStartCycle1()
+			.doubleValue(), a.getEndCycle1().doubleValue());
 		Task subTask3 = new Task("Rüstzeit", a.getStartCycle2()
 			.doubleValue(), a.getEndCycle2().doubleValue());
 		tmpTask.addSubtask(subTask1);
@@ -126,7 +126,7 @@ public class Tab3Controller {
     }
 
     public Task ErrorHighlighting(TaskSeries taskseries) {
-	Task ErrorTask = new Task("Error", 0, 0);
+	Task ErrorTask = new Task("Überschneidung", 0, 0);
 	for (int i = 0; i < taskseries.getItemCount(); i++) {
 	    for (int j = 0; j < taskseries.getItemCount(); j++) {
 		Task task1 = taskseries.get(i);
@@ -142,12 +142,14 @@ public class Tab3Controller {
 				    ErrorTask.setEnd(subtask2.getEnd());
 				}
 				if (subtask1.getEnd() < subtask2.getEnd()) {
-				    ErrorTask.addSubtask(new Task("Error",
-					    subtask2.getStart(), subtask1
+				    ErrorTask.addSubtask(new Task(
+					    "Überschneidung", subtask2
+						    .getStart(), subtask1
 						    .getEnd()));
 				} else {
-				    ErrorTask.addSubtask(new Task("Error",
-					    subtask2.getStart(), subtask2
+				    ErrorTask.addSubtask(new Task(
+					    "Überschneidung", subtask2
+						    .getStart(), subtask2
 						    .getEnd()));
 				}
 			    }
