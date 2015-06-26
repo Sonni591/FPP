@@ -26,6 +26,9 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 	tMin = null;
     }
 
+    /**
+     * @see de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm#calculateInTotal()
+     */
     @Override
     public LotSchedulingResult calculateInTotal()
 	    throws MinimalProductionCycleError {
@@ -138,6 +141,9 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
 	return result;
     }
 
+    /**
+     * @see de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm#getDescriptionToString()
+     */
     public String getDescriptionToString() {
 	return "Berechnung der optimalen Losgrößen der Produkte 1-"
 		+ products.size()

@@ -25,6 +25,9 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	tOptSingle = new HashMap<Integer, Double>();
     }
 
+    /**
+     * @see de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm#calculateInTotal()
+     */
     @Override
     public LotSchedulingResult calculateInTotal() {
 
@@ -99,6 +102,9 @@ public class ClassicLotScheduling implements IBasicLotSchedulingAlgorithm {
 	return result;
     }
 
+    /**
+     * @see de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm#getDescriptionToString()
+     */
     @Override
     public String getDescriptionToString() {
 	return "Berechnung der optimalen Losgrößen der Produkte 1-"

@@ -250,7 +250,7 @@ public class Tab1Controller {
 	Alert alert = new Alert(AlertType.CONFIRMATION);
 	alert.setTitle("Tabelle löschen?");
 	alert.setHeaderText("Wollen Sie alle Daten der Tabelle löschen?");
-	alert.setContentText("OK bestätigt das Löschen, Cancel bricht den Vorgang ab.");
+	alert.setContentText("OK bestätigt das Löschen, Abbrechen bricht den Vorgang ab.");
 	alert.getDialogPane().setStyle(root.getZoomer().getStyleFXFontSize());
 	Optional<ButtonType> result = alert.showAndWait();
 	if (result.get() == ButtonType.OK) {
