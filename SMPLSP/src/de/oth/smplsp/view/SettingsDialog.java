@@ -50,8 +50,11 @@ public class SettingsDialog extends Stage implements Initializable {
 	// TODO Auto-generated method stub
 	super.showAndWait();
 	root.setDecimalsInAllTabs();
-	root.getTab4Controller().showTOpt();
-	root.getTab4Controller().showTMin();
+	// WARNING: Does not work properly on Mac OS X
+	// and leads to an not responding-application
+	if (root.getOSNameNotMacOSX()) {
+	    root.getTab4Controller().showTOptAndTMinFormulas();
+	}
 	int index = root.getTabPane().getSelectionModel().getSelectedIndex();
 
 	switch (index) {

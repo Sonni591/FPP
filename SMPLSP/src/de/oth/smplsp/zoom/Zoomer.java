@@ -127,7 +127,7 @@ public class Zoomer {
 	    tab3Controller.handleZoom();
 
 	    // zoom operations on tab 4
-	    if (!System.getProperty("os.name").equals("Mac OS X")) {
+	    if (root.getOSNameNotMacOSX()) {
 		tab4Controller.showTOptAndTMinFormulas();
 	    }
 

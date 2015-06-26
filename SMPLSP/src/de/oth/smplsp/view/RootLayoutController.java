@@ -46,6 +46,9 @@ public class RootLayoutController {
     public static final boolean DEBUG_MODE = java.lang.management.ManagementFactory
 	    .getRuntimeMXBean().getInputArguments().toString().indexOf("jdwp") >= 0;
 
+    // Examine OS version
+    public static final String OS_NAME = System.getProperty("os.name");
+
     // reference to the BorderPane of the application
     @FXML
     private BorderPane rootBorderPane;
@@ -149,9 +152,9 @@ public class RootLayoutController {
 
 	// show an initial decription text of the input table in the explanation
 	// component
-	// WARNING: Does not work properly on Mac OS X and leads to an not
-	// responding-application
-	if (!System.getProperty("os.name").equals("Mac OS X")) {
+	// WARNING: Does not work properly on Mac OS X
+	// and leads to an not responding-application
+	if (getOSNameNotMacOSX()) {
 	    initExplanationTabTextTab1();
 	}
 
@@ -440,9 +443,9 @@ public class RootLayoutController {
     private void onTabSelectionChanged() {
 	setMenuEditDisable();
 	setBottomLeftStatusLabel();
-	// WARNING: Does not work properly on Mac OS X and leads to an not
-	// responding-application
-	if (!System.getProperty("os.name").equals("Mac OS X")) {
+	// WARNING: Does not work properly on Mac OS X
+	// and leads to an not responding-application
+	if (getOSNameNotMacOSX()) {
 	    setExplanationComponentDefaultText();
 	}
     }
@@ -710,6 +713,25 @@ public class RootLayoutController {
 		FontAwesome.Glyph.SEARCH_MINUS).size((double) fontsize));
 	btnZoomPlus.setGraphic(new Glyph("FontAwesome",
 		FontAwesome.Glyph.SEARCH_PLUS).size((double) fontsize));
+    }
+
+    /**
+     * Returns, if the Operating System is not Mac OS X Explanation: In the
+     * current combination of OSX 10.10 and Java8_45 there is a bug in the used
+     * formula components of the application. The formula component does use a
+     * Icon to display the TeXFormula. The icon itself is displayed in a
+     * JTextPane(). Working with the above combination of OSX and Java8 a second
+     * call of 'new JTextPane()' causes an non-responding application. This
+     * seems to be a non-fixed bug in the Java JRE, so this fix is implemented
+     * for now.
+     * 
+     * @return false if operating system is Mac OS X; else true
+     */
+    public boolean getOSNameNotMacOSX() {
+	if (OS_NAME.equals("Mac OS X")) {
+	    return false;
+	}
+	return true;
     }
 
 }
