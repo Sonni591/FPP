@@ -123,7 +123,7 @@ public class Tab3Controller {
     }
 
     public Task ErrorHighlighting(TaskSeries taskseries) {
-	Task ErrorTask = new Task("Überschneidung", 0, 0);
+	Task ErrorTask = new Task("∩", 0, 0);
 	for (int i = 0; i < taskseries.getItemCount(); i++) {
 	    for (int j = 0; j < taskseries.getItemCount(); j++) {
 		Task task1 = taskseries.get(i);
@@ -139,15 +139,11 @@ public class Tab3Controller {
 				    ErrorTask.setEnd(subtask2.getEnd());
 				}
 				if (subtask1.getEnd() < subtask2.getEnd()) {
-				    ErrorTask.addSubtask(new Task(
-					    "Überschneidung", subtask2
-						    .getStart(), subtask1
-						    .getEnd()));
+				    ErrorTask.addSubtask(new Task("∩", subtask2
+					    .getStart(), subtask1.getEnd()));
 				} else {
-				    ErrorTask.addSubtask(new Task(
-					    "Überschneidung", subtask2
-						    .getStart(), subtask2
-						    .getEnd()));
+				    ErrorTask.addSubtask(new Task("∩", subtask2
+					    .getStart(), subtask2.getEnd()));
 				}
 			    }
 			}

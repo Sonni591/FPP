@@ -119,7 +119,7 @@ public class Tab5Controller {
 	    }
 
 	}
-	taskseries.add(new Task("Überschneidung", 0, 0));
+	taskseries.add(new Task("∩", 0, 0));
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	taskseriescollection.add(taskseries);
 	return taskseriescollection;
