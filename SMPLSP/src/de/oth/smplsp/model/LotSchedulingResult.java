@@ -50,7 +50,7 @@ public class LotSchedulingResult {
     }
 
     /**
-     * @return List<Product> - a list of @class Product
+     * @return List<Product> - a list of products
      */
     public List<Product> getProducts() {
 	return products;

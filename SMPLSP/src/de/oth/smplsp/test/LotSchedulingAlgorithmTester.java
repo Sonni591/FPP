@@ -17,7 +17,7 @@ import de.oth.smplsp.model.Product;
 public class LotSchedulingAlgorithmTester {
 
     /**
-     * List of @class Product for the test
+     * List of product for the test
      */
     private List<Product> products;
 
@@ -75,7 +75,8 @@ public class LotSchedulingAlgorithmTester {
     @Test
     public void testMultiProductLotScheduling() {
 
-	MultiProductLotScheduling tester = new MultiProductLotScheduling(products);
+	MultiProductLotScheduling tester = new MultiProductLotScheduling(
+		products);
 
 	LotSchedulingResult result;
 	try {

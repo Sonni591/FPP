@@ -13,13 +13,10 @@
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/org.eclipse.osgi_3.10.1.v20140909-1633.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jdom.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jlatexmath-1.0.3.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/JMathTeX-0.7pre.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Applications/Eclipse Java 8/plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Applications/Eclipse Java 8/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/ostermillerutils-1.08.02.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jcommon-1.0.23.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/fxsampler-1.0.8.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/openjfx-dialogs-1.0.2.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/ostermillerutils-1.08.02-javadoc.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/ostermillerutils-1.08.02-sources.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/fxgraphics2d-1.1.jar"/>

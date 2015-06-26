@@ -133,8 +133,7 @@ public class MultiProductLotScheduling implements IBasicLotSchedulingAlgorithm {
     }
 
     /**
-     * @return the result
-     * @throws MinimalProductionCycleError
+     * @see de.oth.smplsp.algorithms.IBasicLotSchedulingAlgorithm#getResult()
      */
     @Override
     public LotSchedulingResult getResult() {
