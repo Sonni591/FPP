@@ -3,25 +3,25 @@
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
     <target name="create_run_jar">
-        <jar destfile="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/build/deploy/bundles/SMPLSP.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${basedir}/../build/deploy/bundles/SMPLSP.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="de.oth.smplsp.Main"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/bin"/>
+            <fileset dir="${basedir}/../bin"/>
             <zipfileset excludes="META-INF/*.SF" src="/Applications/Eclipse Java 8/plugins/org.eclipse.fx.ide.css.jfx8_1.2.0.201501301049.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/org.eclipse.osgi_3.10.1.v20140909-1633.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jdom.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jlatexmath-1.0.3.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Applications/Eclipse Java 8/plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Applications/Eclipse Java 8/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/ostermillerutils-1.08.02.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jcommon-1.0.23.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/ostermillerutils-1.08.02-javadoc.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/ostermillerutils-1.08.02-sources.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/fxgraphics2d-1.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/jfreechart-1.0.19-fx.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/Users/danielsonnleitner/Documents/Developer/git/FPP/SMPLSP/lib/controlsfx-8.20.8.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/org.eclipse.osgi_3.10.1.v20140909-1633.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/jdom.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/jlatexmath-1.0.3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/junit.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/ostermillerutils-1.08.02.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/jcommon-1.0.23.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/ostermillerutils-1.08.02-javadoc.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/ostermillerutils-1.08.02-sources.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/fxgraphics2d-1.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/jfreechart-1.0.19-fx.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${basedir}/../lib/controlsfx-8.20.8.jar"/>
         </jar>
     </target>
 </project>
