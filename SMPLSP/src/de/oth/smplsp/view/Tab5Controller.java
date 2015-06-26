@@ -21,7 +21,6 @@ import de.oth.smplsp.util.TaskSeriesCollection;
 
 public class Tab5Controller {
 
-    // References
     @FXML
     private AnchorPane chartPane;
     @FXML
@@ -29,7 +28,9 @@ public class Tab5Controller {
     @FXML
     private Canvas myCanvas;
 
-    // Reference to the main application.
+    /**
+     * reference to the main application
+     */
     private Main main;
     private RootLayoutController root;
 
@@ -65,6 +66,9 @@ public class Tab5Controller {
 	this.main = main;
     }
 
+    /**
+     * shows an empty chart, if there was no calculation made
+     */
     public void showChart() {
 	JFreeChart chart = createChart(createInitDataset());
 	ChartViewer viewer = new ChartViewer(chart);
@@ -74,6 +78,9 @@ public class Tab5Controller {
 	myStackPane.getChildren().add(viewer);
     }
 
+    /**
+     * generates a chart for the data from tab 4 and shows it in the stackpane
+     */
     public void showChart(List<ProductionProcess> processes) {
 	JFreeChart chart = createChart(createDataset(processes));
 	ChartViewer viewer = new ChartViewer(chart);
@@ -83,12 +90,18 @@ public class Tab5Controller {
 	myStackPane.getChildren().add(viewer);
     }
 
-    // Create emptydataset when no Data available
+    /**
+     * creates a empty dataset, if there was no calculation made
+     */
     public TaskSeriesCollection createInitDataset() {
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	return taskseriescollection;
     }
 
+    /**
+     * creates a dataset from the data in tab 4. It generates one task for each
+     * row, which contains 4 subtasks.
+     */
     public TaskSeriesCollection createDataset(List<ProductionProcess> processes) {
 	this.processes = processes;
 	TaskSeries taskseries = new TaskSeries("Schedule");
@@ -154,6 +167,10 @@ public class Tab5Controller {
 	myStackPane.getChildren().add(viewer);
     }
 
+    /**
+     * generates a chart with with the given dataset and names the x-axis zeit
+     * and the y-axis k
+     */
     private JFreeChart createChart(final TaskSeriesCollection dataset) {
 	// final JFreeChart chart = MyGanttChartFactory.createGanttChart(
 	final JFreeChart chart = MyGanttChartFactory.createGanttChart("", // chart

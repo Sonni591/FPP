@@ -24,7 +24,10 @@ public class MyRenderer extends GanttRenderer {
 	clut.add(3, new Color(150, 150, 150));
     }
 
-    @Override
+    /**
+     * Returns the paint for each column and row in the chart. If it is the last
+     * column, which is the error highlighting, it returns red.
+     */
     public Paint getItemPaint(int row, int col) {
 
 	if (this.row != row || this.col != col) {

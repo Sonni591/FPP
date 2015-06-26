@@ -29,7 +29,6 @@ public class MyGanttChartFactory extends ChartFactory {
 
 	CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
 	NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
-	// CategoryItemRenderer renderer = new GanttRenderer();
 	MyRenderer renderer = new MyRenderer(dataset);
 	if (tooltips) {
 	    renderer.setBaseToolTipGenerator(new IntervalCategoryToolTipGenerator(

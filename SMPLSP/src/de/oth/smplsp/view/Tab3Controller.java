@@ -81,13 +81,17 @@ public class Tab3Controller {
 	myStackPane.getChildren().add(viewer);
     }
 
-    // Create emptydataset when no Data available
+    /**
+     * shows an empty chart, if there was no calculation made
+     */
     public TaskSeriesCollection createInitDataset() {
 	TaskSeriesCollection taskseriescollection = new TaskSeriesCollection();
 	return taskseriescollection;
     }
 
-    // Create DataSet for the Data in the Tab2
+    /**
+     * generates a chart for the data from tab 2 and shows it in the stackpane
+     */
     public TaskSeriesCollection createDataset(List<ProductionProcess> processes) {
 	TaskSeries taskseries = new TaskSeries("Schedule");
 	Task tmpTask = new Task("desc", 0, 0);
@@ -122,6 +126,10 @@ public class Tab3Controller {
 	return taskseriescollection;
     }
 
+    /**
+     * checks if there are intersections between the tasks and highlights them
+     * in the chart.
+     */
     public Task ErrorHighlighting(TaskSeries taskseries) {
 	Task ErrorTask = new Task("∩", 0, 0);
 	for (int i = 0; i < taskseries.getItemCount(); i++) {
@@ -183,6 +191,10 @@ public class Tab3Controller {
 	myStackPane.getChildren().add(viewer);
     }
 
+    /**
+     * generates a chart with with the given dataset and re-names the x-axis
+     * zeit and the y-axis k
+     */
     private JFreeChart createChart(final TaskSeriesCollection dataset) {
 	// final JFreeChart chart = MyGanttChartFactory.createGanttChart(
 	final JFreeChart chart = MyGanttChartFactory.createGanttChart("", // chart
