@@ -1,0 +1,24 @@
+Das hier aufgelistete Beispiel kann wie in Kapitel \ref{ch:programmeingaben} erklärt, über den Menüeintrag "'Datei"' importiert werden.
+
+\subsection{Format}
+Das Format der in den CSV-Dateien gespeicherten Produkte ist zweckmäßig gehalten. Die Werte aller Variablen eines Produkts befinden sich in derselben Zeile. Die Anzahl der Zeilen entspricht somit der Anzahl der zu importierenden Produkte. Die Reihenfolge der Variablenwerte pro Produkt ist folgende:
+\begin{compactitem}
+	\item Zeilenindex k
+	\item Nachfragerate D
+	\item Produktionsrate p
+	\item Rüstzeit $\tau$
+	\item Rüstkostensatz s
+	\item Lagerkostensatz h
+\end{compactitem}
+Die einzelnen Werte werden dabei jeweils durch ein Semikolon voneinander getrennt.
+
+\subsection{Beispiel: Fallstudie Tempelmeier}
+Folgende Daten wurden aus \cite{Templ09} entnommen:
+\input{TempelmeierTabelle}
+Der Inhalt der CSV-Datei hierzu sieht folgendermaßen aus:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Bilder/Export.png} 
+	\captionof{figure}[Daten aus \cite{Templ09}]{Daten aus \cite{Templ09}}
+	\label{fig:export}
+\end{figure}

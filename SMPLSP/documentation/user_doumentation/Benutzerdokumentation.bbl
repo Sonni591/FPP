@@ -1,0 +1,49 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.4 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \sortlist{anyt}{anyt}
+    \entry{Templ09}{book}{}
+      \name{labelname}{2}{}{%
+        {{hash=ece315d5f4ec74dce9a1c8774fcd90b1}{G{ü}nther}{G\bibinitperiod}{Hans-Otto}{H\bibinithyphendelim O\bibinitperiod}{}{}{}{}}%
+        {{hash=61e99bcfb1ff045afb965544588cc864}{Tempelmeier}{T\bibinitperiod}{Horst}{H\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{hash=ece315d5f4ec74dce9a1c8774fcd90b1}{G{ü}nther}{G\bibinitperiod}{Hans-Otto}{H\bibinithyphendelim O\bibinitperiod}{}{}{}{}}%
+        {{hash=61e99bcfb1ff045afb965544588cc864}{Tempelmeier}{T\bibinitperiod}{Horst}{H\bibinitperiod}{}{}{}{}}%
+      }
+      \list{location}{1}{%
+        {Berlin [u.a.]}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{f3622b72d9e3db45b4441ed5532655c9}
+      \strng{fullhash}{f3622b72d9e3db45b4441ed5532655c9}
+      \field{labelalpha}{GüTe09}
+      \field{sortinit}{G}
+      \field{sortinithash}{480ee01f9ffd559b3258d822f54a8ac2}
+      \field{labeltitle}{Produktion und Logistik}
+      \field{title}{Produktion und Logistik}
+      \field{year}{2009}
+    \endentry
+  \endsortlist
+\endrefsection
+\endinput
+

@@ -1,0 +1,169 @@
+\section{Programmablauf}
+\label{ch:programmablauf}
+Im Folgenden wird der komplette Programmablauf mit allen möglichen Funktionen erläutert.
+
+\subsection{Allgemein}
+Das Tool enthält einige Komponenten/Abläufe, welche im Programm an mehreren Stellen in gleicher Weise auftreten.
+
+\subsubsection{Programmeingaben}
+\label{ch:programmeingaben}
+Die Eingabe der Programmparameter erfolgt in Tabellenform (siehe Abbildung \ref{fig:benutzereingabe} a). Hierbei entspricht jede Zeile einem Produkt mit den zugehörigen Parametern (Spalten). Die Produkte werden zur Identifizierung automatisch mit einem fortlaufendem Index k (erste Spalte) belegt. Zur Durchführung der beiden Verfahren werden dabei pro Produkt folgende Parameter benötigt:
+\begin{compactitem}
+	\item Nachfragerate D
+	\item Produktionsrate p
+	\item Rüstzeit $\tau$
+	\item Rüstkostensatz s
+	\item Lagerkostensatz h
+\end{compactitem}
+Hinweise zu den einzelnen Eingabeparametern können der Erklärkomponente im unteren Teil der Benutzeroberfläche (siehe Abbildung \ref{fig:benutzereingabe} h), sowie dem Tooltip entnommen werden.
+
+Zur Eingabe von Werten für die benötigten Programmparameter sind folgende Optionen vorgesehen:
+\begin{compactitem}
+	\item Händische Eingabe der Programmparameter
+	\item Import der Programmparameter
+	\item Laden von Testdaten
+\end{compactitem}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Bilder/Benutzereingabe1.png} 
+	\captionof{figure}[Benutzereingabe]{Startseite des Programms/Benutzereingabe}
+	\label{fig:benutzereingabe}
+\end{figure}
+
+\paragraph{Händische Eingabe der Programmparameter:}~\\
+Für das \textbf{Hinzufügen von Produkten} muss zuerst durch einen einfachen Klick auf das "'+"'-Symbol (siehe Abbildung \ref{fig:benutzereingabe} b) in der Toolleiste oberhalb der Tabelle (siehe Abbildung \ref{fig:benutzereingabe}) eine neue Zeile hinzugefügt werden. Jede neu eingefügte Zeile wird automatisch mit einem nicht veränderbaren Zeilenindex k belegt. Durch Doppelklick auf die einzelnen Spalten können Werte hinzugefügt werden. Eine Alternative zum Hinzufügen einer neuen Zeile über das "'+"'-Symbol stellt der Eintrag "'Hinzufügen"' im Menüreiter "'Bearbeiten"' bereit.
+
+Zum \textbf{Löschen von Produkten} wird die entsprechende Tabellenzeile markiert und anschließend durch einen Klick auf das „-“ - Symbol (siehe Abbildung \ref{fig:benutzereingabe} c) aus der Tabelle entfernt. Sollte zum Zeitpunkt des Klicks keine Zeile markiert sein wird dies dem Benutzer durch einen Warndialog, dargestellt in Abbildung \ref{fig:keineauswahl}, mitgeteilt. Eine Alternative zum Löschen einer Zeile über das "'-"'-Symbol stellt der Eintrag "'Löschen"' im Menüreiter "'Bearbeiten"' bereit.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Bilder/KeineZeilenAuswahl.png} 
+	\captionof{figure}[Keine Zeilenauswahl]{Warnhinweis: Keine Zeilenauswahl}
+	\label{fig:keineauswahl}
+\end{figure}
+Das \textbf{Löschen der gesamten Tabelleninhalte} ist durch Klick auf das "'X"'-Symbol (siehe Abbildung \ref{fig:benutzereingabe} d) möglich. Bevor die gesamten Tabelleninhalte gelöscht werden, wird der Benutzer zu einer Bestätigung der gewünschten Aktion durch einen entsprechenden Dialog (siehe Abbildung \ref{fig:datenloeschen}) angehalten. Mit Klick auf den "'Abbrechen"'-Button wird die Aktion abgebrochen und die Daten nicht gelöscht. Eine Alternative zum Löschen sämtlicher Tabelleninhalte über das "'X"'-Symbol stellt der Eintrag "'Alles Löschen"' im Menüreiter "'Bearbeiten"' bereit.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Bilder/DatenLoeschen.png} 
+	\captionof{figure}[Alle Daten löschen]{Warnhinweis: Alle Daten löschen}
+	\label{fig:datenloeschen}
+\end{figure}
+
+\paragraph{Import der Programmparameter:}~\\
+CSV-Dateien können durch Klick auf das Ordnersymbol (…) ausgewählt und importiert werden (siehe Abbildung \ref{fig:benutzereingabe} e). Alternativ kann der Öffnen-Dialog über den Shortcut "'Strg o"' erreicht werden. Sollten bereits Daten in der Tabelle eingetragen sein, so wird der Benutzer gefragt ob die Daten überschrieben werden sollen. Eine Alternative Aufrufmöglichkeit besteht in der Menüleiste unter "Datei".
+
+Das \textbf{Exportieren von Eingabeparametern} wird durch Klick auf das "'Speichern"'-Symbol (siehe Abbildung \ref{fig:benutzereingabe} f) oder den Shortcut "'Strg s"' ausgelöst. Nach Auswahl eines geeigneten Speicherorts wird die Tabelle im CSV-Format abgespeichert. Eine Alternative Aufrufmöglichkeit besteht in der Menüleiste unter "Datei".
+
+\paragraph{Laden von Testdaten:}~\\
+Für einen schnellen Einstieg in die Nutzung des Programms, ist es möglich Testdaten zu laden. Hierfür muss im Menüeintrag "'Datei"' auf "'Testdaten laden"' geklickt oder die Tastenkombination "'Strg t"' gedrückt werden. Die Testdaten entsprechen den Daten aus der in \cite{Templ09} vorgestellten Fallstudie.
+
+\paragraph{Starten der Berechnung:}~\\
+Die Berechnung wird durch einen Klick auf das "'Berechnen"'-Symbol (siehe Abbildung \ref{fig:benutzereingabe} g) oder mit der Tastenkombination "'Strg b"' gestartet. Um die Berechnung erfolgreich durchführen zu können ist es notwendig, dass alle Eingabeparameter mit einem Wert größer Null belegt sind. Ist dies nicht der Fall, wird der Benutzer durch einen Dialog aufgefordert die fehlenden Werte zu ergänzen (siehe Abbildung \ref{fig:ungueltigewerte}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Bilder/UngueltigeWerte.png} 
+	\captionof{figure}[Ungültig Eingabewerte]{Warnhinweis: Ungültig Eingabewerte}
+	\label{fig:ungueltigewerte}
+\end{figure}
+
+Schlägt die Berechnung aus einem anderen Grund fehl, wird dies dem Benutzter in einem
+Fehlerdialog angezeigt.
+
+\subsubsection{Allgemeine Funktionen}
+Im Nachfolgenden werden die Funktionen, welche über den gesamten Programmablauf hin genutzt werden können, erläutert.
+
+\paragraph{Einstellungen:}~\\
+\label{par:einstellungen}
+Die Einstellungen sind über den Menüreiter "'Datei"' erreichbar. Von hier aus kann das Programm bezüglich der darzustellenden Nachkommastellen und der Farbeinstellungen angepasst werden (siehe Abbildung \ref{fig:einstellungen}). Durch Bestätigen der Änderungen über den "'Speichern"'-Button oder mit der Enter-Taste werden die geänderten Werte übernommen.
+
+Die \textbf{Eingabe der Nachkommastellen} bewirkt eine Anpassung der Nachkommastellen bei sämtlichen Zahlen innerhalb der Applikation. Während die Berechnung mit den Originalzahlen durchgeführt wird, wird die Darstellung durch Runden auf die gewünschte Anzahl Nachkommastellen verändert. 
+
+Die \textbf{Anpassung der Farbeinstellung} kann durch Setzen, bzw. Entfernen des Häkchens "'Schwarz/Weiß"' vorgenommen werden. Der Schwarz/Weiß Modus bietet einen starken Kontrast und ist daher für den Einsatz am Beamer geeignet. Zu Lernzwecken ist der Farbmodus zu bevorzugen, da hier eine farbliche Zuordnung zwischen Eingabeparametern und Formeln erfolgt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\linewidth]{Bilder/Einstellungen.png} 
+	\captionof{figure}[Einstellungen]{Einstellungen}
+	\label{fig:einstellungen}
+\end{figure}
+
+\paragraph{Zoomfunktionen:}~\\
+Die Zoomfunktion wird durch die beiden Lupen-Buttons in der unteren rechten Ecke der Applikation aufgerufen werden (siehe Abbildung \ref{fig:zoom}). Dabei steht "'+"' für hinein- und "'-"' für herauszoomen. Hierbei werden alle Applikationselemente vollständig vergrößert bzw. verkleinert, wodurch die Applikation auch aus größerer Entfernung, wie z.B. bei Einsatz eines Beamers gut erkennbar ist. Die Zoom-Funktion kann ebenfalls über den Menüpunkt "'Zoom"' oder über die gängigen Shortcuts "'Strg +"' und "'Strg -"' angesteuert werden. Über den Eintrag "'Zoom zurücksetzen"' oder die Tastenkombination "'Strg 0"' kann der Zoom vollständig zurückgesetzt werden.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\linewidth]{Bilder/Zoom.png} 
+	\captionof{figure}[Zoomfunktionen]{Zoomfunktionen}
+	\label{fig:zoom}
+\end{figure}
+
+\paragraph{About:}~\\
+Der About ("'Über"') Dialog kann über den Menüpunkt "'Hilfe"' erreicht werden und liefert Informationen über die Software, sowie ihre Entwickler.
+
+\subsection{Klassische Losgrößenplanung}
+\label{ch:klassischeberechnung}
+Die Lösungswerte der klassischen Losgrößenberechnung werden mit Hilfe der Formeln aus \cite{Templ09} berechnet.
+
+Die Darstellung der Lösungswerte erfolgt im Reiter "'Lösungsweg Konflikt"'. Die Benutzeroberfläche ist wie folgt gegliedert:
+
+\begin{compactitem}
+	\item Tabelle mit den Lösungswerten für die optimale Losgröße, der daraus resultierenden Produktionsdauer und der Reichweite der einzelnen Produkte(siehe Abbildung \ref{fig:klassich} a)
+	\item Tabelle mit Produktionsablauf (siehe Abbildung \ref{fig:klassich} b)
+	\item Darstellung der Berechnung der einzelnen Lösungswerte in der Erklärkomponente (siehe Abbildung \ref{fig:klassich} c)
+\end{compactitem}
+
+Hinweise zu den einzelnen Spalten werden in der jeweiligen Tabelle als Tooltip angezeigt.  Die Darstellung der Berechnung in der Erklärkomponente wird durch das einfache Klicken auf eine Zeile einer Tabelle ausgelöst. Innerhalb einer Tabelle kann mit den Pfeiltasten der Tastatur navigiert werden. In der Erklärkomponente wird die allgemeine Lösungsformel sowie die Formel mit eingesetzten Werten für das gewählte Produkt angezeigt. Hierbei lässt sich eine farbliche Zuordnung der konkreten, eingesetzten Werte zu den in der Formel verwendeten Variablen herstellen, sofern der Schwarz-Weiß-Modus nicht aktiviert ist (siehe Einstellungen, Kapitel \ref{par:einstellungen}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Bilder/KlassischesVerfahren.png} 
+	\captionof{figure}[Klassisches Losgrößenverfahren]{Klassisches Losgrößenverfahren - Darstellung der Lösungswerte}
+	\label{fig:klassich}
+\end{figure}
+
+%Das in Reiter "'Lösung Konflikt"' dargestellte Gantt Chart (siehe Abbildung \ref{fig:ganttklassisch}) stellt eine graphische Aufarbeitung des Produktionsablauf aus Reiter "'Lösungsweg Konflikt"' dar, wobei auf der x-Achse die Zeit und auf der y-Achse die Produktindizes aufgetragen sind. Die Belegung der Anlage durch mehrere Produkte wird in der Zeile "'Überschneidung"' farblich markiert (rot) angezeigt.
+Im Reiter „Lösung Konflikt“ wird der Produktionsablauf mittels eines Gantt Charst grafisch dargestellt. Auf der X-Achse ist die Zeit angetragen, auf der Y-Achse die Produktindizes. Folgendes Bild zeigt das Diagramm. Die rot gefärbten Balken zeigen die Konflikte zwischen den Produkten an.
+
+Durch Klicken auf das Diagramm und ziehen der Maus nach rechts wird der ausgewählte Bereich vergrößert. Durch Klicken auf das Diagramm und ziehen der Maus nach links zeigt das Diagramm wieder den Originalbereich an. Alternativ genügt zum Anzeigen des Originalbereichs auch ein Klick in den Randbereich   des Charts.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Bilder/GanttKlassisch.png} 
+	\captionof{figure}[Gantt Chart - klassische Losgrößenplanung]{Gantt Chart- Graphische Darstellung der Lösungswerte der klassischen Losgrößenplanung}
+	\label{fig:ganttklassisch}
+\end{figure}
+
+\subsection{Mehrprodukt-Losgrößenplanung}
+Ebenso wie die Lösungswerte der klassischen Losgrößenberechnung werden die Lösungswerte der Mehrprodukt-Losgrößenplanung mit Hilfe der Formeln aus \cite{Templ09} berechnet. Als Eingangsparameter für dieses Verfahren werden die Eingabeparameter im Reiter "'Eingabe"' verwendet. Es sind keinerlei Anpassungen zu machen. 
+
+Es ist bei diesem Verfahren zu beachten, dass der berechnete optimale gemeinsame Produktionszyklus größer oder gleich dem berechneten minimalen Produktionszyklus sein muss. Ist dies nicht der Fall, wird der Benutzer nach Start der Berechnung darauf hingewiesen und dazu aufgefordert die Benutzereingabe dementsprechend anzupassen. Es erfolgt in diesem Fall keine Anzeige der Lösungswerte.
+
+Nach erfolgreicher Berechnung erfolgt die Darstellung der Lösungswerte im Reiter "'Lösungsweg Konfliktfrei"', da dieses Verfahren zu einem überschneidungsfreien und somit ausführbaren Produktionsablaufplan führt. Die Benutzeroberfläche ist wie folgt gegliedert:
+
+\begin{compactitem}
+\item Allgemeine Lösungsformeln zur Berechnung des optimalen, gemeinsamen sowie des minimalen Produktionszyklus (siehe Abbildung \ref{fig:mehrprodukt} a)
+	\item Tabelle mit den Lösungswerten für die optimale Losgröße, der daraus resultierenden Produktionsdauer und der Reichweite der einzelnen Produkte (siehe Abbildung \ref{fig:mehrprodukt} b)
+	\item Tabelle mit Produktionsablauf (siehe Abbildung \ref{fig:mehrprodukt} c)
+	\item Darstellung der Berechnung der einzelnen Lösungswerte in der Erklärkomponente (siehe Abbildung \ref{fig:mehrprodukt} d)
+\end{compactitem}
+
+Hinweise zu den einzelnen Spalten werden in der jeweiligen Tabelle als Tooltip angezeigt.  Die Darstellung der Berechnung in der Erklärkomponente und die Navigation innerhalb der Tabellen erfolgt wie beim klassischen Losgrößenverfahren in Abschnitt \ref{ch:klassischeberechnung}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Bilder/Mehrprodukt.png} 
+	\captionof{figure}[Mehrprodukt-Losgrößenplanung]{Mehrprodukt-Losgrößenplanung - Darstellung der Lösungswerte}
+	\label{fig:mehrprodukt}
+\end{figure}
+
+Das in Reiter „Lösung Konfliktfrei“ dargestellte Gantt Chart weist keine Überschneidungen auf.
+
+Die Bedienung des Diagramms kann wie bei dem klassischen Losgrößenverfahren in Abschnitt \ref{ch:klassischeberechnung} vorgenommen werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Bilder/GanttMehrprodukt.png} 
+	\captionof{figure}[Gantt Chart Mehrprodukt-Losgrößenplanung]{Gantt Chart- Graphische Darstellung der Lösungswerte der Mehrprodukt-Losgrößenplanung}
+	\label{fig:mehrproduktgantt}
+\end{figure}
+
+
+\pagebreak

@@ -1,0 +1,290 @@
+% !TeX document-id = {acd94374-0a5a-4c39-a15c-8f2e56f0151a}
+\documentclass[12pt,a4paper, listof=entryprefix, bibliography=totocnumbered,toc=listofnumbered,lof=listofnumbered]{scrartcl}
+
+% WICHTIG!!!
+% Pseudokommentar um pdflatex zu erlauben andere Programme zu nutzen z.B. gnuplot
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape] 
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{nccmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[right]{eurosym}
+\usepackage[printonlyused]{acronym}
+\usepackage{subfig}
+\usepackage{floatflt}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{picinpar}
+\usepackage[pdfpagelabels=true]{hyperref}
+\usepackage{listings}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{paralist}
+\usepackage[nonumberlist, nogroupskip]{glossaries}
+
+%-----------------------------------------------------------------------------------
+% Bibilothek
+%-----------------------------------------------------------------------------------
+% Einbinden des BibLateX paketes mit Ausgabeeinstellungen
+\usepackage[
+style=alphabetic,          % Zitierstil
+maxbibnames=50,            % alle Autorennamen anzeigen
+maxcitenames=4,            % maximale Namen, die im Kürzel angezeigt werden
+autocite=inline,           % regelt Aussehen für \autocite (inline=\parancite)
+block=space,               % kleiner horizontaler Platz zwischen den Feldern
+backref=true,              % Seiten anzeigen, auf denen die Referenz vorkommt
+backrefstyle=three+,       % fasst Seiten zusammen, z.B. S. 2f, 6ff, 7-10
+date=short,                % Datumsformat
+backend = biber,           % Backnend für Aufbereitung
+]{biblatex}
+
+%Zusätzliche für Umbrüche für Kleinbuchstaben z.B. in URLs
+\appto\UrlBreaks{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j
+	\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w
+	\do\x\do\y\do\z}
+
+
+\newcounter{verzeichnis}
+\setcounter{verzeichnis}{1}
+
+%Abstände der Einträge
+\setlength{\bibitemsep}{1em}     % Abstand zwischen den Literaturangaben
+\setlength{\bibhang}{2em}        % Einzug nach jeweils erster Zeile
+
+% Kürzel soll vier Buchstaben der Autoren enthalten statt drei
+\DeclareLabelalphaTemplate{
+	\labelelement{
+		\field[final]{shorthand}
+		\field{label}
+		\field[strwidth=4,strside=left,ifnames=1]{labelname}
+		\field[strwidth=2,strside=left,ifnames=2]{labelname}
+		\field[strwidth=1,strside=left]{labelname}
+	}
+	\labelelement{
+		\field[strwidth=2,strside=right]{year}
+	}
+}
+
+% Bibliothek der Quellen
+\bibliography{bib}
+\label{bib}
+
+% --------------------------------------------------------------------------------
+% Einstellung für Listings
+% --------------------------------------------------------------------------------
+\lstset{basicstyle=\footnotesize, captionpos=b, breaklines=true, showstringspaces=false, tabsize=2, frame=lines, numbers=left, numberstyle=\tiny, xleftmargin=2em, framexleftmargin=2em}
+\makeatletter
+\def\l@lstlisting#1#2{\@dottedtocline{1}{0em}{1em}{\hspace{1,5em} Lst. #1}{#2}}
+\makeatother
+
+% --------------------------------------------------------------------------------
+% Seitenformate
+% --------------------------------------------------------------------------------
+%Seitenformat
+\geometry{a4paper, top=27mm, left=30mm, right=20mm, bottom=32mm, headsep=12mm, footskip=12mm}
+
+% --------------------------------------------------------------------------------
+% Metainformationen
+% --------------------------------------------------------------------------------
+\hypersetup{unicode=false, pdftoolbar=true, pdfmenubar=true, pdffitwindow=false, pdfstartview={FitH},
+	pdftitle={Vorlage},
+	pdfauthor={Stefan Jung},
+	pdfsubject={Abschlussarbeit},
+	pdfcreator={\LaTeX\ with package \flqq hyperref\frqq},
+	pdfproducer={pdfTeX \the\pdftexversion.\pdftexrevision},
+	pdfkeywords={Vorlage},
+	pdfnewwindow=true,
+	colorlinks=true,linkcolor=black,citecolor=black,filecolor=magenta,urlcolor=black}
+\pdfinfo{/CreationDate (D:20141024101000)}
+\pgfplotsset{compat=1.11}
+
+%-----------------------------------------------------------------------------------
+% Abkürzungen AKRONYME HIER ERGÄNZEN
+%-----------------------------------------------------------------------------------
+\glssetwidest{SMPLSP}% Längste Abkürzung für eine korrekte Einrückung
+
+\makenoidxglossaries %Leeres Verzeichnis erstellen
+
+%Abkürzungen hinzufügen
+\newacronym{LIP}{LIP}{Labor für Informationstechnik und Produktionslogistik}
+\newacronym{JRE}{JRE}{Java Runtime Environment}
+\newacronym{SMPLSP}{SMPLSP}{Static Multi-Product Proportional Lotsizing and Scheduling Problem}
+\newacronym{OTH}{OTHR}{Ostbayerische Technische Hochschule Regensburg}
+
+\begin{document}
+% --------------------------------------------------------------------------------
+% Globale Formateinstellungen
+% --------------------------------------------------------------------------------
+\onehalfspacing
+% Abstände Überschrift
+\titlespacing{\section}{0pt}{42pt}{6pt}
+\titlespacing{\subsection}{0pt}{12pt}{6pt}
+\titlespacing{\subsubsection}{0pt}{12pt}{6pt}
+
+% Kopf- und Fusszeile
+\pagestyle{fancy}
+\lhead{}\chead{}
+\rhead{\thesection\space\contentsname}
+\lhead{}\cfoot{}
+\rfoot{\ \linebreak \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Nummereriung
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\theHsection}{\Roman{section}}
+\pagenumbering{Roman}
+
+% eigene Farbdefinitionen
+\definecolor{lip}{HTML}{3366FF}
+\definecolor{grey}{HTML}{ABABAB}
+
+% ---------------------------------------------------------------------------
+% Titelseite
+% ---------------------------------------------------------------------------
+\thispagestyle{empty}
+
+%LIP Schriftzug in eigener Farbe 
+\textsf{\begin{minipage}{.69\textwidth}
+	\large
+	\textcolor{lip}{\textbf{Labor für Informationstechnik und\\Produktionslogistik (LIP)}} %Farbe setzten
+	\small 
+	\textbf{\\Verfahren, Strategien, Prozesse und IT-Systeme}
+	\\Professor Dr.-Ing. Frank Herrmann
+\end{minipage}
+%Einbinden des OTH Logos mir rechtsbündiger Ausrichtung
+\begin{minipage}{.29\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=.15]{Bilder/othlogo}\\
+	\end{flushright}
+\end{minipage}}
+ 
+% Zeilenabstand
+\onehalfspacing	
+
+%Beschriftung der Titelseite
+\begin{center}
+
+	\vspace*{4cm} %4 cm Vorspann
+	\Large
+	\textbf{Benutzerhandbuch zur Losgrößen- und Ressourceneinsatzplanung bei Fließproduktion}\\ %Titel der Arbeit
+	\large
+	\textbf{Klassisches Losgrößenmodell, Mehrproduktproduktion}\\ %Untertitel der Arbeit
+		
+	\vspace*{8cm} %8 cm Vorspann
+	\normalsize
+	\begin{center}
+	Aktueller Stand: \today 
+	
+	\textbf{Christiane Arnold\\Timo Denzin\\Tobias Eichinger\\Daniel Sonnleitner\\Pilar Wagner} %Name des Autors
+	
+	\end{center}
+\end{center}
+\pagebreak
+
+% ------------------------------------------------------------------------------
+% Inhaltsverzeichnis
+% ------------------------------------------------------------------------------
+% Inhaltsverzeichnis
+\singlespacing %Zeilenabsatnd reduzieren
+\setcounter{section}{0}
+\setcounter{page}{1}
+\addcontentsline{toc}{section}{Inhaltsverzeichnis}%hinzufügen des Inhaltsverzeichnises selbst
+
+\tableofcontents %Ausgabe des Inhaltsverzeichnisses
+\pagebreak
+
+% ------------------------------------------------------------------------------
+% Setzen der Nummerierungen für Normaltext
+% ------------------------------------------------------------------------------
+\onehalfspacing %Zeilenabstand auf 1.5
+\renewcommand{\thesection}{\arabic{section}} %Arabische Beschriftung für Absatznummern
+\pagenumbering{arabic}  %Seitennummerrierung auf arabisch setzten
+\setcounter{page}{1}	%Seitenzahl für Inhalt auf 1 setzten
+\setcounter{section}{0}
+% Kopfzeile mit aktuellem Hauptkapitel darstellen
+\renewcommand{\sectionmark}[1]{\markright{#1}} %Section ausgeben
+\renewcommand{\subsectionmark}[1]{}            %Subsection nicht ausgeben
+\renewcommand{\subsubsectionmark}[1]{}         %Subsubsection nicht ausgeben
+\rhead{\rightmark}                             %Ausgabe Rechtsbündig
+
+%------------------------------------------------------------------------------
+%	Einfuehrung
+%------------------------------------------------------------------------------
+\input{Einfuehrung}
+
+%------------------------------------------------------------------------------
+%	Installation
+%------------------------------------------------------------------------------
+\input{Installation}
+
+%------------------------------------------------------------------------------
+%	Programmablauf
+%------------------------------------------------------------------------------
+\input{Programmablauf}
+
+%-------------------------------------------------------------------------------------
+% Verzeichnisse %-------------------------------------------------------------------------------------
+	\rhead{Verzeichnisse} %Kopftextbeschriftung
+
+	\stepcounter{section}
+	\phantomsection \label{Verzeichnisse}
+	\addcontentsline{toc}{section}{Verzeichnisse} %Ohne Nummer ins Inhaltsverzeichnis
+	\renewcommand{\thesection}{\Roman{verzeichnis}}
+	\section*{Verzeichnisse}
+	% Literaturverzeichnis
+	\rhead{Verzeichnisse}
+	\renewcommand{\refname}{Literaturverzeichnis}
+	\printbibliography
+	\pagebreak
+	
+	% Abbildungsverzeichnis
+	\stepcounter{verzeichnis}
+	\listoffigures
+	\pagebreak
+	
+	% Tabellenverzeichnis
+	\stepcounter{verzeichnis}
+	\listoftables
+	\pagebreak
+	
+	% Abkürzungen
+	\stepcounter{verzeichnis}
+	\section{Abkürzungsverzeichnis}
+	\vspace{-6em} % Abstand analog der anderen Verzeichnisse reduzieren
+	\printnoidxglossary[type=\acronymtype,style=alttree,title=,toctitle=] %automatischen Titel und Gliederungsbeschriftung unterdrücken - sonst steht da Glossarie
+	\newpage
+
+% ---------------------------------------------------------------------------------
+% Anhang
+% ---------------------------------------------------------------------------------
+\pagenumbering{Roman} %Seitennummerierung auf Romanisch stellen
+\setcounter{page}{1}  %Seitenzähler initialisieren
+\rhead{Anhang}        %Kopftextbeschriftung
+\begin{appendix}
+	\phantomsection \label{Anhang}
+	\section*{Anhang}\addcontentsline{toc}{section}{Anhang} %Anhang ohne Nummer
+	\renewcommand{\thesection}{\Roman{section}}
+	
+	\setcounter{section}{0} %Counter für Nummerirung der Anhänge initalisieren
+	\section{Beispielimport}
+	\label{app:beispielimport}
+	\input{Beispielimport}
+	
+\end{appendix}
+\end{document}
